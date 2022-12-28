@@ -4,5 +4,5 @@
 
 
 ## Branches:
-* [Api, inclusief node.js backend](https://github.com/Darjow/Android/api)
-* [mock, op basis van seeding](https://github.com/Darjow/Android/mock)
+* [Api, inclusief node.js backend](https://github.com/Darjow/Android/tree/api)
+* [mock, op basis van seeding](https://github.com/Darjow/Android/tree/mock)
