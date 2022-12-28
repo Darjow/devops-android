@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.vms.details.VMDetailsViewModel"
+    >
+
+    <data>
+        <variable
+            name="vmViewModel"
+            type="com.hogent.android.ui.vms.details.VMDetailsViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/back_vmList"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{ () -> vmViewModel.navigateBack()}"
+            android:src="@drawable/arrow"
+            app:flow_horizontalBias="0.3"
+            app:layout_constraintEnd_toStartOf="@+id/DetailsVMName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/DetailsVMName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text='@{vmViewModel.vm.name}'
+            android:textColor="@color/black"
+            android:textSize="@dimen/titel_font_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/back_vmList"
+            app:layout_constraintTop_toTopOf="@+id/back_vmList"
+            tools:text="VMTestnaam" />
+
+        <ImageView
+            android:id="@+id/general_detail"
+            android:layout_width="370dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="24dp"
+            android:alpha="0.7"
+            android:contentDescription="details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/DetailsVMName"
+            app:srcCompat="@drawable/detail_rectangle"
+            android:textColor="@color/black"/>
+        />
+
+        <ImageView
+            android:id="@+id/hardware_detail"
+            android:layout_width="370dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="25dp"
+            android:alpha="0.7"
+            android:contentDescription="details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/general_detail"
+            app:srcCompat="@drawable/detail_rectangle" />
+
+        <ImageView
+            android:id="@+id/connection_detail"
+            android:layout_width="370dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="25dp"
+            android:alpha="0.7"
+            android:contentDescription="details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hardware_detail"
+            app:srcCompat="@drawable/detail_rectangle" />
+
+        <TextView
+            android:id="@+id/cardTitleAlgemeen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Algemeen"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toTopOf="@+id/general_detail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/cardTitleHardware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Hardware"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toTopOf="@+id/hardware_detail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/cardTitleConnectie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Connection"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/connection_detail"
+            app:layout_constraintTop_toTopOf="@+id/connection_detail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/idDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/idDetail(vmViewModel.vm.id)}"
+            tools:text="ID: 1"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/cardTitleAlgemeen"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/nameDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/nameDetail(vmViewModel.vm.name)}"
+            tools:text="Naam: VMTestnaam"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/idDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/statusDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/statusDetail(vmViewModel.vm.status.toString())}"
+            tools:text="Status: Actief"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/nameDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/osDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/osDetail(vmViewModel.vm.operatingSystem.toString())}"
+            tools:text="OS: Windows 10"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/statusDetail"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/contractIdDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/contractIdDetail(vmViewModel.contract.id)}"
+            tools:text="Contract ID: 3"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/cardTitleAlgemeen"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/startDateDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/contractStartDetail(vmViewModel.contract.startDate.toString())}"
+            tools:text="Startdatum: 18/02/2022"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/contractIdDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/endDateDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/contractEndDetail(vmViewModel.contract.endDate.toString())}"
+            tools:text="Einddatum: 18/03/2022"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/startDateDetail"
+            android:textColor="@color/black"/>
+
+
+
+        <TextView
+            android:id="@+id/ramDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/ramDetail(vmViewModel.vm.hardware.memory / 1000)}"
+            tools:text="RAM: 16GB"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toBottomOf="@+id/cardTitleHardware"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/coreDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/coreDetail(vmViewModel.vm.hardware.cpu)}"
+            tools:text="CPU's: 6"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toBottomOf="@+id/ramDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/storageDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/storageDetail(vmViewModel.vm.hardware.storage / 1000)}"
+            tools:text="Storage: 512GB"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toBottomOf="@+id/coreDetail"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/backupDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/backupDetail(vmViewModel.vm.backup.type.toString())}"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toBottomOf="@+id/cardTitleHardware"
+            tools:text="Backup Type: Maandelijks" />
+
+
+        <TextView
+            android:id="@+id/backupDateDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/backupDateDetail(vmViewModel.vm.backup.date)}"
+            tools:text="Backup: 18/02/2022"
+            app:layout_constraintStart_toStartOf="@+id/hardware_detail"
+            app:layout_constraintTop_toBottomOf="@+id/backupDetail"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/serverDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/serverDetail(vmViewModel.vm.connection.fqdn)}"
+            tools:text="Server Adres: MOCK-FQDN"
+            app:layout_constraintStart_toStartOf="@+id/connection_detail"
+            app:layout_constraintTop_toBottomOf="@+id/cardTitleConnectie"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/ipDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/ipDetail(vmViewModel.vm.connection.ipAdres)}"
+            tools:text="IP-adres: 25.236.117.11"
+            app:layout_constraintStart_toStartOf="@+id/connection_detail"
+            app:layout_constraintTop_toBottomOf="@+id/serverDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/usernameDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/usernameDetail(vmViewModel.vm.connection.username)}"
+            tools:text="Username: MOCK-USER"
+            app:layout_constraintStart_toStartOf="@+id/connection_detail"
+            app:layout_constraintTop_toBottomOf="@+id/ipDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/passwordDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/passwordDetail(vmViewModel.vm.connection.password)}"
+            tools:text="Password: DW2]]YmiPrvz34-dh5]s"
+            app:layout_constraintStart_toStartOf="@+id/connection_detail"
+            app:layout_constraintTop_toBottomOf="@+id/usernameDetail"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/vmModusDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/vmModusDetail(vmViewModel.vm.mode.toString())}"
+            tools:text="Modus: PaaS"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/general_detail"
+            app:layout_constraintTop_toBottomOf="@+id/osDetail" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

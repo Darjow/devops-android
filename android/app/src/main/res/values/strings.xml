@@ -1,0 +1,102 @@
+<resources>
+    <string name="app_name">IT LAB - Virtual Machine Service App</string>
+
+
+    <string name="overzicht_vms">Overzicht VMs</string>
+    <string name="vm_aanvragen">VM aanvragen</string>
+    <string name="profiel">Profiel</string>
+    <string name="login">Login</string>
+    <string name="registreer">Registreer</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="naam_virtualmachine">Naam Virtualmachine</string>
+    <string name="logo_hogent">logo HoGent</string>
+    <string name="logout">Log uit</string>
+
+    <!-- Strings -->
+    <!-- Algemeen-->
+    <string name="dash">/</string>
+    <string name="algemene_informatie"><u>Algemene Informatie</u></string>
+    <string name="example_phone">0497815332</string>
+    <string name="example_email">example@ex.com</string>
+    <string name="example_fullname">John Doe</string>
+
+    <!-- Klant -->
+    <string name="lbl_full_name">Volledige naam:</string>
+    <string name="lbl_contactpersonen"><u>Contactpersonen</u></string>
+    <string name="ttl_klanten_details"><u>Klanten details</u></string>
+    <string name="lbl_course_business">Opleiding/Bedrijf:</string>
+    <string name="lbl_phonenumber">Gsmnummer:</string>
+    <string name="lbl_email">Emailadres:</string>
+    <string name="contactpersoon1">Contactpersoon 1</string>
+    <string name="contactpersoon2">Contactpersoon 2</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="firstname">Voornaam</string>
+    <string name="lastname">Achternaam</string>
+    <string name="phonenumber">Gsm-nummer</string>
+    <string name="button_to_safe_customer_edit">Button to safe the customer contact details</string>
+    <string name="button_to_cancel_customer_edit">Button to cancel the contactdetails edit</string>
+    <string name="button_to_start_customer_edit">Buttont to start editing the customer contactdetails</string>
+
+
+
+    <!-- Login Register -->
+    <string name="maak_acc">Maak Account</string>
+    <string name="phonenumberHint">0412345678</string>
+    <string name="passwordHint">***********</string>
+    <string name="maak_acc_title"><u>Maak een account aan</u></string>
+    <string name="confirmPassword">Herhaal paswoord</string>
+    <string name="register_text">Geen account </string>
+
+    <!-- VM -->
+    <string name="title_vm_aanvraag">Aanvragen virtualmachine</string>
+    <string name="title_naam_vm_aanvraag">Naam virtualmachine:</string>
+    <string name="naam_vm_aanvraag">Naam virtualmachine</string>
+    <string name="os_windows">Windows</string>
+    <string name="os_linux">Linux</string>
+    <string name="os_mac">MacOS</string>
+    <string name="memory_vm_aanvraag">Memory GB:</string>
+    <string name="aantal_gb_storage">Aantal GB in storage</string>
+    <string name="mode_vm_aanvraag">Mode VM:</string>
+    <string name="iaasmodevm_zelf">IAAS (instaleert zelf software)</string>
+    <string name="iaasmodevm_voorzien">IAAS (software wordt voorzien)</string>
+    <string name="paasmodevm">PAAS</string>
+    <string name="backup_vm_aanvraag">Backup van virtualmachine:</string>
+    <string name="start_data_vm_aanvraag">Startdatum: </string>
+    <string name="end_date_vm_aanvraag">Einddatum:</string>
+    <string name="aanvragen">Aanvragen</string>
+    <string name="title_aantal_vcpu">Aantal vCPU:</string>
+    <string name="title_storage_vm_aanvraag">Storage GB:</string>
+    <string name="title_hostname_vm_aanvraag">Hostname virtual machine:</string>
+    <string name="title_operating_system_aanvraag">Operating system:</string>
+    <string name="hostname_vm_aanvraag">ik kreeg error omdat deze hier niet was</string>
+
+    <string-array name="soorten_gb_memory">
+        <item>2GB</item>
+        <item>4GB</item>
+        <item>6GB</item>
+        <item>8GB</item>
+        <item>10GB</item>
+        <item>12GB</item>
+        <item>16GB</item>
+    </string-array>
+    <!-- VM Details -->
+    <string name="nameDetail">Naam: %1$s</string>
+    <string name="idDetail">ID: %1$d</string>
+    <string name="statusDetail">Status: %1$s</string>
+    <string name="osDetail">OS: %1$s</string>
+    <string name="ramDetail">RAM: %1$sGB</string>
+    <string name="coreDetail">CPU\'s: %1$d</string>
+    <string name="storageDetail">Storage: %1$sGB</string>
+    <string name="contractIdDetail">Contract ID: %1$d</string>
+    <string name="contractStartDetail">Startdatum: %1$s</string>
+    <string name="contractEndDetail">Einddatum: %1$s</string>
+    <string name="backupDetail">Backup Type: %1$s</string>
+    <string name="backupDateDetail">Backup: %1$s</string>
+    <string name="serverDetail">Server Adres: %1$s</string>
+    <string name="ipDetail">IP-Adres: %1$s</string>
+    <string name="usernameDetail">Username: %1$s</string>
+    <string name="passwordDetail">Password: %1$s</string>
+    <string name="vm_details_fragment">VM Details</string>
+    <string name="vmModusDetail">Mode: %1$s</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="horizontal_margin">8dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
+
+
+    <!-- FONTS-->
+    <dimen name="titel_font_size">24sp</dimen>
+    <dimen name="subtitel_font_size">18sp</dimen>
+    <dimen name="p_font_size">14sp</dimen>
+
+</resources>

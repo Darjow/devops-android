@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="customerViewModel"
+            type="com.hogent.android.ui.klant.CustomerViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:backgroundTint="@color/white">
+
+            <TextView
+                android:id="@+id/titleKlantDetails"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/ttl_klanten_details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/titel_font_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/subttl_contactpersonen"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/lbl_contactpersonen"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subtitel_font_size"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_algemeen" />
+
+            <TextView
+                android:id="@+id/subttl_contactpersonen2"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/algemene_informatie"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/subtitel_font_size"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleKlantDetails" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_algemeen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subttl_contactpersonen2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white">
+
+
+                    <TextView
+                        android:id="@+id/label_course_business"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/lbl_course_business"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/course_business"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_fullname" />
+
+                    <TextView
+                        android:id="@+id/course_business"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@{customerViewModel.klant.bedrijf_opleiding}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/label_course_business"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/label_course_business"
+                        app:layout_constraintTop_toTopOf="@+id/label_course_business"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/label_fullname"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/lbl_full_name"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/fullname"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fullname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text='@{String.format("%s %s", customerViewModel.klant.firstName, customerViewModel.klant.lastName)}'
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/label_fullname"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/label_fullname"
+                        app:layout_constraintTop_toTopOf="@+id/label_fullname"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/label_email"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/lbl_email"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/emailadress"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_course_business" />
+
+                    <TextView
+                        android:id="@+id/emailadress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text='@{customerViewModel.klant.email}'
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/label_email"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/label_email"
+                        app:layout_constraintTop_toTopOf="@+id/label_email" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/buttons_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subttl_contactpersonen">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white">
+
+                    <ImageButton
+                        android:id="@+id/profile_edit_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="20dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/button_to_start_customer_edit"
+                        android:onClick="@{() -> customerViewModel.onEditButtonPressed()}"
+                        android:src="@drawable/edit_start"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/profile_safe_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/button_to_safe_customer_edit"
+                        android:onClick="@{() -> customerViewModel.onSubmitButtonPressed()}"
+                        android:src="@drawable/edit_confirm"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/profile_cancel_button"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/profile_cancel_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/button_to_cancel_customer_edit"
+                        android:onClick="@{() -> customerViewModel.onCancelButtonPressed()}"
+                        android:src="@drawable/edit_cancel"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_contactdetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttons_container">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white">
+
+                    <TextView
+                        android:id="@+id/placeholder_invisible"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toStartOf="@+id/label_contactpersoon_1"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/label_contactpersoon_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/contactpersoon2"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/label_contactpersoon_1"
+                        app:layout_constraintTop_toTopOf="@+id/label_contactpersoon_1" />
+
+                    <TextView
+                        android:id="@+id/label_contactpersoon_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/contactpersoon1"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/label_contactpersoon_2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/placeholder_invisible"
+                        app:layout_constraintTop_toTopOf="@+id/placeholder_invisible" />
+
+                    <EditText
+                        android:id="@+id/contactpersoon_1_email_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:afterTextChanged="@{ (text) -> customerViewModel.setEmail(1, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:nextFocusForward="@id/contactpersoon_1_phone_input"
+                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_email : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_email"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_email"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_email" />
+
+                    <EditText
+                        android:id="@+id/contactpersoon_1_phone_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:afterTextChanged="@{ (text) -> customerViewModel.setPhone(1, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_phone"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:nextFocusForward="@id/contactpersoon_1_fullname_input"
+                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_phone : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_phone"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_contact_phone"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_contact_phone" />
+
+                    <EditText
+                        android:id="@+id/contactpersoon_1_fullname_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:afterTextChanged="@{ (text) -> customerViewModel.setFullName(1, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_fullname"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
+                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_firstname + " " + customerViewModel.klant.contactPs1.contact1_lastname : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_fullname"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_contact_fullname"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_contact_fullname" />
+
+                    <EditText
+                        android:id="@+id/contactpersoon_2_email_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:afterTextChanged="@{(text) -> customerViewModel.setEmail(2, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:nextFocusForward="@id/contactpersoon_2_phone_input"
+                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_email : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_email"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_email" />
+
+                    <EditText
+                        android:id="@+id/contactpersoon_2_phone_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:afterTextChanged="@{ (text) -> customerViewModel.setPhone(2, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_phone"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:nextFocusForward="@id/contactpersoon_2_fullname_input"
+                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_phone : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_phone"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_phone" />
+
+
+                    <EditText
+                        android:id="@+id/contactpersoon_2_fullname_input"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:afterTextChanged="@{ (text) -> customerViewModel.setFullName(2, text)}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/example_fullname"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
+                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_firstname + " " + customerViewModel.klant.contactPs2.contact2_lastname : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_fullname"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_fullname" />
+
+
+                    <TextView
+                        android:id="@+id/lbl_email"
+                        android:layout_width="110dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:text="@string/lbl_email"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_1_email"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/placeholder_invisible" />
+
+                    <TextView
+                        android:id="@+id/contactpersoon_2_email"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_email : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_email"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_email" />
+
+                    <TextView
+                        android:id="@+id/contactpersoon_1_email"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_email : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_email"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_email"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_email" />
+
+                    <TextView
+                        android:id="@+id/contactpersoon_1_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_phone : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_phone"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_contact_phone"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_contact_phone" />
+
+
+                    <TextView
+                        android:id="@+id/contactpersoon_2_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_phone : ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_phone"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_phone" />
+
+                    <TextView
+                        android:id="@+id/lbl_contact_phone"
+                        android:layout_width="110dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:text="@string/lbl_phonenumber"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_1_phone"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_email" />
+
+                    <TextView
+                        android:id="@+id/lbl_contact_fullname"
+                        android:layout_width="110dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:text="@string/lbl_full_name"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_1_fullname"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_contact_phone" />
+
+                    <TextView
+                        android:id="@+id/contactpersoon_2_fullname"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_firstname + " " +   customerViewModel.klant.contactPs2.contact2_lastname: ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/contactpersoon_1_fullname"
+                        app:layout_constraintTop_toTopOf="@+id/contactpersoon_1_fullname" />
+
+
+                    <TextView
+                        android:id="@+id/contactpersoon_1_fullname"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/dash"
+                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_firstname + " " +   customerViewModel.klant.contactPs1.contact1_lastname: ""}'
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/p_font_size"
+                        android:visibility='@{!customerViewModel.inEditMode? customerViewModel.getVisibleId() : customerViewModel.getInvisibleId()}'
+                        app:layout_constraintEnd_toStartOf="@+id/contactpersoon_2_fullname"
+                        app:layout_constraintStart_toEndOf="@+id/lbl_contact_fullname"
+                        app:layout_constraintTop_toTopOf="@+id/lbl_contact_fullname" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
