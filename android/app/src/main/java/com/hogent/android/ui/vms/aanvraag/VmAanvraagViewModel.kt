@@ -60,9 +60,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         _form.postValue(__form)
     }
 
-    fun setProject(){
-
-    }
     fun setStorage(e: Editable){
         val __form = _form.value
         __form!!.storage = try{
@@ -114,11 +111,8 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         _form.postValue(__form)
     }
     fun osChanged(type: String){
-        //hier zal wrs methode moeten komen die de string split op " " en dan joined op een "_" en dan in capital zet
-        //daarna met deze value: OperatingSystem.valueOf(value)
-
         val __form = _form.value
-        __form!!.os = OperatingSystem.valueOf(type.uppercase())
+        __form!!.os = OperatingSystem.valueOf(type.split(" ").joinToString('_'.toString()).uppercase())
         _form.postValue(__form)
     }
 
