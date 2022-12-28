@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.*
+import com.hogent.android.util.AuthenticationManager
 import timber.log.Timber
 
 
-class VMListViewModel(db: DatabaseImp, customer_id: Long) : ViewModel() {
+class VMListViewModel(db: DatabaseImp) : ViewModel() {
 
     private val db_projecten = db.projectDao;
     private val db_vms = db.virtualMachineDao;
@@ -27,7 +28,7 @@ class VMListViewModel(db: DatabaseImp, customer_id: Long) : ViewModel() {
         get() = _virtualmachine;
 
     init {
-        _projecten.value = db_projecten.getByCustomerId(customer_id);
+        _projecten.value = db_projecten.getByCustomerId(AuthenticationManager.getCustomer()!!.id);
         var templist = mutableListOf<VirtualMachine>()
         _projecten.value?.forEach { i ->
             var listvirtualmachine = db_vms.getByProjectId(i.id)

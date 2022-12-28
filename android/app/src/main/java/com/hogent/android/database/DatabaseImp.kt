@@ -14,7 +14,7 @@ import com.hogent.android.database.entities.*
 import com.hogent.android.util.ioThread
 import java.time.LocalDate
 
-@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 12, exportSchema = false)
+@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 13, exportSchema = false)
 @TypeConverters(CourseConverter::class, HardwareConverter::class, BackupConverter::class, ConnectionConverter::class, LocalDateConverter::class /*OperatingSystemConverter::class*/)
 abstract class DatabaseImp() : RoomDatabase() {
 
@@ -112,6 +112,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 1,
                                 LocalDate.of(2022, 12,11),
                                 LocalDate.of(2023, 2,1),
+                                true
 
                             )
                         )
@@ -120,13 +121,15 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 2,
                                 LocalDate.of(2022, 10,10),
                                 LocalDate.of(2023, 12,20),
+                                true
                             )
                         )
                         contractDao.insert(
                             Contract(
                                 3,
                                 LocalDate.of(2022, 11,11),
-                                LocalDate.of(2023,3,3)
+                                LocalDate.of(2023,3,3),
+                                true
                             )
                         )
                         contractDao.insert(
@@ -134,6 +137,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 4,
                                 LocalDate.of(2022, 11,15),
                                 LocalDate.of(2023, 3,1),
+                                true
                             )
                         )
                         contractDao.insert(
@@ -141,6 +145,8 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 5,
                                 LocalDate.of(2022, 10,11),
                                 LocalDate.of(2023, 4,1),
+                                true
+
                             )
                         )
                         contractDao.insert(
@@ -148,6 +154,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 6,
                                 LocalDate.of(2022, 11,1),
                                 LocalDate.of(2023, 8,11),
+                                true
                             )
                         )
                         contractDao.insert(
@@ -155,6 +162,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 7,
                                 LocalDate.of(2022, 3,11),
                                 LocalDate.of(2023, 5,11),
+                                true
                             )
                         )
                         contractDao.insert(
@@ -162,6 +170,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 8,
                                 LocalDate.of(2021, 5,11),
                                 LocalDate.of(2023, 11,11),
+                                true
                             )
                         )
 

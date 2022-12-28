@@ -53,7 +53,7 @@ class VirtualMachineListAdapter constructor(
             //hier heb je het project en de holder, je kan er dingen op setten
             holder.textView1.text = virtualmachine?.status.toString()
             holder.textView2.text = virtualmachine?.name
-            holder.textView3.text = AuthenticationManager.getInstance(application).klant.value!!.email
+            holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
             holder.itemView.setOnClickListener {
                 Timber.d(String.format("VM ID :  %s", virtualmachine!!.id.toString()))

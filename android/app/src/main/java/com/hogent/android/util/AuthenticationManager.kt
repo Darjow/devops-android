@@ -31,8 +31,19 @@ class AuthenticationManager(private val db: CustomerDao) {
             }
         }
 
+        fun getCustomer(): Customer?{
+            if (!::instance.isInitialized) {
+                return null;
+            }
+            return instance.klant.value
+        }
+        fun loggedIn(): Boolean{
+            if (!::instance.isInitialized) {
+                return false;
+            }
+            return instance.loggedIn()
+        }
     }
-
 
     fun loggedIn(): Boolean{
         return authenticationState.value == AuthenticationState.AUTHENTICATED

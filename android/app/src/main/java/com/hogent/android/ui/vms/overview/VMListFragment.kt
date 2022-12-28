@@ -39,8 +39,7 @@ class VMListFragment : Fragment() {
         application = requireNotNull(this.activity).application
 
         val db = DatabaseImp.getInstance(application);
-        val customerId = AuthenticationManager.getInstance(application).klant.value!!.id
-        val viewModelFactory = VMListViewModelFactory(db, customerId);
+        val viewModelFactory = VMListViewModelFactory(db);
 
         viewModel = ViewModelProvider(this, viewModelFactory)[(VMListViewModel::class.java)];
 

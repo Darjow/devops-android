@@ -99,4 +99,5 @@
     <string name="passwordDetail">Password: %1$s</string>
     <string name="vm_details_fragment">VM Details</string>
     <string name="vmModusDetail">Mode: %1$s</string>
+    <string name="selecteer_project">Selecteer een project</string>
 </resources>

@@ -9,7 +9,7 @@ import com.hogent.android.database.entities.Contract
 @Dao
 interface ContractDao {
     @Insert
-    fun insert(contract: Contract)
+    fun insert(contract: Contract): Long
 
     @Update
     fun update(contract: Contract)
