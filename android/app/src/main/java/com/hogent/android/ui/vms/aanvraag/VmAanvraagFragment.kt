@@ -60,7 +60,7 @@ class VmAanvraagFragment : Fragment(){
         spinner_memory.onItemSelectedListener= object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 val selected = listMemory[pos]
-                binding.viewmodel.memoryGBChanged(selected)
+                binding.viewmodel!!.memoryGBChanged(selected)
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
@@ -71,7 +71,7 @@ class VmAanvraagFragment : Fragment(){
         seek?.setOnSeekBarChangeListener(object :  SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 text.text = getString(R.string.title_aantal_vcpu) + ' ' +p1.toString()
-                binding.viewmodel.coresCpuChanged(p1)
+                binding.viewmodel!!.coresCpuChanged(p1)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -89,7 +89,7 @@ class VmAanvraagFragment : Fragment(){
         spinnerBackup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 val selected = listBackup[pos]
-                binding.viewmodel.backupTypeChanged(selected)
+                binding.viewmodel!!.backupTypeChanged(selected)
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
@@ -97,22 +97,22 @@ class VmAanvraagFragment : Fragment(){
 
         binding.groupModeVm.setOnCheckedChangeListener { radioGroup, i ->
             val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-            binding.viewmodel.modeChanged(value.text.toString())
+            binding.viewmodel!!.modeChanged(value.text.toString())
         }
 
         binding.groupOsVm.setOnCheckedChangeListener { radioGroup, i ->
             val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-            binding.viewmodel.osChanged(value.text.toString())
+            binding.viewmodel!!.osChanged(value.text.toString())
         }
 
         binding.startDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             val start = LocalDate.of(year, month ,day);
-            binding.viewmodel.startDateChanged(start)
+            binding.viewmodel!!.startDateChanged(start)
         }
 
         binding.endDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             val end = LocalDate.of(year, month ,day);
-            binding.viewmodel.endDateChanged(end)
+            binding.viewmodel!!.endDateChanged(end)
         }
     }
 }
