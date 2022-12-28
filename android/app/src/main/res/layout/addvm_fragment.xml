@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:textColor="@color/black"
             android:textColorHint="@color/black"
@@ -67,7 +68,8 @@
                     android:inputType="text"
                     android:minHeight="48dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColorHint="@color/black"
+                    android:imeOptions="actionDone"/>
 
                 <TextView
                     android:id="@+id/project_select"
@@ -94,13 +96,33 @@
                     <ImageView
                         android:id="@+id/dropdown_projecten"
                         style="@style/dropdown_select"
-                        app:srcCompat="@drawable/white_drop_down"
                         app:layout_constraintBottom_toBottomOf="@+id/spinner_project"
                         app:layout_constraintEnd_toEndOf="@+id/spinner_project"
                         app:layout_constraintTop_toTopOf="@+id/spinner_project"
-                        />
+                        app:srcCompat="@drawable/white_drop_down" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                <TextView
+                    android:id="@+id/storageVmAanvraag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_storage_vm_aanvraag"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+
+                <EditText
+                    android:id="@+id/inputStorageVmAanvraag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{viewmodel::setStorage}"
+                    android:backgroundTint="@color/blue_med"
+                    android:ems="10"
+                    android:hint="@string/aantal_gb_storage"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:imeOptions="actionDone"/>
 
                 <TextView
                     android:id="@+id/operatingsystemVmAanvraag"
@@ -152,6 +174,7 @@
                     android:id="@+id/titleVcpuAanvraag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="@string/title_aantal_vcpu"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
@@ -160,34 +183,15 @@
                     android:id="@+id/aantalVcpuAanvraag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:max="16"
-                    android:min="2"
 
+                    android:min="2"
                     android:progressTint="#000000"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
                 <!--android:value="@={viewmodel.cpuCoresValue}"
                     }"-->
-
-                <TextView
-                    android:id="@+id/storageVmAanvraag"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_storage_vm_aanvraag"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-
-                <EditText
-                    android:id="@+id/inputStorageVmAanvraag"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blue_med"
-                    android:ems="10"
-                    android:hint="@string/aantal_gb_storage"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:afterTextChanged="@{viewmodel::setStorage}"/>
 
                 <TextView
                     android:id="@+id/memoryTitleVmAanvraag"
@@ -300,45 +304,40 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
                 <TextView
                     android:id="@+id/titleStartdateVmaanvraag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/start_data_vm_aanvraag"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
                 <DatePicker
                     android:id="@+id/startDateVmAanvraag"
-                    style="@android:style/Widget.DatePicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black"
+                    android:background="@color/black"
                     android:calendarViewShown="false"
-                    android:datePickerMode="spinner"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:datePickerMode="spinner" />
 
                 <TextView
                     android:id="@+id/titleEndDateVmAanvraag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/end_date_vm_aanvraag"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
                 <DatePicker
                     android:id="@+id/endDateVmAanvraag"
-                    style="@android:style/Widget.DatePicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/black"
+                    android:background="@color/black"
                     android:calendarViewShown="false"
-                    android:datePickerMode="spinner"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:datePickerMode="spinner" />
 
                 <Button
                     android:id="@+id/aanvraagSubmit"
@@ -346,9 +345,14 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> viewmodel.aanvragen()}"
                     android:text="@string/aanvragen"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:layout_marginTop="20dp"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
             </LinearLayout>
         </ScrollView>
 
