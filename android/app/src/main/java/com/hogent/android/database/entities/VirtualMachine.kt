@@ -109,7 +109,7 @@ enum class OperatingSystem {
         MAANDELIJKS;
 
         override fun toString(): String {
-            return this.name.lowercase()
+            return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
         }
     }
 

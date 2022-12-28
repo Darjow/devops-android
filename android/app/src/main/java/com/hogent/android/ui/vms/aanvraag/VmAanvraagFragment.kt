@@ -12,10 +12,12 @@ import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
 import com.hogent.android.database.DatabaseImp
+import com.hogent.android.database.entities.BackupType
 import com.hogent.android.database.entities.Project
 import com.hogent.android.database.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
 import com.hogent.android.util.closeKeyboardOnTouch
+import timber.log.Timber
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
@@ -47,11 +49,11 @@ class VmAanvraagFragment : Fragment(){
 
 //MEMORY
         val spinner_memory = binding.root.findViewById<Spinner>(R.id.memoryVmAanvraagDropdownList)
-        val listMemory = arrayListOf("2GB","4GB","6GB","8GB","10GB","12GB","14GB","16GB")
-        if(spinner_memory != null){
-            val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, listMemory)
-            spinner_memory.adapter = adapter
-        }
+        val listMemory = arrayListOf("1GB","2GB","4GB","8GB","16GB","32GB")
+        val adapter_memory = ArrayAdapter(context, android.R.layout.simple_spinner_item, listMemory)
+        adapter_memory.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinner_memory.adapter = adapter_memory
+
             spinner_memory.onItemSelectedListener= object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                     val selected = listMemory[pos]
@@ -63,6 +65,7 @@ class VmAanvraagFragment : Fragment(){
 
 //CPU
         val seek = binding.root.findViewById<SeekBar>(R.id.aantalVcpuAanvraag);
+        seek.max = 15
         val text = binding.root.findViewById<TextView>(R.id.titleVcpuAanvraag);
         seek?.setOnSeekBarChangeListener(object :  SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
@@ -70,18 +73,16 @@ class VmAanvraagFragment : Fragment(){
                 binding.viewmodel!!.coresCpuChanged(p1)
             }
 
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-            }
-
+            override fun onStartTrackingTouch(p0: SeekBar?) {           }
+            override fun onStopTrackingTouch(p0: SeekBar?) {            }
         })
 
 //BACKUP
-        val listBackup = arrayListOf("Dagelijks","Wekenlijks","Maandelijks","Nooit")
+
+        val listBackup = BackupType.values().map { it.toString() }
         val spinnerBackup = binding.root.findViewById<Spinner>(R.id.backupVmDropdownList)
         val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, listBackup)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinnerBackup.adapter = adapter
         spinnerBackup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
@@ -94,11 +95,11 @@ class VmAanvraagFragment : Fragment(){
 //PROJECT
         val spinnerProject = binding.root.findViewById<Spinner>(R.id.spinner_project)
         val adapterProject = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayListOf<String>())
-
+        adapterProject.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.viewmodel!!.projecten.observe(viewLifecycleOwner) {
             adapterProject.clear();
             it.forEach { project ->
-                adapter.add(project.name)
+                adapterProject.add(project.name)
             }
             adapterProject.notifyDataSetChanged()
         }
@@ -126,13 +127,22 @@ class VmAanvraagFragment : Fragment(){
         }
 
         binding.startDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
-            val start = LocalDate.of(year, month ,day);
-            binding.viewmodel!!.startDateChanged(start)
+            try {
+                val start = LocalDate.of(year, month, day);
+                binding.viewmodel!!.startDateChanged(start)
+            }catch(e: Exception){
+                Timber.d("Error during startup in startdatevmaanvraag changedlistener")
+            }
         }
 
         binding.endDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
-            val end = LocalDate.of(year, month ,day);
-            binding.viewmodel!!.endDateChanged(end)
+            try {
+                val end = LocalDate.of(year, month, day);
+                binding.viewmodel!!.endDateChanged(end)
+            }catch(e: Exception){
+                Timber.d("Error during startup in enddatevmaanvraag changedlistener")
+            }
+
         }
         binding.viewmodel!!.errorToast.observe(viewLifecycleOwner) {
             if (it) {
