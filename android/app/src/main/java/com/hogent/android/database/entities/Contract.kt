@@ -10,11 +10,10 @@ import java.time.format.DateTimeFormatter
 
 @Entity(tableName = "contract_table")
 data class Contract(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long? = 0L,
-    var startDate: LocalDate,
-    var endDate: LocalDate,
-    var active: Boolean = false
+    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
+    val active: Boolean = false
 )
 
 class LocalDateConverter{

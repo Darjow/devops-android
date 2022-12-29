@@ -12,7 +12,7 @@ import com.hogent.android.util.AuthenticationManager
 
 class VmAanvraagRepository(private val databaseImp: DatabaseImp) {
 
-    val customerId = AuthenticationManager.getCustomer()!!.id
+    val customerId = AuthenticationManager.getCustomer()!!.id!!
 
     private val vmDao: VirtualMachineDao = databaseImp.virtualMachineDao
     private val contractDao: ContractDao = databaseImp.contractDao
@@ -23,8 +23,7 @@ class VmAanvraagRepository(private val databaseImp: DatabaseImp) {
         val backup = Backup(form.backUpType, null)
 
         val c_id = contractDao.insert(Contract(startDate = form.startDate!!, endDate = form.endDate!!))
-
-        val vm = VirtualMachine(name = form.naamVm!!, status = VirtualMachineStatus.AANGEVRAAGD, mode = form.modeVm!!, hardware = hardware, backup = backup, operatingSystem = form.os!!, contractId = c_id, project_id = form.project_id!!)
+        val vm = VirtualMachine(name = form.naamVm!!, status = VirtualMachineStatus.AANGEVRAAGD, mode = form.modeVm!!, hardware = hardware, backup = backup, operatingSystem = form.os!!, contractId = c_id, projectId = form.project_id!!)
         vmDao.insert(vm);
     }
 

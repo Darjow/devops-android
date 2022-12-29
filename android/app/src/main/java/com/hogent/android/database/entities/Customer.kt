@@ -5,13 +5,12 @@ import androidx.room.*
 
 @Entity(tableName = "customer_table")
 data class Customer(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
-    var lastName: String = "",
-    var firstName: String = "",
-    var phoneNumber: String = "",
-    var email: String = "",
-    var password: String = "",
+    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
+    val lastName: String,
+    val firstName: String,
+    val phoneNumber: String,
+    val email: String,
+    val password: String,
 
     @Embedded
     var contactPs1: ContactDetails1? = null,

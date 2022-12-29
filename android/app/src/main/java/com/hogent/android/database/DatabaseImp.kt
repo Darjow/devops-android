@@ -12,15 +12,16 @@ import com.hogent.android.database.daos.ProjectDao
 import com.hogent.android.database.daos.VirtualMachineDao
 import com.hogent.android.database.entities.*
 import com.hogent.android.util.ioThread
+import timber.log.Timber
 import java.time.LocalDate
 
-@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 14, exportSchema = false)
-@TypeConverters(CourseConverter::class, HardwareConverter::class, BackupConverter::class, ConnectionConverter::class, LocalDateConverter::class /*OperatingSystemConverter::class*/)
+@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 20, exportSchema = false)
+@TypeConverters(CourseConverter::class, HardwareConverter::class, BackupConverter::class, ConnectionConverter::class, LocalDateConverter::class)
 abstract class DatabaseImp() : RoomDatabase() {
 
     abstract val customerDao: CustomerDao
     abstract val virtualMachineDao: VirtualMachineDao
-    abstract val projectDao : ProjectDao
+    abstract val projectDao: ProjectDao
     abstract val contractDao: ContractDao
 
     companion object {
@@ -53,242 +54,251 @@ abstract class DatabaseImp() : RoomDatabase() {
                         val virtualMachineDao = getInstance(context).virtualMachineDao
                         val contractDao = getInstance(context).contractDao
 
-                        customerDao.insert(
-                            Customer(
-                                1,
-                                "Doe",
-                                "John",
-                                "0497815223",
-                                "john.doe@hotmail.com",
-                                "Password#69",
-                                null,
-                                null,
-                                "De la where",
-                            )
+                        val customer1 = Customer(
+                            firstName = "Doe",
+                            lastName = "John",
+                            phoneNumber = "0497815223",
+                            email = "john.doe@hotmail.com",
+                            password = "Password#69",
+                            bedrijf_opleiding = "De la where"
                         )
-                        customerDao.insert(
-                            Customer(
-                                2,
-                                "Billy",
-                                "Willy",
-                                "0497815224",
-                                "billy.willy@hotmail.com",
-                                "Password#69",
-                                null,
-                                null,
-                                "De la where",
-                            )
+                        val customer2 = Customer(
+                            firstName = "Billy",
+                            lastName = "Willy",
+                            phoneNumber = "0497815224",
+                            email = "billy.willy@hotmail.com",
+                            password = "Password#69",
+                            bedrijf_opleiding = "De la where"
                         )
-                        customerDao.insert(
-                            Customer(
-                                3,
-                                "Jacky",
-                                "Wacky",
-                                "0497815225",
-                                "jacky.wacky@hotmail.com",
-                                "Password#69",
-                                null,
-                                null,
-                                "De la where",
-                            )
+                        val customer3 = Customer(
+                            firstName = "Doe",
+                            lastName = "John",
+                            phoneNumber = "0497815223",
+                            email = "john.doe@hotmail.com",
+                            password = "Password#69",
+                            bedrijf_opleiding = "De la where",
                         )
-                        projectDao.insert(
-                            Project(1, "Project A", 1L)
-                        )
-                        projectDao.insert(
-                            Project(2, "Project B", 1L)
-                        )
-                        projectDao.insert(
-                            Project(3, "Project C", 1L)
-                        )
-                        projectDao.insert(
-                            Project(4, "Project D", 2L)
-                        )
-                        projectDao.insert(
-                            Project(5, "Project E", 3L)
-                        )
-                        contractDao.insert(
-                            Contract(
-                                1,
-                                LocalDate.of(2022, 12,11),
-                                LocalDate.of(2023, 2,1),
-                                true
-
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                2,
-                                LocalDate.of(2022, 10,10),
-                                LocalDate.of(2023, 12,20),
-                                true
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                3,
-                                LocalDate.of(2022, 11,11),
-                                LocalDate.of(2023,3,3),
-                                true
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                4,
-                                LocalDate.of(2022, 11,15),
-                                LocalDate.of(2023, 3,1),
-                                true
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                5,
-                                LocalDate.of(2022, 10,11),
-                                LocalDate.of(2023, 4,1),
-                                true
-
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                6,
-                                LocalDate.of(2022, 11,1),
-                                LocalDate.of(2023, 8,11),
-                                true
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                7,
-                                LocalDate.of(2022, 3,11),
-                                LocalDate.of(2023, 5,11),
-                                true
-                            )
-                        )
-                        contractDao.insert(
-                            Contract(
-                                8,
-                                LocalDate.of(2021, 5,11),
-                                LocalDate.of(2023, 11,11),
-                                true
-                            )
+                        val customer4 = Customer(
+                            firstName = "Jacky",
+                            lastName = "Wacky",
+                            phoneNumber = "0497815225",
+                            email = "jacky.wacky@hotmail.com",
+                            password = "Password#69",
+                            bedrijf_opleiding = "De la where"
                         )
 
+                        listOf(customer1, customer2, customer3, customer4).forEach {
+                            Timber.d(String.format("Inserting customer: %s", it.toString()))
+                            customerDao.insert(it)
+                        }
 
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                1,
-                                "Willie's VM",
-                                Connection("MOC2-FQDN", "25.236.117.11", "MOC-USER1", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.RUNNING,
-                                OperatingSystem.LINUX_KALI,
-                                HardWare(32000, 50000, 3),
-                                2,
-                                VirtualMachineModus.IAAS,
-                                1,
-                                Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,1))
-                            )
+
+                        val project1 = Project(name = "Project A", customer_id = customer1.id!!)
+                        val project2 = Project(name = "Project B", customer_id = customer1.id!!)
+                        val project3 = Project(name = "Project C", customer_id = customer1.id!!)
+                        val project4 = Project(name = "Project D", customer_id = customer2.id!!)
+                        val project5 = Project(name = "Project E", customer_id = customer3.id!!)
+
+                        listOf(project1, project2, project3, project4, project5).forEach {
+                            Timber.d(String.format("Inserting project: %s", it.toString()))
+                            projectDao.insert(it)
+                        }
+
+
+                        val contract1 = Contract(
+                            startDate = LocalDate.of(2022, 12, 11),
+                            endDate = LocalDate.of(2023, 2, 1),
+                            active = true
+                        );
+                        val contract2 = Contract(
+                            startDate = LocalDate.of(2022, 10, 10),
+                            endDate = LocalDate.of(2023, 12, 20),
+                            active = true
+                        );
+                        val contract3 = Contract(
+                            startDate = LocalDate.of(2022, 11, 11),
+                            endDate = LocalDate.of(2023, 3, 3),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                2,
-                                "Mami's VM",
-                                Connection("MOC2-FQDN", "25.236.117.12", "MOC-USE2", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.TERMINATED,
-                                OperatingSystem.WINDOWS_2016,
-                                HardWare(32000, 50000, 3),
-                                2,
-                                VirtualMachineModus.PAAS,
-                                2,
-                                Backup(BackupType.DAGELIJKS, LocalDate.of(2022,12,11))
-                            )
+                        val contract4 = Contract(
+                            startDate = LocalDate.of(2022, 11, 15),
+                            endDate = LocalDate.of(2023, 3, 1),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                3,
-                                "Papi's VM",
-                                Connection("MOC6-FQDN", "25.236.117.13", "MOC-USER3", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.GEREED,
-                                OperatingSystem.LINUX_KALI,
-                                HardWare(32000, 50000, 3),
-                                5,
-                                VirtualMachineModus.PAAS,
-                                3,
-                                Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,11))
-                            )
+                        val contract5 = Contract(
+                            startDate = LocalDate.of(2022, 10, 11),
+                            endDate = LocalDate.of(2023, 4, 1),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                4,
-                                "Hackerman's VM",
-                                Connection("MOC5-FQDN", "25.236.117.14", "MOC-USER4", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.GEREED,
-                                OperatingSystem.LINUX_KALI,
-                                HardWare(32000, 50000, 3),
-                                1,
-                                VirtualMachineModus.PAAS,
-                                4,
-                                Backup(BackupType.DAGELIJKS, LocalDate.of(2022,12,1))
-                            )
+                        val contract6 = Contract(
+                            startDate = LocalDate.of(2022, 11, 1),
+                            endDate = LocalDate.of(2023, 8, 11),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                5,
-                                "Mr Robot's VM",
-                                Connection("MOC5-FQDN", "25.236.117.15", "MOC-USER5", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.RUNNING,
-                                OperatingSystem.LINUX_KALI,
-                                HardWare(32000, 50000, 3),
-                                4,
-                                VirtualMachineModus.PAAS,
-                                5,
-                                Backup(BackupType.DAGELIJKS, LocalDate.of(2022,12,27))
-                            )
+                        val contract7 = Contract(
+                            startDate = LocalDate.of(2022, 3, 11),
+                            endDate = LocalDate.of(2023, 5, 11),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                6,
-                                "Willie Wonka's VM",
-                                Connection("MOC6-FQDN", "25.236.117.16", "MOC-USER6", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.GEREED,
-                                OperatingSystem.LINUX_UBUNTU,
-                                HardWare(32000, 50000, 3),
-                                5,
-                                VirtualMachineModus.PAAS,
-                                6,
-                                Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,11))
-                            )
+                        val contract8 = Contract(
+                            startDate = LocalDate.of(2021, 5, 11),
+                            endDate = LocalDate.of(2023, 11, 11),
+                            active = true
                         )
-                        virtualMachineDao.insert(
-                                VirtualMachine(
-                                    7,
-                                    "Dilly Billie's VM",
-                                    Connection("MOC7-FQDN", "25.236.117.17", "MOC-USER7", "DW2]]YmiPrvz34-dh5]g"),
-                                    VirtualMachineStatus.GEREED,
-                                    OperatingSystem.LINUX_KALI,
-                                    HardWare(32000, 50000, 3),
-                                    4,
-                                    VirtualMachineModus.PAAS,
-                                    7,
-                                    Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,11))
-                                ))
-                        virtualMachineDao.insert(
-                            VirtualMachine(
-                                8,
-                                "Wikky bickie's VM",
-                                Connection("MOC7-FQDN", "25.236.117.30", "MOC-USER8", "DW2]]YmiPrvz34-dh5]g"),
-                                VirtualMachineStatus.GEREED,
-                                OperatingSystem.LINUX_KALI,
-                                HardWare(32000, 50000, 3),
-                                3,
-                                VirtualMachineModus.PAAS,
-                                8,
-                                Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,1))
-                            ))
+
+                        listOf(
+                            contract1,
+                            contract2,
+                            contract3,
+                            contract4,
+                            contract5,
+                            contract6,
+                            contract7,
+                            contract8
+                        ).forEach {
+                            Timber.d(String.format("Inserting contract: %s", it.toString()))
+                            contractDao.insert(it)
+                        }
+
+
+
+                        val vm1 = VirtualMachine(
+                            name = "Willie's VM",
+                            connection = Connection(
+                                "MOC2-FQDN",
+                                "25.236.117.11",
+                                "MOC-USER1",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.RUNNING,
+                            operatingSystem = OperatingSystem.LINUX_KALI,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project2.id!!,
+                            mode = VirtualMachineModus.IAAS,
+                            contractId = contract1.id!!,
+                            backup = Backup(BackupType.MAANDELIJKS, LocalDate.of(2022, 12, 1))
+                        )
+
+                        val vm2 = VirtualMachine(
+                            name = "Mami's VM",
+                            connection = Connection(
+                                "MOC2-FQDN",
+                                "25.236.117.12",
+                                "MOC-USE2",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.TERMINATED,
+                            operatingSystem = OperatingSystem.WINDOWS_2016,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project2.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract2.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 11))
+                        )
+
+                        val vm3 = VirtualMachine(
+                            name = "Papi's VM",
+                            connection = Connection(
+                                "MOC6-FQDN",
+                                "25.236.117.13",
+                                "MOC-USER3",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.GEREED,
+                            operatingSystem = OperatingSystem.LINUX_KALI,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project5.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract3.id!!,
+                            backup = Backup(BackupType.MAANDELIJKS, LocalDate.of(2022, 12, 11))
+                        )
+                        val vm4 = VirtualMachine(
+                            name = "Hackerman's VM",
+                            connection = Connection(
+                                "MOC5-FQDN",
+                                "25.236.117.14",
+                                "MOC-USER4",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.GEREED,
+                            operatingSystem = OperatingSystem.LINUX_KALI,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project1.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract4.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 1))
+                        )
+                        val vm5 = VirtualMachine(
+                            name = "Mr Robot's VM",
+                            connection = Connection(
+                                "MOC5-FQDN",
+                                "25.236.117.15",
+                                "MOC-USER5",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.RUNNING,
+                            operatingSystem = OperatingSystem.LINUX_KALI,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project4.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract5.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 27))
+                        )
+                        val vm6 = VirtualMachine(
+                            name = "Willie Wonka's VM",
+                            connection = Connection(
+                                "MOC6-FQDN",
+                                "25.236.117.16",
+                                "MOC-USER6",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.GEREED,
+                            operatingSystem = OperatingSystem.LINUX_UBUNTU,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project5.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract6.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 28))
+                        )
+                        val vm7 = VirtualMachine(
+                            name = "Elmo's VM",
+                            connection = Connection(
+                                "MOC2-FQDN",
+                                "25.236.117.17",
+                                "MOC-USER7",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.RUNNING,
+                            operatingSystem = OperatingSystem.LINUX_KALI,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project3.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract7.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 29))
+                        )
+                        val vm8 = VirtualMachine(
+                            name = "Sesame Street's VM",
+                            connection = Connection(
+                                "MOC2-FQDN",
+                                "25.236.117.18",
+                                "MOC-USER8",
+                                "DW2]]YmiPrvz34-dh5]g"
+                            ),
+                            status = VirtualMachineStatus.GEREED,
+                            operatingSystem = OperatingSystem.LINUX_UBUNTU,
+                            hardware = HardWare(32000, 50000, 3),
+                            projectId = project1.id!!,
+                            mode = VirtualMachineModus.PAAS,
+                            contractId = contract8.id!!,
+                            backup = Backup(BackupType.DAGELIJKS, LocalDate.of(2022, 12, 30))
+                        )
+                        mutableListOf(vm1, vm2, vm3, vm4, vm5, vm6, vm7, vm8).forEach {
+                            Timber.d(String.format("Inserting vm: %s", it.toString()))
+                            virtualMachineDao.insert(it)
+                        }
                     }
                 }
             }
         }
     }
 }
-

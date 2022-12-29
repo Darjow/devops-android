@@ -6,23 +6,21 @@ import java.time.LocalDate
 
 
 @Entity(tableName = "virtualmachine_table",
-    foreignKeys = [ForeignKey(
-        entity = Contract::class,
-        childColumns = ["contractId"],
-        parentColumns = ["id"]
-    )])
+    foreignKeys = [
+        ForeignKey(entity = Contract::class, childColumns = ["contractId"], parentColumns = ["id"]),
+        ForeignKey(entity = Project::class, childColumns = ["projectId"], parentColumns = ["id"],
+        )])
 data class VirtualMachine(
-    @PrimaryKey(autoGenerate = true)
-    var id : Long = 0L,
-    val name : String = "",
-    val connection : Connection? = null ,
+    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
+    val name : String,
+    val connection : Connection? = null,
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
     val operatingSystem: OperatingSystem = OperatingSystem.NONE,
-    val hardware: HardWare = HardWare(0,0,0),
-    val project_id : Long = 0L,
+    val hardware: HardWare,
+    val projectId : Long,
     val mode : VirtualMachineModus = VirtualMachineModus.NONE,
-    val contractId : Long = 0L,
-    val backup : Backup = Backup(null, null),
+    val contractId : Long,
+    val backup : Backup
 
 )
 
@@ -116,7 +114,10 @@ enum class OperatingSystem {
 
     class ConnectionConverter {
         @TypeConverter
-        fun fromConnection(connection: Connection): String {
+        fun fromConnection(connection: Connection?): String {
+            if(connection == null){
+                return "None";
+            }
             return JSONObject().apply {
                 put("fqdn", connection.fqdn)
                 put("ipAdres", connection.ipAdres)
@@ -126,7 +127,10 @@ enum class OperatingSystem {
         }
 
         @TypeConverter
-        fun toConnection(json: String): Connection {
+        fun toConnection(json: String): Connection? {
+            if(json == "None"){
+                return null
+            }
             val connection = JSONObject(json)
             return Connection(
                 connection.get("fqdn") as String,

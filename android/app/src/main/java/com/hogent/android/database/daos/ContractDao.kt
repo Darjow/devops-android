@@ -15,5 +15,5 @@ interface ContractDao {
     fun update(contract: Contract)
 
     @Query("SELECT * FROM contract_table WHERE id = :key")
-    suspend fun get(key: Long): Contract?
+    fun get(key: Long): Contract?
 }

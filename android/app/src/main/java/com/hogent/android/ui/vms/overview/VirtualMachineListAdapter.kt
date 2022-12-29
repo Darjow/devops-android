@@ -57,16 +57,14 @@ class VirtualMachineListAdapter constructor(
 
             holder.itemView.setOnClickListener {
                 Timber.d(String.format("VM ID :  %s", virtualmachine!!.id.toString()))
-                Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id))
+                Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id!!))
             }
-
-
         }
     }
 
     override fun getItemCount(): Int {
         Timber.i("getItemCount:")
-        Timber.i(virtualmachineList.toString())
+        Timber.i(virtualmachineList.isNullOrEmpty().toString())
         return virtualmachineList?.size!! + 1
     }
 }

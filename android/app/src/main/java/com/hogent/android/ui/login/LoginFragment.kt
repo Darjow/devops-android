@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
         loginView.navigateToProfile.observe(viewLifecycleOwner, Observer {
             if (it) {
                 NavHostFragment.findNavController(this)
-                    .navigate(LoginFragmentDirections.loginToProfile(AuthenticationManager.getInstance(application).klant.value!!.id));
+                    .navigate(LoginFragmentDirections.loginToProfile(AuthenticationManager.getCustomer()!!.id!!));
                 loginView.doneNavigating();
             }
         });

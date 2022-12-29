@@ -1,12 +1,11 @@
 package com.hogent.android.database.entities
 import androidx.room.*
 
-@Entity(tableName = "project_table")
+@Entity(tableName = "project_table", foreignKeys = [ForeignKey(entity = Customer::class, childColumns = ["customer_id"], parentColumns = ["id"])                ])
 data class Project(
-    @PrimaryKey(autoGenerate = true)
-    var id : Long = 0L,
-    val name : String = "",
-    val customer_id : Long = 0L
+    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
+    val name : String,
+    val customer_id : Long
 )
 
 

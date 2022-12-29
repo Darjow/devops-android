@@ -80,12 +80,13 @@ class RegisterViewModel (val application: Application) : ViewModel() {
                     }
                 }
                 else{
-                    val c = Customer()
-                    c.email = registerForm.value!!.inputEmail
-                    c.firstName = registerForm.value!!.inputFirstName
-                    c.lastName = registerForm.value!!.inputLastName
-                    c.phoneNumber = registerForm.value!!.inputPhoneNumber
-                    c.password = registerForm.value!!.inputPassword
+                    val c = Customer(
+                        email = registerForm.value!!.inputEmail,
+                        firstName = registerForm.value!!.inputFirstName,
+                        lastName = registerForm.value!!.inputLastName,
+                        phoneNumber = registerForm.value!!.inputPhoneNumber,
+                        password = registerForm.value!!.inputPassword
+                    )
                     repository.insert(c);
                     _navigateHome.postValue(true)
                 }
