@@ -14,7 +14,7 @@ import com.hogent.android.database.entities.*
 import com.hogent.android.util.ioThread
 import java.time.LocalDate
 
-@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 13, exportSchema = false)
+@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 14, exportSchema = false)
 @TypeConverters(CourseConverter::class, HardwareConverter::class, BackupConverter::class, ConnectionConverter::class, LocalDateConverter::class /*OperatingSystemConverter::class*/)
 abstract class DatabaseImp() : RoomDatabase() {
 
@@ -184,7 +184,7 @@ abstract class DatabaseImp() : RoomDatabase() {
                                 OperatingSystem.LINUX_KALI,
                                 HardWare(32000, 50000, 3),
                                 2,
-                                VirtualMachineModus.SAAS,
+                                VirtualMachineModus.IAAS,
                                 1,
                                 Backup(BackupType.MAANDELIJKS, LocalDate.of(2022,12,1))
                             )

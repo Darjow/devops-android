@@ -1,26 +1,29 @@
 package com.hogent.android.ui.vms.aanvraag
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
 import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.BackupType
-import com.hogent.android.database.entities.Project
+import com.hogent.android.database.entities.OperatingSystem
 import com.hogent.android.database.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
 import com.hogent.android.util.closeKeyboardOnTouch
+import kotlinx.coroutines.NonDisposableHandle.parent
 import timber.log.Timber
 import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
 
 class VmAanvraagFragment : Fragment(){
 
@@ -46,6 +49,19 @@ class VmAanvraagFragment : Fragment(){
 
     private fun initializeComponents(binding: AddvmFragmentBinding) {
         val context = requireContext()
+
+//OS
+        val buttonContainer: RadioGroup = binding.root.findViewById(R.id.group_os_vm)
+        OperatingSystem.values().sortedBy { it.name }.forEachIndexed{ index, it ->
+            if(it.name != "NONE"){
+                val btn = RadioButton(buttonContainer.context)
+                btn.text = it.toString()
+                btn.setTextColor(Color.BLACK)
+                buttonContainer.addView(btn)
+
+            }
+        }
+        buttonContainer.check(buttonContainer.getChildAt(0).id)
 
 //MEMORY
         val spinner_memory = binding.root.findViewById<Spinner>(R.id.memoryVmAanvraagDropdownList)
@@ -130,17 +146,20 @@ class VmAanvraagFragment : Fragment(){
             try {
                 val start = LocalDate.of(year, month, day);
                 binding.viewmodel!!.startDateChanged(start)
-            }catch(e: Exception){
-                Timber.d("Error during startup in startdatevmaanvraag changedlistener")
+            } catch (e: Exception) {
+                Timber.d(e.message);
+                Timber.d(e.stackTraceToString())
             }
         }
+
 
         binding.endDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             try {
                 val end = LocalDate.of(year, month, day);
                 binding.viewmodel!!.endDateChanged(end)
             }catch(e: Exception){
-                Timber.d("Error during startup in enddatevmaanvraag changedlistener")
+                Timber.d(e.message)
+                Timber.d(e.stackTraceToString())
             }
 
         }

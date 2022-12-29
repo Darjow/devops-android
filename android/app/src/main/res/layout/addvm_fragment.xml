@@ -139,35 +139,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black">
 
-                    <RadioButton
-                        android:id="@+id/radioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:text="@string/os_windows"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        tools:ignore="TouchTargetSizeCheck" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minHeight="48dp"
-                        android:text="@string/os_linux"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/radioButton3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minHeight="48dp"
-                        android:text="@string/os_mac"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
                 </RadioGroup>
 
                 <TextView
@@ -256,15 +228,6 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/black"
                         android:text="@string/iaasmodevm_voorzien"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/paasVmAanvraag"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:text="@string/paasmodevm"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
 

@@ -107,11 +107,12 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     }
     fun modeChanged(type: String){
         val __form = _form.value
-        __form!!.modeVm = VirtualMachineModus.valueOf(type.uppercase())
+        __form!!.modeVm = VirtualMachineModus.valueOf(type.uppercase().split(" ")[0])
         _form.postValue(__form)
     }
     fun osChanged(type: String){
         val __form = _form.value
+        Timber.d(type)
         __form!!.os = OperatingSystem.valueOf(type.split(" ").joinToString('_'.toString()).uppercase())
         _form.postValue(__form)
     }

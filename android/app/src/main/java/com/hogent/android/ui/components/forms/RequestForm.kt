@@ -11,11 +11,11 @@ import java.util.*
 data class RequestForm(
      var naamVm : String? = null,
      var os : OperatingSystem? = null,
-     var cpuCoresValue : Int? = null,
-     var memory : Int? = null,
+     var cpuCoresValue : Int? = 0,
+     var memory : Int? = 0,
      var backUpType : BackupType? = null,
      var modeVm : VirtualMachineModus? = null,
-     var storage : Int? = null,
+     var storage : Int? = 0,
      var startDate : LocalDate?= null,
      var endDate : LocalDate? = null,
      var project_id: Long? = 0L

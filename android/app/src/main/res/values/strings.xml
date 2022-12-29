@@ -58,14 +58,14 @@
     <string name="memory_vm_aanvraag">Memory GB:</string>
     <string name="aantal_gb_storage">Aantal GB in storage</string>
     <string name="mode_vm_aanvraag">Mode VM:</string>
-    <string name="iaasmodevm_zelf">IAAS (instaleert zelf software)</string>
-    <string name="iaasmodevm_voorzien">IAAS (software wordt voorzien)</string>
+    <string name="iaasmodevm_zelf">IaaS (instaleert zelf software)</string>
+    <string name="iaasmodevm_voorzien">PaaS (software wordt voorzien)</string>
     <string name="paasmodevm">PAAS</string>
     <string name="backup_vm_aanvraag">Backup van virtualmachine:</string>
     <string name="start_data_vm_aanvraag">Startdatum: </string>
     <string name="end_date_vm_aanvraag">Einddatum:</string>
     <string name="aanvragen">Aanvragen</string>
-    <string name="title_aantal_vcpu">Aantal vCPU:</string>
+    <string name="title_aantal_vcpu">Aantal vCPU: </string>
     <string name="title_storage_vm_aanvraag">Storage GB:</string>
     <string name="title_hostname_vm_aanvraag">Hostname virtual machine:</string>
     <string name="title_operating_system_aanvraag">Operating system:</string>

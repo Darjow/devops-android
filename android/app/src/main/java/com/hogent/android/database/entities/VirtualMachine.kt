@@ -29,13 +29,13 @@ data class VirtualMachine(
 enum class VirtualMachineModus {
     NONE,
     PAAS,
-    SAAS;
+    IAAS;
 
     override fun toString(): String {
         return when (this.name) {
             "NONE" -> "Geen"
             "PAAS" -> "PaaS"
-            "SAAS" -> "SaaS"
+            "IAAS" -> "IaaS"
             else -> throw IllegalArgumentException("Unknown vm modus received");
         }
     }
@@ -57,14 +57,6 @@ enum class OperatingSystem {
     LINUX_KALI,
     RASPBERRY_PI;
 
-    /*override fun toString(): String {
-        var strings = this.name.split("_").toMutableList()
-        for((i, string) in strings.withIndex()){
-            strings[i]= string.lowercase()
-            strings[i] = string.replaceFirstChar { it.uppercase() }
-        }
-        return strings.joinToString(" ")
-    }*/
     override fun toString(): String {
         val strings = this.name.split("_")
         var output = "";
