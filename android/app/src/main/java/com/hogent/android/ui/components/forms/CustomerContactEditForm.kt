@@ -3,13 +3,13 @@ package com.hogent.android.ui.components.forms
 import androidx.lifecycle.MutableLiveData
 import com.hogent.android.util.Validators
 
-data class EditForm(var contact1 : ContactOne, var contact2: ContactTwo): IFormValidation {
+data class CustomerContactEditForm(var contact1 : ContactOne = ContactOne(), var contact2: ContactTwo = ContactTwo()): IResetableFormValidation {
 
-    val error_message = MutableLiveData("")
+    var error_message = ""
 
     override fun isValid(): Boolean{
         if(!contact1.isValid()) {
-            error_message.postValue(contact1.getError())
+            error_message = contact1.getError()
             return false;
         }
         if(contact2.isValid()) {
@@ -18,22 +18,21 @@ data class EditForm(var contact1 : ContactOne, var contact2: ContactTwo): IFormV
         if(contact2.email == "" && contact2.phone == "" && contact2.fullName == ""){
             return true;
         }
-        error_message.postValue(contact2.getError())
+        error_message = contact2.getError()
         return false;
 
     }
     override fun getError(): String?{
-        return error_message.value
+        return error_message
     }
 
-    fun reset(){
-        contact1 = ContactOne("","","")
-        contact2 = ContactTwo("","","")
+    override fun reset(): CustomerContactEditForm  {
+        return CustomerContactEditForm()
     }
 }
 
 
-data class ContactOne(val email: String, val phone: String, val fullName: String) {
+data class ContactOne(val email: String = "", val phone: String = "", val fullName: String= "") {
     fun isValid(): Boolean {
         return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) && Validators.validateFullName(fullName);
     }
@@ -52,7 +51,7 @@ data class ContactOne(val email: String, val phone: String, val fullName: String
     }
 }
 
-data class ContactTwo(val email: String, val phone: String, val fullName: String) {
+data class ContactTwo(val email: String= "", val phone: String = "", val fullName: String = "") {
     fun isValid(): Boolean {
         return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) && Validators.validateFullName(fullName);
     }

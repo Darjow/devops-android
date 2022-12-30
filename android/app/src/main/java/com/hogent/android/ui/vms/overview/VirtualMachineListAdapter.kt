@@ -1,6 +1,6 @@
-package com.hogent.android.ui.vms.overview
+package com.hogent.devOps_Android.ui.vms.overview
 
-import android.app.Application
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,29 +9,24 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
 import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.ui.vms.overview.VMListFragmentDirections
 import com.hogent.android.util.AuthenticationManager
+
 import timber.log.Timber
 
 
-class VirtualMachineListAdapter constructor(
+class VirtualMachineListAdapter (
     private var virtualmachineList: List<VirtualMachine>?,
-    private var application: Application
 ) : RecyclerView.Adapter<VirtualMachineListAdapter.ViewHolder>() {
 
-    var header = false
-
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        //cardview ( = container )  als voorbeeld maar kan je ook gebruiken
         val textView1: TextView = itemView.findViewById(R.id.status)
         val textView2: TextView = itemView.findViewById(R.id.naam)
         val textView3: TextView = itemView.findViewById(R.id.klant)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.virtual_machine_container, parent, false)
 
         return ViewHolder(view)
@@ -39,36 +34,26 @@ class VirtualMachineListAdapter constructor(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (!header) {
+        if (position == 0) {
             holder.textView1.textSize = 15F
             holder.textView2.textSize = 15F
             holder.textView3.textSize = 15F
-            header = true
-
         } else {
-
-            val virtualmachine = virtualmachineList?.get(position - 1)
-            Timber.i("onBindViewHolder:")
-            Timber.i(virtualmachine.toString())
-            //hier heb je het project en de holder, je kan er dingen op setten
+            val virtualmachine = virtualmachineList!![position - 1]
             holder.textView1.text = virtualmachine?.status.toString()
             holder.textView2.text = virtualmachine?.name
             holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
             holder.itemView.setOnClickListener {
                 Timber.d(String.format("VM ID :  %s", virtualmachine!!.id.toString()))
-                Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id!!))
+                Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id))
             }
+
         }
     }
 
     override fun getItemCount(): Int {
-        Timber.i("getItemCount:")
-        Timber.i(virtualmachineList.isNullOrEmpty().toString())
         return virtualmachineList?.size!! + 1
     }
 }
-
-
-
 

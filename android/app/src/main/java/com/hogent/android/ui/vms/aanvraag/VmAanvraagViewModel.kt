@@ -32,7 +32,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     private val _form = MutableLiveData(RequestForm())
     private val _errorToast = MutableLiveData(false)
     private val _success = MutableLiveData(false)
-    private val _navigateToVmList = MutableLiveData(false)
 
 
     init {
@@ -46,7 +45,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         get() = _projecten
 
     val form : LiveData<RequestForm>
-            get() = _form
+        get() = _form
     val errorToast:  LiveData<Boolean>
         get() = _errorToast
     val success: LiveData<Boolean>
@@ -63,7 +62,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     fun setStorage(e: Editable){
         val __form = _form.value
         __form!!.storage = try{
-            Integer.parseInt(e.toString())
+            Integer.parseInt(e.toString()) * 1000
         }catch (e: java.lang.Exception){
             0
         }
@@ -94,7 +93,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     fun memoryGBChanged(gb :String){
         val __form = _form.value
         __form!!.memory = try {
-            Integer.parseInt(gb.split("GB")[0])
+            Integer.parseInt(gb.split("GB")[0]) * 1000
         }catch (e: java.lang.Exception){
             0
         }
@@ -128,14 +127,13 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         _form.postValue(__form)
     }
 
-    //button clicked
     fun aanvragen(){
         Timber.d("vmaanvraag is binnengekomen: " + form.value.toString())
         if(_form.value!!.isValid()){
             runBlocking {
-                repo.create(form!!.value!!)
-                _navigateToVmList.postValue(true)
-
+                repo.create(form.value!!)
+                _form.postValue(_form.value!!.reset())
+                _success.postValue(true)
             }
         }else{
             _errorToast.postValue(true)

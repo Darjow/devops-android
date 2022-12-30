@@ -23,6 +23,7 @@ import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.NonDisposableHandle.parent
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.Month
 import java.util.*
 
 class VmAanvraagFragment : Fragment(){
@@ -61,7 +62,6 @@ class VmAanvraagFragment : Fragment(){
 
             }
         }
-        buttonContainer.check(buttonContainer.getChildAt(0).id)
 
 //MEMORY
         val spinner_memory = binding.root.findViewById<Spinner>(R.id.memoryVmAanvraagDropdownList)
@@ -144,7 +144,7 @@ class VmAanvraagFragment : Fragment(){
 
         binding.startDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             try {
-                val start = LocalDate.of(year, month, day);
+                val start = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.startDateChanged(start)
             } catch (e: Exception) {
                 Timber.d(e.message);
@@ -155,7 +155,7 @@ class VmAanvraagFragment : Fragment(){
 
         binding.endDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             try {
-                val end = LocalDate.of(year, month, day);
+                val end = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.endDateChanged(end)
             }catch(e: Exception){
                 Timber.d(e.message)
@@ -171,9 +171,12 @@ class VmAanvraagFragment : Fragment(){
         }
         binding.viewmodel!!.success.observe(viewLifecycleOwner) {
             if (it) {
+                Timber.d("Navigate to vmList has been called")
                 Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
                 NavHostFragment.findNavController(this).navigate(VmAanvraagFragmentDirections.actionFromRequestToList())
                 binding.viewmodel!!.doneSuccess()
+                Timber.d(String.format("Succesfully handled the success request, success should now be false .  Success == %s", binding.viewmodel!!.success.value.toString()))
+
             }
         }
 

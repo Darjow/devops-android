@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.util.*
 
 data class RequestForm(
-     var naamVm : String? = null,
+     var naamVm : String? = "",
      var os : OperatingSystem? = null,
      var cpuCoresValue : Int? = 0,
      var memory : Int? = 0,
@@ -19,12 +19,12 @@ data class RequestForm(
      var startDate : LocalDate?= null,
      var endDate : LocalDate? = null,
      var project_id: Long? = 0L
-): IFormValidation {
+): IResetableFormValidation {
 
     var error_message = ""
 
     override fun isValid(): Boolean {
-        if(naamVm == null || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null || modeVm == null || backUpType == null){
+        if(naamVm.isNullOrBlank() || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null || modeVm == null || backUpType == null){
             error_message = "Alle velden zijn verplicht"
             return false;
         }
@@ -57,4 +57,9 @@ data class RequestForm(
     override fun getError(): String? {
         return error_message;
     }
+
+    override fun reset(): RequestForm {
+        return RequestForm()
+    }
+
 }

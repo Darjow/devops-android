@@ -6,12 +6,12 @@ import com.hogent.android.util.Validators
 import timber.log.Timber
 
 data class RegisterForm (
-    var inputFirstName: String,
-    var inputLastName: String,
-    var inputEmail: String,
-    var inputPassword: String,
-    var inputConfirmPassword : String,
-    var inputPhoneNumber : String,
+    var inputFirstName: String = "",
+    var inputLastName: String = "",
+    var inputEmail: String = "",
+    var inputPassword: String = "",
+    var inputConfirmPassword : String = "",
+    var inputPhoneNumber : String = "",
 ): IFormValidation {
 
     val error_message = MutableLiveData("")
@@ -44,6 +44,8 @@ data class RegisterForm (
     override fun getError(): String? {
         return error_message.value
     }
+
+
 
 
     //voor debug

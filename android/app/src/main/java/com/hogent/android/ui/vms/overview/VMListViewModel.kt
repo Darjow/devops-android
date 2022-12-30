@@ -27,29 +27,22 @@ class VMListViewModel(db: DatabaseImp) : ViewModel() {
         get() = _virtualmachine;
 
     init {
-        _projecten.postValue(db_projecten.getByCustomerId(AuthenticationManager.getCustomer()!!.id!!))
-        var templist = mutableListOf<VirtualMachine>()
-        projecten.value!!.forEach { i ->
-            var listvirtualmachine = db_vms.getByProjectId(i.id!!)
-            Timber.i("List from database:")
-            Timber.i(listvirtualmachine.isNullOrEmpty().toString())
-            listvirtualmachine?.forEach { j ->
-                Timber.i(j.toString())
-                templist.add(j)
-                Timber.i("templist plus:")
-                Timber.i(templist.toString())
-            }
+        val customerId = AuthenticationManager.getCustomer()!!.id
+        val virtualMachineList = mutableListOf<VirtualMachine>()
+
+        _projecten.value = db_projecten.getByCustomerId(customerId)
+        Timber.d(String.format("Landed on vmlist viewmodel page, this user has %d projects", projecten.value?.size ?: 0))
+
+        _projecten.value?.forEach { project ->
+            val projectVMs = db_vms.getByProjectId(project.id)
+
+            Timber.d(String.format("project: %s, has %d virtual machine(s)", project.name, projectVMs?.size ?: 0))
+
+            if (projectVMs != null) {
+                virtualMachineList.addAll(projectVMs)
+                }
         }
-        Timber.i("templist:")
-        Timber.i(templist.toString())
-        _virtualmachine.value = templist
-
-        Timber.i("Virtual Machine:")
-        Timber.i(_virtualmachine.value.toString())
-
-
+        _virtualmachine.value = virtualMachineList
     }
-
-
 }
 

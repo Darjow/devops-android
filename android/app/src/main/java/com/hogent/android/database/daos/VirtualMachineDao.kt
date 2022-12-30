@@ -18,9 +18,6 @@ interface VirtualMachineDao {
     @Query("SELECT * FROM virtualmachine_table WHERE id = :key")
     fun get(key: Long): VirtualMachine?
 
-    @Query("SELECT * FROM customer_table WHERE id = :key")
-    fun getKlant(key: Long): Customer
-
     @Query("SELECT * FROM virtualmachine_table WHERE projectId = :key")
     fun getByProjectId(key: Long): List<VirtualMachine>?
 
