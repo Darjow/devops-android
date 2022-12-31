@@ -12,7 +12,7 @@ import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
-import com.hogent.android.ui.components.forms.EditForm
+import com.hogent.android.ui.components.forms.CustomerContactEditForm
 import timber.log.Timber
 
 class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewModel() {
@@ -20,7 +20,7 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
 
     private val database = db;
 
-    private val _form = MutableLiveData( EditForm(ContactOne("", "", ""), ContactTwo("", "", "")))
+    private val _form = MutableLiveData(CustomerContactEditForm())
     private val _klant = MediatorLiveData<Customer>()
 
     val inEditMode  = MutableLiveData(false)
@@ -41,12 +41,12 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
     fun setEmail(contactPerson: Int, text: Editable){
             if (contactPerson == 1) {
                 val contact = _form.value!!.contact1
-                _form.postValue(EditForm(ContactOne(text.toString(), contact.phone,contact.fullName), _form.value!!.contact2));
+                _form.postValue(CustomerContactEditForm(ContactOne(text.toString(), contact.phone,contact.fullName), _form.value!!.contact2));
 
             } else if (contactPerson == 2) {
                 val contact = _form.value!!.contact2
                 _form.postValue(
-                    EditForm(_form.value!!.contact1,
+                    CustomerContactEditForm(_form.value!!.contact1,
                         ContactTwo(text.toString(), contact.phone, contact.fullName)
                     )
                 );
@@ -56,12 +56,12 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
 
         if(contactPerson == 1){
             val contact = _form.value!!.contact1
-            _form.postValue(EditForm(ContactOne(contact.email, text.toString(), contact.fullName), _form.value!!.contact2));
+            _form.postValue(CustomerContactEditForm(ContactOne(contact.email, text.toString(), contact.fullName), _form.value!!.contact2));
         }
         else if(contactPerson == 2){
             val contact = _form.value!!.contact2
             _form.postValue(
-                EditForm(_form.value!!.contact1,
+                CustomerContactEditForm(_form.value!!.contact1,
                     ContactTwo(contact.email, text.toString(), contact.fullName)
                 )
             );
@@ -71,12 +71,12 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
 
         if(contactPerson == 1){
             val contact = _form.value!!.contact1
-            _form.postValue(EditForm(ContactOne(contact.email, contact.phone, text.toString()), _form.value!!.contact2));
+            _form.postValue(CustomerContactEditForm(ContactOne(contact.email, contact.phone, text.toString()), _form.value!!.contact2));
         }
         else if(contactPerson == 2){
             val contact = _form.value!!.contact2
             _form.postValue(
-                EditForm(_form.value!!.contact1,
+                CustomerContactEditForm(_form.value!!.contact1,
                     ContactTwo(contact.email, contact.phone, text.toString())
                 )
             );
@@ -97,12 +97,12 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
             contactTwo = ContactTwo(contactps2.contact2_email, contactps2.contact2_phone, contactps2.contact2_firstname + " " + contactps2.contact2_lastname);
         }
 
-        _form.postValue(EditForm(contactOne, contactTwo));
+        _form.postValue(CustomerContactEditForm(contactOne, contactTwo));
 
     }
 
     fun onCancelButtonPressed(){
-        _form.value!!.reset()
+        _form.postValue(CustomerContactEditForm())
         inEditMode.postValue(false)
     }
 

@@ -9,22 +9,22 @@ import java.time.LocalDate
 import java.util.*
 
 data class RequestForm(
-     var naamVm : String? = null,
-     var hostnameVm : String? = null,
+     var naamVm : String? = "",
      var os : OperatingSystem? = null,
-     var cpuCoresValue : Int? = null,
-     var memory : Int? = null,
+     var cpuCoresValue : Int? = 0,
+     var memory : Int? = 0,
      var backUpType : BackupType? = null,
      var modeVm : VirtualMachineModus? = null,
-     var storage : Int? = null,
+     var storage : Int? = 0,
      var startDate : LocalDate?= null,
-     var endDate : LocalDate? = null
+     var endDate : LocalDate? = null,
+     var project_id: Long? = 0L
 ): IFormValidation {
 
     var error_message = ""
 
     override fun isValid(): Boolean {
-        if(hostnameVm == null || naamVm == null || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null || modeVm == null || backUpType == null){
+        if(naamVm.isNullOrBlank() || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null || modeVm == null || backUpType == null){
             error_message = "Alle velden zijn verplicht"
             return false;
         }
@@ -46,6 +46,10 @@ data class RequestForm(
             error_message = "Opslag moet positief zijn"
             return false;
         }
+        if(project_id == 0L){
+            error_message = "Selecteer een project"
+            return false;
+        }
 
         return true;
     }
@@ -53,4 +57,6 @@ data class RequestForm(
     override fun getError(): String? {
         return error_message;
     }
+
+
 }

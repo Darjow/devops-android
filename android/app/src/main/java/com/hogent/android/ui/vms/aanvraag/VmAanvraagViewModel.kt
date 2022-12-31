@@ -1,42 +1,45 @@
 package com.hogent.android.ui.vms.aanvraag
 
-import android.app.Application
 import android.text.Editable
-import android.util.Log
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.DatabaseImp
-import com.hogent.android.database.daos.VirtualMachineDao
-import com.hogent.android.database.entities.BackupType
-import com.hogent.android.database.entities.OperatingSystem
-import com.hogent.android.database.entities.VirtualMachine
-import com.hogent.android.database.entities.VirtualMachineModus
-import com.hogent.android.ui.components.forms.RegisterForm
+import com.hogent.android.R
+import com.hogent.android.database.entities.*
+import com.hogent.android.database.repositories.VmAanvraagRepository
 import com.hogent.android.ui.components.forms.RequestForm
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.time.LocalDate
-import java.util.Date
 
-class VmAanvraagViewModel(app : Application): ViewModel() {
-
-
-    private val vmDao: VirtualMachineDao = DatabaseImp.getInstance(app).virtualMachineDao
+class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
 
+
+    private val _projecten = MutableLiveData<List<Project>>()
     private val _form = MutableLiveData(RequestForm())
     private val _errorToast = MutableLiveData(false)
     private val _success = MutableLiveData(false)
-    private val _navigateToVmList = MutableLiveData(false)
 
 
+    init {
+        runBlocking {
+            _projecten.postValue(repo.getProjecten())
+        }
+
+    }
+
+    val projecten : LiveData<List<Project>>
+        get() = _projecten
 
     val form : LiveData<RequestForm>
-            get() = _form
+        get() = _form
     val errorToast:  LiveData<Boolean>
         get() = _errorToast
-    val success:  LiveData<Boolean>
-        get() = success
+    val success: LiveData<Boolean>
+        get() = _success
+
 
 
     fun setNaamVm(v : Editable){
@@ -44,25 +47,46 @@ class VmAanvraagViewModel(app : Application): ViewModel() {
         __form!!.naamVm = v.toString()
         _form.postValue(__form)
     }
-    fun setHostnameVm(v : Editable){
+
+    fun setStorage(e: Editable){
         val __form = _form.value
-        __form!!.hostnameVm = v.toString()
+        __form!!.storage = try{
+            Integer.parseInt(e.toString()) * 1000
+        }catch (e: java.lang.Exception){
+            0
+        }
         _form.postValue(__form)
     }
-    /*fun setStorage(v : Unit){
-        val __form = _form.value
-        __form!!.storage = v.toString()
-        _form.postValue(__form)    }*/
 
+
+    fun projectChanged(naam: String){
+        if(projecten.value.isNullOrEmpty()){
+            throw IllegalArgumentException("Selected a wrong type of project")
+        }
+
+        val __form = _form.value!!;
+
+
+        if(projecten.value!!.none { it.name == naam }){
+            __form.project_id = 0
+        }
+        else {
+            val project: Project = projecten.value!!.filter { it.name == naam }[0]
+            __form.project_id = project.id
+        }
+        _form.postValue(__form)
+
+    }
 
     fun coresCpuChanged(progress : Int){
         val __form = _form.value
         __form!!.cpuCoresValue = progress
-        _form.postValue(__form)    }
+        _form.postValue(__form)
+    }
     fun memoryGBChanged(gb :String){
         val __form = _form.value
         __form!!.memory = try {
-            Integer.parseInt(gb)
+            Integer.parseInt(gb.split("GB")[0]) * 1000
         }catch (e: java.lang.Exception){
             0
         }
@@ -70,20 +94,32 @@ class VmAanvraagViewModel(app : Application): ViewModel() {
     }
     fun backupTypeChanged(type : String){
         val __form = _form.value
-        __form!!.backUpType = BackupType.valueOf(type.uppercase())
+        if(type.isNullOrBlank()){
+            __form!!.backUpType == null;
+        }else{
+            __form!!.backUpType = BackupType.valueOf(type.uppercase());
+        }
         _form.postValue(__form)
     }
     fun modeChanged(type: String){
         val __form = _form.value
-        __form!!.modeVm = VirtualMachineModus.valueOf(type.uppercase())
+
+        if(type == "null"){
+            __form!!.modeVm = null;
+        }else{
+            __form!!.modeVm = VirtualMachineModus.valueOf(type.uppercase().split(" ")[0])
+        }
         _form.postValue(__form)
     }
     fun osChanged(type: String){
-        //hier zal wrs methode moeten komen die de string split op " " en dan joined op een "_" en dan in capital zet
-        //daarna met deze value: OperatingSystem.valueOf(value)
-
         val __form = _form.value
-        __form!!.os = OperatingSystem.valueOf(type.uppercase())
+
+        //nullcheck voor form reset
+        if(type == "null"){
+            __form!!.os = null;
+        }else{
+            __form!!.os = OperatingSystem.valueOf(type.split(" ").joinToString('_'.toString()).uppercase())
+        }
         _form.postValue(__form)
     }
 
@@ -98,20 +134,21 @@ class VmAanvraagViewModel(app : Application): ViewModel() {
         _form.postValue(__form)
     }
 
-    //button clicked
     fun aanvragen(){
         Timber.d("vmaanvraag is binnengekomen: " + form.value.toString())
-
         if(_form.value!!.isValid()){
-            val vm: VirtualMachine = VirtualMachine()
-
-            _navigateToVmList.postValue(true)
+            runBlocking {
+                repo.create(form.value!!)
+                _form.postValue(RequestForm())
+                _success.postValue(true)
+            }
         }else{
             _errorToast.postValue(true)
         }
 
 
     }
+
 
     fun doneToastingError(){
         _errorToast.postValue(false)

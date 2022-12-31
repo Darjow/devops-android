@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menu?.clear();
-        if(AuthenticationManager.getInstance(this.application).loggedIn()){
+        if(AuthenticationManager.loggedIn()){
             menuInflater.inflate(R.menu.navdrawer_menu_logged_in, menu);
         }else {
             menuInflater.inflate(R.menu.navdrawer_menu_logged_out, menu)

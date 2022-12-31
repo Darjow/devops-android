@@ -5,21 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.*
+import com.hogent.android.util.AuthenticationManager
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 
-class VMListViewModel(db: DatabaseImp, customer_id: Long) : ViewModel() {
+class VMListViewModel(db: DatabaseImp) : ViewModel() {
 
     private val db_projecten = db.projectDao;
     private val db_vms = db.virtualMachineDao;
 
-    //mutable live data indien je bijvoorbeeld de naam van een project wil wijzigen
-    //anders enkel livedata.
+
     private val _projecten = MutableLiveData<List<Project>>()
     private var _virtualmachine = MutableLiveData<List<VirtualMachine>>()
 
 
-    //dit is u getter
     val projecten: LiveData<List<Project>>
         get() = _projecten;
 
@@ -27,29 +27,22 @@ class VMListViewModel(db: DatabaseImp, customer_id: Long) : ViewModel() {
         get() = _virtualmachine;
 
     init {
-        _projecten.value = db_projecten.getByCustomerId(customer_id);
-        var templist = mutableListOf<VirtualMachine>()
-        _projecten.value?.forEach { i ->
-            var listvirtualmachine = db_vms.getByProjectId(i.id)
-            Timber.i("List from database:")
-            Timber.i(listvirtualmachine.toString())
-            listvirtualmachine?.forEach { j ->
-                Timber.i(j.toString())
-                templist.add(j)
-                Timber.i("templist plus:")
-                Timber.i(templist.toString())
-            }
+        val customerId = AuthenticationManager.getCustomer()!!.id
+        val virtualMachineList = mutableListOf<VirtualMachine>()
+
+        _projecten.value = db_projecten.getByCustomerId(customerId)
+        Timber.d(String.format("Landed on vmlist viewmodel page, this user has %d projects", projecten.value?.size ?: 0))
+
+        _projecten.value?.forEach { project ->
+            val projectVMs = db_vms.getByProjectId(project.id)
+
+            Timber.d(String.format("project: %s, has %d virtual machine(s)", project.name, projectVMs?.size ?: 0))
+
+            if (projectVMs != null) {
+                virtualMachineList.addAll(projectVMs)
+                }
         }
-        Timber.i("templist:")
-        Timber.i(templist.toString())
-        _virtualmachine.value = templist
-
-        Timber.i("Virtual Machine:")
-        Timber.i(_virtualmachine.value.toString())
-
-
+        _virtualmachine.value = virtualMachineList
     }
-
-
 }
 
