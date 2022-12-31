@@ -4,5 +4,4 @@ interface IFormValidation {
 
     public fun isValid(): Boolean;
     public fun getError(): String?;
-
 }

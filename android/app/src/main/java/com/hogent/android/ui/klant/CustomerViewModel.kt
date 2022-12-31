@@ -102,7 +102,7 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
     }
 
     fun onCancelButtonPressed(){
-        _form.postValue(_form.value!!.reset())
+        _form.postValue(CustomerContactEditForm())
         inEditMode.postValue(false)
     }
 

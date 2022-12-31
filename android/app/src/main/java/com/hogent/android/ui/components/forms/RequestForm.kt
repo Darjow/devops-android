@@ -19,7 +19,7 @@ data class RequestForm(
      var startDate : LocalDate?= null,
      var endDate : LocalDate? = null,
      var project_id: Long? = 0L
-): IResetableFormValidation {
+): IFormValidation {
 
     var error_message = ""
 
@@ -58,8 +58,5 @@ data class RequestForm(
         return error_message;
     }
 
-    override fun reset(): RequestForm {
-        return RequestForm()
-    }
 
 }

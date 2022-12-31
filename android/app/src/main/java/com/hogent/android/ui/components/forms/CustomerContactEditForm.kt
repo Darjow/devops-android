@@ -3,7 +3,7 @@ package com.hogent.android.ui.components.forms
 import androidx.lifecycle.MutableLiveData
 import com.hogent.android.util.Validators
 
-data class CustomerContactEditForm(var contact1 : ContactOne = ContactOne(), var contact2: ContactTwo = ContactTwo()): IResetableFormValidation {
+data class CustomerContactEditForm(var contact1 : ContactOne = ContactOne(), var contact2: ContactTwo = ContactTwo()): IFormValidation {
 
     var error_message = ""
 
@@ -24,10 +24,6 @@ data class CustomerContactEditForm(var contact1 : ContactOne = ContactOne(), var
     }
     override fun getError(): String?{
         return error_message
-    }
-
-    override fun reset(): CustomerContactEditForm  {
-        return CustomerContactEditForm()
     }
 }
 
