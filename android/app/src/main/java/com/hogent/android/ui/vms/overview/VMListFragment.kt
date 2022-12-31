@@ -22,7 +22,7 @@ import timber.log.Timber
 class VMListFragment : Fragment() {
 
     private lateinit var viewModel: VMListViewModel
-    private lateinit var application : Application
+    private lateinit var application: Application
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,17 +54,17 @@ class VMListFragment : Fragment() {
         Timber.i(viewModel.virtualmachine.value.toString())
 
         viewModel.projecten.observe(viewLifecycleOwner, Observer {
-            recyclerView.adapter = ProjectListAdapter(it, viewModel.virtualmachine.value, this.context, this.application);
+            recyclerView.adapter = ProjectListAdapter(
+                it,
+                viewModel.virtualmachine.value,
+                this.context);
 
         })
 
 
         return binding.root
     }
-
-    // AuthenticationManager.getInstance(application).klant.value!!.id
-
-
+}
 
 
 
@@ -152,4 +152,3 @@ class VMListFragment : Fragment() {
 
 
     }*/
-}

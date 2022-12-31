@@ -3,9 +3,10 @@ import androidx.room.*
 
 @Entity(tableName = "project_table", foreignKeys = [ForeignKey(entity = Customer::class, childColumns = ["customer_id"], parentColumns = ["id"])                ])
 data class Project(
-    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
     val name : String,
-    val customer_id : Long
-)
+    val customer_id : Long,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+
+    )
 
 

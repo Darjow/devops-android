@@ -12,7 +12,7 @@ import com.hogent.android.util.AuthenticationManager
 
 class VmAanvraagRepository(private val databaseImp: DatabaseImp) {
 
-    val customerId = AuthenticationManager.getCustomer()!!.id!!
+    private val customerId = AuthenticationManager.getCustomer()!!.id!!
 
     private val vmDao: VirtualMachineDao = databaseImp.virtualMachineDao
     private val contractDao: ContractDao = databaseImp.contractDao

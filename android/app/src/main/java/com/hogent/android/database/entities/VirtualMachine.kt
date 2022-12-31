@@ -11,7 +11,6 @@ import java.time.LocalDate
         ForeignKey(entity = Project::class, childColumns = ["projectId"], parentColumns = ["id"],
         )])
 data class VirtualMachine(
-    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
     val name : String,
     val connection : Connection? = null,
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
@@ -20,7 +19,10 @@ data class VirtualMachine(
     val projectId : Long,
     val mode : VirtualMachineModus = VirtualMachineModus.NONE,
     val contractId : Long,
-    val backup : Backup
+    val backup : Backup,
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
 
 )
 
@@ -154,10 +156,12 @@ enum class OperatingSystem {
         fun toBackup(json: String): Backup {
             val backup = JSONObject(json)
             val backupType = backup.get("type").toString()
+            val backupDate = backup.opt("backupDate")?.toString()
+
 
             return Backup(
                 BackupType.valueOf(backupType.uppercase()),
-                LocalDate.parse(backup.get("backupDate").toString())
+                backupDate?.let{ LocalDate.parse(it)}
             )
         }
     }

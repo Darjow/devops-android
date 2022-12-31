@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.core.view.marginBottom
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.NonDisposableHandle.parent
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.Month
 import java.util.*
 
 class VmAanvraagFragment : Fragment(){
@@ -40,11 +43,37 @@ class VmAanvraagFragment : Fragment(){
 
         initializeComponents(binding)
 
+        vmAanvraagView.errorToast.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(requireContext(),vmAanvraagView.form.value!!.getError(),Toast.LENGTH_SHORT).show()
+                vmAanvraagView.doneToastingError()
+            }
+        }
+        vmAanvraagView.success.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
+                clearForm(binding.vmaanvraaglayout)
+                vmAanvraagView.doneSuccess()
+
+            }
+        }
 
         return binding.root
     }
 
 
+    private fun clearForm(parent: ViewGroup){
+        for (i in 0 until parent.childCount){
+            when(val child = parent.getChildAt(i)){
+                is Spinner -> child.setSelection(0)//geen waarde voor spinner
+                is EditText -> child.setText("")
+                is SeekBar -> child.progress = 0
+                is DatePicker -> child.updateDate(LocalDate.now().year, LocalDate.now().monthValue, LocalDate.now().dayOfMonth)
+                is RadioGroup -> child.clearCheck()
+                is ViewGroup -> clearForm(child) //recursief om de edit en spinners te clearen
+            }
+        }
+    }
 
 
     private fun initializeComponents(binding: AddvmFragmentBinding) {
@@ -61,11 +90,10 @@ class VmAanvraagFragment : Fragment(){
 
             }
         }
-        buttonContainer.check(buttonContainer.getChildAt(0).id)
 
 //MEMORY
         val spinner_memory = binding.root.findViewById<Spinner>(R.id.memoryVmAanvraagDropdownList)
-        val listMemory = arrayListOf("1GB","2GB","4GB","8GB","16GB","32GB")
+        val listMemory = arrayListOf("","1GB","2GB","4GB","8GB","16GB","32GB")
         val adapter_memory = ArrayAdapter(context, android.R.layout.simple_spinner_item, listMemory)
         adapter_memory.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner_memory.adapter = adapter_memory
@@ -95,7 +123,8 @@ class VmAanvraagFragment : Fragment(){
 
 //BACKUP
 
-        val listBackup = BackupType.values().map { it.toString() }
+        val listBackup : MutableList<String> =  mutableListOf("")
+            listBackup.addAll(BackupType.values().map { it.toString() })
         val spinnerBackup = binding.root.findViewById<Spinner>(R.id.backupVmDropdownList)
         val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, listBackup)
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -114,6 +143,7 @@ class VmAanvraagFragment : Fragment(){
         adapterProject.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.viewmodel!!.projecten.observe(viewLifecycleOwner) {
             adapterProject.clear();
+            adapterProject.add("")
             it.forEach { project ->
                 adapterProject.add(project.name)
             }
@@ -134,17 +164,17 @@ class VmAanvraagFragment : Fragment(){
 
         binding.groupModeVm.setOnCheckedChangeListener { radioGroup, i ->
             val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-            binding.viewmodel!!.modeChanged(value.text.toString())
+            binding.viewmodel!!.modeChanged(value?.text.toString())
         }
 
         binding.groupOsVm.setOnCheckedChangeListener { radioGroup, i ->
             val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-            binding.viewmodel!!.osChanged(value.text.toString())
+            binding.viewmodel!!.osChanged(value?.text.toString())
         }
 
         binding.startDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             try {
-                val start = LocalDate.of(year, month, day);
+                val start = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.startDateChanged(start)
             } catch (e: Exception) {
                 Timber.d(e.message);
@@ -155,7 +185,7 @@ class VmAanvraagFragment : Fragment(){
 
         binding.endDateVmAanvraag.setOnDateChangedListener { datePicker, year, month, day ->
             try {
-                val end = LocalDate.of(year, month, day);
+                val end = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.endDateChanged(end)
             }catch(e: Exception){
                 Timber.d(e.message)
@@ -163,19 +193,7 @@ class VmAanvraagFragment : Fragment(){
             }
 
         }
-        binding.viewmodel!!.errorToast.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(requireContext(),binding.viewmodel!!.form.value!!.getError(),Toast.LENGTH_SHORT).show()
-                binding.viewmodel!!.doneToastingError()
-            }
-        }
-        binding.viewmodel!!.success.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
-                NavHostFragment.findNavController(this).navigate(VmAanvraagFragmentDirections.actionFromRequestToList())
-                binding.viewmodel!!.doneSuccess()
-            }
-        }
+
 
     }
 }

@@ -11,7 +11,7 @@ import com.hogent.android.database.entities.Customer
 @Dao
 interface CustomerDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(klant: Customer)
 
     @Update

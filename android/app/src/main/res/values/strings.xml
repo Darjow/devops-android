@@ -66,7 +66,7 @@
     <string name="end_date_vm_aanvraag">Einddatum:</string>
     <string name="aanvragen">Aanvragen</string>
     <string name="title_aantal_vcpu">Aantal vCPU: </string>
-    <string name="title_storage_vm_aanvraag">Storage GB:</string>
+    <string name="title_storage_vm_aanvraag">Storage GB: </string>
     <string name="title_hostname_vm_aanvraag">Hostname virtual machine:</string>
     <string name="title_operating_system_aanvraag">Operating system:</string>
     <string name="hostname_vm_aanvraag">ik kreeg error omdat deze hier niet was</string>
@@ -85,9 +85,9 @@
     <string name="idDetail">ID: %1$d</string>
     <string name="statusDetail">Status: %1$s</string>
     <string name="osDetail">OS: %1$s</string>
-    <string name="ramDetail">RAM: %1$sGB</string>
+    <string name="ramDetail">RAM: %1$dGB</string>
     <string name="coreDetail">CPU\'s: %1$d</string>
-    <string name="storageDetail">Storage: %1$sGB</string>
+    <string name="storageDetail">Storage: %1$dGB</string>
     <string name="contractIdDetail">Contract ID: %1$d</string>
     <string name="contractStartDetail">Startdatum: %1$s</string>
     <string name="contractEndDetail">Einddatum: %1$s</string>
