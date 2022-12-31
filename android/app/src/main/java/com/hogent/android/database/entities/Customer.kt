@@ -6,11 +6,11 @@ import androidx.room.*
 @Entity(tableName = "customer_table")
 data class Customer(
     @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
-    val lastName: String,
-    val firstName: String,
-    val phoneNumber: String,
-    val email: String,
-    val password: String,
+    var lastName: String,
+    var firstName: String,
+    var phoneNumber: String,
+    var email: String,
+    var password: String,
 
     @Embedded
     var contactPs1: ContactDetails1? = null,
@@ -18,7 +18,11 @@ data class Customer(
     var contactPs2: ContactDetails2? = null,
 
     var bedrijf_opleiding: String = Course.NONE.toString()
-)
+
+
+) {
+    constructor() : this(null,"", "", "", "","")
+}
 
 
 data class ContactDetails1(

@@ -1,6 +1,7 @@
 package com.hogent.android.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,7 +16,7 @@ import com.hogent.android.util.ioThread
 import timber.log.Timber
 import java.time.LocalDate
 
-@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 20, exportSchema = false)
+@Database(entities = [VirtualMachine::class, Customer::class, Contract::class, Project::class ], version = 21, exportSchema = false)
 @TypeConverters(CourseConverter::class, HardwareConverter::class, BackupConverter::class, ConnectionConverter::class, LocalDateConverter::class)
 abstract class DatabaseImp() : RoomDatabase() {
 
@@ -54,40 +55,43 @@ abstract class DatabaseImp() : RoomDatabase() {
                         val virtualMachineDao = getInstance(context).virtualMachineDao
                         val contractDao = getInstance(context).contractDao
 
-                        val customer1 = Customer(
-                            firstName = "Doe",
-                            lastName = "John",
-                            phoneNumber = "0497815223",
-                            email = "john.doe@hotmail.com",
-                            password = "Password#69",
-                            bedrijf_opleiding = "De la where"
-                        )
-                        val customer2 = Customer(
-                            firstName = "Billy",
-                            lastName = "Willy",
-                            phoneNumber = "0497815224",
-                            email = "billy.willy@hotmail.com",
-                            password = "Password#69",
-                            bedrijf_opleiding = "De la where"
-                        )
+                        var customer1 = Customer()
+                            customer1.firstName = "Doe"
+                            customer1.lastName = "John"
+                            customer1.phoneNumber = "0497815223"
+                            customer1.email = "john.doe@hotmail.com"
+                            customer1.password = "Password#69"
+                            customer1.bedrijf_opleiding = "De la where"
+                        customerDao.insert(customer1)
+
+                        var customer2 = Customer()
+                            customer2.firstName = "Billy"
+                            customer2.lastName = "Willy"
+                            customer2.phoneNumber = "0497815224"
+                            customer2.email = "billy.willy@hotmail.com"
+                            customer2.password = "Password#69"
+                            customer2.bedrijf_opleiding = "De la where"
+
                         val customer3 = Customer(
-                            firstName = "Doe",
-                            lastName = "John",
+                            firstName = "Dikke",
+                            lastName = "Tapir",
                             phoneNumber = "0497815223",
-                            email = "john.doe@hotmail.com",
+                            email = "tapir.dik@hotmail.com",
                             password = "Password#69",
                             bedrijf_opleiding = "De la where",
                         )
+
                         val customer4 = Customer(
                             firstName = "Jacky",
                             lastName = "Wacky",
                             phoneNumber = "0497815225",
                             email = "jacky.wacky@hotmail.com",
                             password = "Password#69",
-                            bedrijf_opleiding = "De la where"
+                        bedrijf_opleiding = "De la where"
                         )
 
-                        listOf(customer1, customer2, customer3, customer4).forEach {
+                        listOf(customer3, customer4).forEach {
+                            Log.d("CUSTOMER_insert", it.toString())
                             Timber.d(String.format("Inserting customer: %s", it.toString()))
                             customerDao.insert(it)
                         }
