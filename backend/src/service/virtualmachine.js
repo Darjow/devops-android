@@ -1,7 +1,8 @@
-const {tables, getKnex} = require("../data/index");
+const repoVm = require('../repository/virtualmachine')
 
 const getAll = async () => {
-  return getKnex()(tables.virtualmachine).select()
+    const vms = await getKnex()(tables.virtualmachine).select()
+    return {vms}
 }
 
 const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm, 
@@ -12,40 +13,34 @@ const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm,
                 operatingsystem_vm, mode_vm, backup_type_vm, 
                 latest_backup_vm, project_id_vm, contract_id_vm
             );
-  try{
-    await getKnex()(tables.virtualmachine).insert({
-        name: name_vm,
-        connection: connection_vm,
-        status: status_vm,
-        hardware: hardware_vm,
-        operatingsystem : operatingsystem_vm,
-        mode : mode_vm,
-        backup_type : backup_type_vm,
-        latest_backup : latest_backup_vm,
-        project_id : project_id_vm,
-        contract_id : contract_id_vm
-    });
-    }catch(error){
-      console.log(error);
-    }
+    const id = await repoVm.createVm(name_vm, connection_vm, status_vm, hardware_vm, 
+    operatingsystem_vm, mode_vm, backup_type_vm, latest_backup_vm, project_id_vm, contract_id_vm)
+    return repoVm.getVirtualmachinesById(id)
 
-  
 }
 
 const getVirtualmachinesByProjectId = async ({id}) => {
-    try {
-        return getKnex()(tables.virtualmachine).select().where("project_id", id)
-    } catch (error) {
-        console.log(error)
+    const vm = await repoVm.getVirtualmachinesByProjectId(id);
+    if(!vm){
+        return "geen vm gevonden met dat projectId"
     }
+    return {vm}
 }
 
 const getVirtualmachineByContractId = async ({id})=> {
-    try {
-        return getKnex()(tables.virtualmachine).select().where("contract_id", id)
-    } catch (error) {
-        console.log(error)
+    const vm = await repoVm.getVirtualmachineByContractId(id);
+    if(!vm){
+        return "geen vm gevonden met dat contractid"
     }
+    return {vm}
+}
+
+const getVirtualmachinesById= async ({id}) => {
+    const vm = await repoVm.getVirtualmachinesById(id);
+    if(!vm){
+        return "geen vm gevonden met dat id"
+    }
+    return {vm}
 }
   
 
@@ -53,5 +48,6 @@ module.exports = {
   getAll,
   createVm,
   getVirtualmachinesByProjectId,
-  getVirtualmachineByContractId
+  getVirtualmachineByContractId,
+  getVirtualmachinesById
 }

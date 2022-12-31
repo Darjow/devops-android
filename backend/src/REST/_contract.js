@@ -10,12 +10,31 @@ const addContract = async (ctx) => {
     
 }
 
+const updateContract = async (ctx) => {
+  const contract = await contractService.updateContract(ctx.params.id,
+  {
+    contract : ctx.request.body
+  })
+  return contract
+}
+
+const getContractById = async (ctx) => {
+ ctx.body = await contractService.getContractById(ctx.params.id)
+}
+
+const contractActiveren = async (ctx) => {
+  ctx.body = await contractService.contractActiveren(ctx.params.id)
+}
+
 
 module.exports = (app) => {
   const router = new Router({prefix:"/contract"});
 
   router.get("/", getContracts);
-  router.post("/", addContract)
+  router.post("/", addContract);
+  router.put("/:id", updateContract);
+  router.get("/:id", getContractById);
+  router.put("/activeren/:id", contractActiveren);
 
   app.use(router.routes()).use(router.allowedMethods());
 }
