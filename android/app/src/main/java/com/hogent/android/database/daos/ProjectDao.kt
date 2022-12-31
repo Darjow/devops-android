@@ -7,8 +7,6 @@ import com.hogent.android.database.entities.Project
 interface ProjectDao {
     @Insert
     fun insert(project : Project)
-    @Update
-    fun update(project : Project)
 
     @Query("SELECT * FROM project_table WHERE id = :key")
     fun get(key : Long): Project?

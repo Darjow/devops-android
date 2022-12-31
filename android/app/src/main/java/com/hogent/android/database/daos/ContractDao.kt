@@ -9,11 +9,11 @@ import com.hogent.android.database.entities.Contract
 @Dao
 interface ContractDao {
     @Insert
-    fun insert(contract: Contract)
+    fun insert(contract: Contract): Long
 
     @Update
     fun update(contract: Contract)
 
     @Query("SELECT * FROM contract_table WHERE id = :key")
-    suspend fun get(key: Long): Contract?
+    fun get(key: Long): Contract?
 }

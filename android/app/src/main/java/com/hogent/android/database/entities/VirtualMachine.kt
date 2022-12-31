@@ -6,36 +6,36 @@ import java.time.LocalDate
 
 
 @Entity(tableName = "virtualmachine_table",
-    foreignKeys = [ForeignKey(
-        entity = Contract::class,
-        childColumns = ["contractId"],
-        parentColumns = ["id"]
-    )])
+    foreignKeys = [
+        ForeignKey(entity = Contract::class, childColumns = ["contractId"], parentColumns = ["id"]),
+        ForeignKey(entity = Project::class, childColumns = ["projectId"], parentColumns = ["id"],
+        )])
 data class VirtualMachine(
-    @PrimaryKey(autoGenerate = true)
-    var id : Long = 0L,
-    val name : String = "",
-    val connection : Connection? = null ,
+    val name : String,
+    val connection : Connection? = null,
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
     val operatingSystem: OperatingSystem = OperatingSystem.NONE,
-    val hardware: HardWare = HardWare(0,0,0),
-    val project_id : Long = 0L,
+    val hardware: HardWare,
+    val projectId : Long,
     val mode : VirtualMachineModus = VirtualMachineModus.NONE,
-    val contractId : Long = 0L,
-    val backup : Backup = Backup(null, null),
+    val contractId : Long,
+    val backup : Backup,
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
 
 )
 
 enum class VirtualMachineModus {
     NONE,
     PAAS,
-    SAAS;
+    IAAS;
 
     override fun toString(): String {
         return when (this.name) {
             "NONE" -> "Geen"
             "PAAS" -> "PaaS"
-            "SAAS" -> "SaaS"
+            "IAAS" -> "IaaS"
             else -> throw IllegalArgumentException("Unknown vm modus received");
         }
     }
@@ -57,14 +57,6 @@ enum class OperatingSystem {
     LINUX_KALI,
     RASPBERRY_PI;
 
-    /*override fun toString(): String {
-        var strings = this.name.split("_").toMutableList()
-        for((i, string) in strings.withIndex()){
-            strings[i]= string.lowercase()
-            strings[i] = string.replaceFirstChar { it.uppercase() }
-        }
-        return strings.joinToString(" ")
-    }*/
     override fun toString(): String {
         val strings = this.name.split("_")
         var output = "";
@@ -109,7 +101,7 @@ enum class OperatingSystem {
         MAANDELIJKS;
 
         override fun toString(): String {
-            return this.name.lowercase()
+            return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
         }
     }
 
@@ -124,7 +116,10 @@ enum class OperatingSystem {
 
     class ConnectionConverter {
         @TypeConverter
-        fun fromConnection(connection: Connection): String {
+        fun fromConnection(connection: Connection?): String {
+            if(connection == null){
+                return "None";
+            }
             return JSONObject().apply {
                 put("fqdn", connection.fqdn)
                 put("ipAdres", connection.ipAdres)
@@ -134,7 +129,10 @@ enum class OperatingSystem {
         }
 
         @TypeConverter
-        fun toConnection(json: String): Connection {
+        fun toConnection(json: String): Connection? {
+            if(json == "None"){
+                return null
+            }
             val connection = JSONObject(json)
             return Connection(
                 connection.get("fqdn") as String,
@@ -158,10 +156,12 @@ enum class OperatingSystem {
         fun toBackup(json: String): Backup {
             val backup = JSONObject(json)
             val backupType = backup.get("type").toString()
+            val backupDate = backup.opt("backupDate")?.toString()
+
 
             return Backup(
                 BackupType.valueOf(backupType.uppercase()),
-                LocalDate.parse(backup.get("backupDate").toString())
+                backupDate?.let{ LocalDate.parse(it)}
             )
         }
     }

@@ -16,12 +16,9 @@ interface VirtualMachineDao {
     fun update(vm: VirtualMachine)
 
     @Query("SELECT * FROM virtualmachine_table WHERE id = :key")
-    suspend fun get(key: Long): VirtualMachine?
+    fun get(key: Long): VirtualMachine?
 
-    @Query("SELECT * FROM customer_table WHERE id = :key")
-    fun getKlant(key: Long): Customer
-
-    @Query("SELECT * FROM virtualmachine_table WHERE project_id = :key")
+    @Query("SELECT * FROM virtualmachine_table WHERE projectId = :key")
     fun getByProjectId(key: Long): List<VirtualMachine>?
 
 

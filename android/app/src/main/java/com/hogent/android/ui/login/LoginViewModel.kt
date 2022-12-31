@@ -53,7 +53,7 @@ class LoginViewModel(app: Application): ViewModel(){
                 val manager: AuthenticationManager = AuthenticationManager.getInstance(application);
                 manager.login(_mail.value!!, _pass.value!!)
 
-                if(manager.loggedIn()){
+                if(AuthenticationManager.loggedIn()){
                     _successToastLogin.postValue(true);
                     _navigateToProfile.postValue(true);
                 }else{
