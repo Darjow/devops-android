@@ -7,7 +7,7 @@ import com.hogent.android.database.daos.CustomerDao
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
-import com.hogent.android.network.CustomerApi
+import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class CustomerViewModel (private val customerId : Long) : ViewModel() {
+class CustomerViewModel (private val customerId : Long, private val repo: CustomerDao) : ViewModel() {
 
 
     //private val database = db;

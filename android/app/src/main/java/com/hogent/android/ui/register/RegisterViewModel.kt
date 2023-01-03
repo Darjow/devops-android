@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.Customer
 import com.hogent.android.database.repositories.RegisterRepository
-import com.hogent.android.network.CustomerApi
+import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.ui.components.forms.RegisterForm
 import kotlinx.coroutines.*
 import timber.log.Timber

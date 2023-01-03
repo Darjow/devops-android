@@ -1,8 +1,9 @@
-package com.hogent.android.network
+package com.hogent.android.network.services
 
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
+import com.hogent.android.network.Config
 import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
