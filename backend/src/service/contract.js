@@ -13,6 +13,7 @@ const addContract = async ({start, end}) => {
         console.log(error)
     }
 }
+
  /*word eiglk ni gebruikt \_(^_^)_/*/
 const contractActiveren = async (id) => {
     try {

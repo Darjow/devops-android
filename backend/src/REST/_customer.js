@@ -32,8 +32,7 @@ const getCustomerById = async(ctx) => {
 
 const updateCustomerById = async(ctx) => {
   ctx.body = await customerService.updateCustomerById(ctx.params.id, {
-    contactpersoon1_c: ctx.request.body.constactpersoon1,
-    contactpersoon2_c : ctx.request.body.constactpersoon2
+    customer: ctx.request.body.customer,
   })
 }
 
