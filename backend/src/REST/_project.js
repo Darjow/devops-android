@@ -18,7 +18,7 @@ module.exports = (app) => {
 
   router.get("/", getProjects);
   router.get("/:id", getProjectById);
-  router.get("/:cust_id", getProjectByCustomerId)
+  router.get("/customer/:id", getProjectByCustomerId)
 
   app.use(router.routes()).use(router.allowedMethods());
 }
