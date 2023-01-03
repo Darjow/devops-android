@@ -6,13 +6,13 @@ module.exports = {
             [
                 {
                     id: 1,
-                    start_date: new Date(2022, 10,10),
-                    end_date: new Date(2023, 12,20),
+                    startDate: new Date(2022, 10,10),
+                    endDate: new Date(2023, 12,20),
                 },
                 {
                     id: 2,
-                    start_date: new Date(2022, 10,10),
-                    end_date: new Date(2023, 6,20),
+                    startDate: new Date(2022, 10,10),
+                    endDate: new Date(2023, 6,20),
                 }
             ]
         )

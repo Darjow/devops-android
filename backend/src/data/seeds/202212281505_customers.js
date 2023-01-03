@@ -16,6 +16,10 @@ module.exports = {
                     contact1_email: "contact1@hotmail.com",
                     contact1_firstname: "Some",
                     contact1_lastname: "One",
+                    contact2_phone: null,
+                    contact2_email: null,
+                    contact2_firstname: null,
+                    contact2_lastname: null
                 },
             ]
         )
