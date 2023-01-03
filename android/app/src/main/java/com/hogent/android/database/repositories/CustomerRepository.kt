@@ -1,6 +1,6 @@
 package com.hogent.android.database.repositories
 
-import com.hogent.android.entities.Customer
+import com.hogent.android.database.entities.Customer
 import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.util.AuthenticationManager
