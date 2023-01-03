@@ -1,23 +1,31 @@
 const repoProject = require('../repository/project')
 
 const getAll = async () => {
+  console.log('Getting all projects')
   const projects = await repoProject.getAll();
+  console.log('returning projects:\n ' + projects)
   return projects
 }
 
 const getProjectById = async (id) => {
+  console.log('Getting project with ID: '+ id)
    const project = await repoProject.getProjectById(id);
    if(!project){
+    console.log("no project found")
     return null;
   }
+  console.log("returning project:\n" + project)
   return project
 }
 
-const getByCustomerId = async (cust_id) => {
-  const project = await repoProject.getByCustomerId(cust_id);
+const getByCustomerId = async (id) => {
+  console.log('Getting project with customerID: '+ id)
+  const project = await repoProject.getByCustomerId(id);
    if(!project){
+    console.log("no project found")
     return null;
   }
+  console.log("returning project:\n" + project)
   return project
 }
 

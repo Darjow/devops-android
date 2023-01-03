@@ -1,11 +1,14 @@
 const contractRepo = require('../repository/contract')
 
 const getAll = async () => {
+    console.log('Getting all contracts')
   const contracts = contractRepo.getAll();
+  console.log('returning contracts:\n ' + contracts)
   return contracts
 }
 
 const addContract = async ({start, end}) => {
+    console.log("adding contract with these parameters: " + start + ' ' + end)
     try {    
         const id = await contractRepo.addContract(start,end);
         return contractRepo.getContractById(id)

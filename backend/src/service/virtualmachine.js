@@ -2,6 +2,8 @@ const repoVm = require('../repository/virtualmachine')
 
 const getAll = async () => {
     const vms = await getKnex()(tables.virtualmachine).select()
+    console.log('returing all vms\n')
+    console.log(vms)
     return vms
 }
 
@@ -20,26 +22,36 @@ const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm,
 }
 
 const getVirtualmachinesByProjectId = async ({id}) => {
+    console.log("getting vm with projectid: " + id)
     const vm = await repoVm.getVirtualmachinesByProjectId(id);
     if(!vm){
-        return "geen vm gevonden met dat projectId"
+        console.log("geen vm gevonden")
+        return null
+        
     }
+    console.log("returning vm: \n"+vm)
     return vm
 }
 
 const getVirtualmachineByContractId = async ({id})=> {
+    console.log("getting vm with contractID: " + id)
     const vm = await repoVm.getVirtualmachineByContractId(id);
     if(!vm){
-        return "geen vm gevonden met dat contractid"
+        console.log("geen vm gevonden")
+        return null
     }
+    console.log("returning vm: \n"+vm)
     return vm
 }
 
 const getVirtualmachinesById= async ({id}) => {
+    console.log("getting vm with ID: " + id)
     const vm = await repoVm.getVirtualmachinesById(id);
     if(!vm){
-        return "geen vm gevonden met dat id"
+        console.log("geen vm gevonden")
+        return null
     }
+    console.log("returning vm: "+vm)
     return vm
 }
   
