@@ -9,8 +9,8 @@ const login = async (ctx) => {
   console.log("Login request has been called.");
     ctx.body = await customerService.loginCustomer(
       {
-        email : ctx.request.body.loginCredentials.email,
-        password : ctx.request.body.loginCredentials.password
+        email : ctx.request.body.email,
+        password : ctx.request.body.password
       })
 }
 const register = async(ctx) => {

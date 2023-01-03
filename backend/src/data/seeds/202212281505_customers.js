@@ -5,19 +5,17 @@ module.exports = {
         await knex(tables.customer).insert(
             [
                 {
-                   id: 1,
+                    id: 1,
                     firstname: "John",
                     lastname: "Doe",
-                    phonenumber: "0497815223",
                     email : "john.doe@hotmail.com",
                     password: "Password#69",
-                    bedrijf: "De la where",
-                    contactpersoon1: {
-                        phone: '0474619443',
-                        email: 'contactpersoon@hotmail.com',
-                        firstname: 'Contact',
-                        lastname: 'Persoon'
-                      }
+                    phonenumber: "0497815223",
+                    bedrijf_opleiding: "De la where",
+                    contact1_phone: "0497815773",
+                    contact1_email: "contact1@hotmail.com",
+                    contact1_firstname: "Some",
+                    contact1_lastname: "One",
                 },
             ]
         )

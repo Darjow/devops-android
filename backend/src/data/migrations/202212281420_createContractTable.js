@@ -5,9 +5,9 @@ module.exports = {
     await knex.schema.createTable(tables.contract, (table) => {
 
       table.increments('id').primary();
-      table.date('start_date').notNullable();
-      table.date('end_date').notNullable();
-      table.boolean("geactiveerd").notNullable().defaultTo(false);
+      table.date('startDate').notNullable();
+      table.date('endDate').notNullable();
+      table.boolean("active").notNullable().defaultTo(false);
     });
   },
   down: (knex) => {

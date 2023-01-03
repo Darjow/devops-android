@@ -7,19 +7,15 @@ module.exports = {
                 {
                     id: 1,
                     name: "Willie's VM",
-                    connection: {
-                        fqdn: "MOC2-FQDN", 
-                        ipadress: "25.236.117.11", 
-                        username:"MOC-USER1", 
-                        password:"DW2]]YmiPrvz34-dh5]g"
-                    },
+                    fqdn: "MOC2-FQDN", 
+                    ipAdres: "25.236.117.11", 
+                    username:"MOC-USER1", 
+                    password:"DW2]]YmiPrvz34-dh5]g",                    
                     status: "Running",
                     operatingsystem: "Linux Kali",
-                    hardware:{
-                        cores : 2,
-                        memory: "4GB",
-                        storage: 200
-                    },
+                    cores : 2,
+                    memory: 4000,
+                    storage: 50000,
                     mode: "SAAS",
                     backup_type:"MAANDELIJKS",
                     latest_backup: new Date(),
