@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 data class Contract(
     val startDate: LocalDate,
     var endDate: LocalDate,
-    var active: Boolean = false,
+    var active: Boolean? = false,
     @PrimaryKey(autoGenerate = true) var id: Long = 0L,
 )
 

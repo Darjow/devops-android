@@ -3,11 +3,12 @@ package com.hogent.android.ui.vms.details
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.hogent.android.database.repositories.VmDetailRepository
 
-class VMDetailsViewModelFactory(private val application: Application, private val vm_id: Long) : ViewModelProvider.Factory {
+class VMDetailsViewModelFactory(private val vmDetailRepository: VmDetailRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(VMDetailsViewModel::class.java)){
-            return VMDetailsViewModel(application, vm_id) as T;
+            return VMDetailsViewModel(vmDetailRepository) as T;
         }
         return super.create(modelClass)
     }

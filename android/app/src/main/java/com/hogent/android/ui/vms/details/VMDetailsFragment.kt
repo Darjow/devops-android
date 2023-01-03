@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
+import com.hogent.android.database.repositories.VmDetailRepository
 import com.hogent.android.databinding.FragmentVmDetailsBinding
 
 class VMDetailsFragment : Fragment() {
@@ -24,9 +25,8 @@ class VMDetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vm_details, container, false)
 
 
-        val appContext = requireNotNull(this.activity).application
         var vm_id : Long = arguments!!.getLong("vm_id")
-        val viewModelFactory = VMDetailsViewModelFactory(appContext, vm_id)
+        val viewModelFactory = VMDetailsViewModelFactory(VmDetailRepository(vm_id))
         val viewModel = ViewModelProvider(this, viewModelFactory)[VMDetailsViewModel::class.java];
 
 
