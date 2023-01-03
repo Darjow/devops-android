@@ -1,10 +1,12 @@
 package com.hogent.android.database.entities
 import androidx.core.text.isDigitsOnly
 import androidx.room.*
+import com.hogent.android.network.NullSafe
 import org.json.JSONObject
 import java.time.LocalDate
 
 
+@NullSafe
 @Entity(tableName = "virtualmachine_table",
     foreignKeys = [
         ForeignKey(entity = Contract::class, childColumns = ["contractId"], parentColumns = ["id"]),

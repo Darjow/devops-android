@@ -13,13 +13,13 @@ private val retrofit = Config.createRetrofit(API)
 
 interface VirtualMachineApiService{
 
-    @GET("/:id")
+    @GET(":id")
     suspend fun getById(@Path("id") id: Long): VirtualMachine?
 
-    @POST("/")
+    @POST
     suspend fun createVM(@Body vm: VirtualMachine): VirtualMachine
 
-    @GET("/project/:id")
+    @GET("project/:id")
     suspend fun getByProjectId(@Path("id") id: Long): List<VirtualMachine>?
 
 }
