@@ -6,6 +6,7 @@ const getCustomers = async (ctx) => {
 }
 
 const login = async (ctx) => {
+  console.log("Login request has been called.");
     ctx.body = await customerService.loginCustomer(
       {
         email : ctx.request.body.email,
@@ -41,7 +42,7 @@ module.exports = (app) => {
 
   router.get("/", getCustomers);
   router.post("/", register);
-  router.get("/login", login);
+  router.post("/login", login);
   router.get("/:id", getCustomerById);
   router.put("/:id", updateCustomerById)
 

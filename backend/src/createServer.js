@@ -14,10 +14,7 @@ module.exports = async function createServer () {
 	await initializeData();
 
 	const app = new Koa();
-	app.use(koaCors())
-		
-	
-	
+	app.use(koaCors())	
 	app.use(bodyParser());
 	
 	installRest(app);
