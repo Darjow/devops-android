@@ -7,23 +7,22 @@ import com.hogent.android.database.daos.CustomerDao
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
+import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.network.CustomerApi
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
-class CustomerViewModel (private val customerId : Long) : ViewModel() {
-
-
-    //private val database = db;
+class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     private val _form = MutableLiveData(CustomerContactEditForm())
-    private val _klant = MediatorLiveData<Customer>()
+    private val _klant = MutableLiveData<Customer>()
 
-    val inEditMode  = MutableLiveData(false)
+    val inEditMode = MutableLiveData(false)
 
 
     private val _errorToast = MutableLiveData<Boolean>()
@@ -32,51 +31,78 @@ class CustomerViewModel (private val customerId : Long) : ViewModel() {
 
     val klant: LiveData<Customer>
         get() = _klant
-    val success:  LiveData<Boolean>
+    val success: LiveData<Boolean>
         get() = _successToast
-    val error:  LiveData<Boolean>
+    val error: LiveData<Boolean>
         get() = _errorToast
 
 
-    fun setEmail(contactPerson: Int, text: Editable){
-            if (contactPerson == 1) {
-                val contact = _form.value!!.contact1
-                _form.postValue(CustomerContactEditForm(ContactOne(text.toString(), contact.phone,contact.fullName), _form.value!!.contact2));
-
-            } else if (contactPerson == 2) {
-                val contact = _form.value!!.contact2
-                _form.postValue(
-                    CustomerContactEditForm(_form.value!!.contact1,
-                        ContactTwo(text.toString(), contact.phone, contact.fullName)
-                    )
-                );
-            }
-    }
-    fun setPhone(contactPerson: Int, text: Editable){
-
-        if(contactPerson == 1){
+    fun setEmail(contactPerson: Int, text: Editable) {
+        if (contactPerson == 1) {
             val contact = _form.value!!.contact1
-            _form.postValue(CustomerContactEditForm(ContactOne(contact.email, text.toString(), contact.fullName), _form.value!!.contact2));
-        }
-        else if(contactPerson == 2){
+            _form.postValue(
+                CustomerContactEditForm(
+                    ContactOne(
+                        text.toString(),
+                        contact.phone,
+                        contact.fullName
+                    ), _form.value!!.contact2
+                )
+            );
+
+        } else if (contactPerson == 2) {
             val contact = _form.value!!.contact2
             _form.postValue(
-                CustomerContactEditForm(_form.value!!.contact1,
+                CustomerContactEditForm(
+                    _form.value!!.contact1,
+                    ContactTwo(text.toString(), contact.phone, contact.fullName)
+                )
+            );
+        }
+    }
+
+    fun setPhone(contactPerson: Int, text: Editable) {
+
+        if (contactPerson == 1) {
+            val contact = _form.value!!.contact1
+            _form.postValue(
+                CustomerContactEditForm(
+                    ContactOne(
+                        contact.email,
+                        text.toString(),
+                        contact.fullName
+                    ), _form.value!!.contact2
+                )
+            );
+        } else if (contactPerson == 2) {
+            val contact = _form.value!!.contact2
+            _form.postValue(
+                CustomerContactEditForm(
+                    _form.value!!.contact1,
                     ContactTwo(contact.email, text.toString(), contact.fullName)
                 )
             );
         }
     }
-    fun setFullName(contactPerson: Int, text: Editable){
 
-        if(contactPerson == 1){
+    fun setFullName(contactPerson: Int, text: Editable) {
+
+        if (contactPerson == 1) {
             val contact = _form.value!!.contact1
-            _form.postValue(CustomerContactEditForm(ContactOne(contact.email, contact.phone, text.toString()), _form.value!!.contact2));
-        }
-        else if(contactPerson == 2){
+            _form.postValue(
+                CustomerContactEditForm(
+                    ContactOne(
+                        contact.email,
+                        contact.phone,
+                        text.toString()
+                    ), _form.value!!.contact2
+                )
+            );
+        } else if (contactPerson == 2) {
             val contact = _form.value!!.contact2
             _form.postValue(
-                CustomerContactEditForm(_form.value!!.contact1,
+                CustomerContactEditForm(
+                    _form.value!!.contact1,
                     ContactTwo(contact.email, contact.phone, text.toString())
                 )
             );
@@ -91,40 +117,50 @@ class CustomerViewModel (private val customerId : Long) : ViewModel() {
         var contactTwo = ContactTwo("", "", "")
 
         if (contactps1 != null) {
-            contactOne = ContactOne(contactps1.contact1_email, contactps1.contact1_phone, contactps1.contact1_firstname + " " + contactps1.contact1_lastname);
+            contactOne = ContactOne(
+                contactps1.contact1_email,
+                contactps1.contact1_phone,
+                contactps1.contact1_firstname + " " + contactps1.contact1_lastname
+            );
         }
-        if(contactps2 != null){
-            contactTwo = ContactTwo(contactps2.contact2_email, contactps2.contact2_phone, contactps2.contact2_firstname + " " + contactps2.contact2_lastname);
+        if (contactps2 != null) {
+            contactTwo = ContactTwo(
+                contactps2.contact2_email,
+                contactps2.contact2_phone,
+                contactps2.contact2_firstname + " " + contactps2.contact2_lastname
+            );
         }
 
         _form.postValue(CustomerContactEditForm(contactOne, contactTwo));
 
     }
 
-    fun onCancelButtonPressed(){
+    fun onCancelButtonPressed() {
         _form.postValue(CustomerContactEditForm())
         inEditMode.postValue(false)
     }
 
-    fun onSubmitButtonPressed(){
-        if(_form.value!!.isValid()) {
+    fun onSubmitButtonPressed() {
+        if (_form.value!!.isValid()) {
             Timber.d("VALID")
             inEditMode.postValue(false);
             _successToast.postValue(true);
             persistCustomer();
-        }else{
+        } else {
             Timber.d("INVALID")
             Timber.d(_form.value!!.getError())
             _errorToast.postValue(true);
         }
     }
 
-    fun getVisibleId(): Int{
+    fun getVisibleId(): Int {
         return View.VISIBLE;
     }
-    fun getInvisibleId(): Int{
+
+    fun getInvisibleId(): Int {
         return View.INVISIBLE
     }
+
     private fun persistCustomer() {
         val customer: Customer = klant!!.value!!.copy()
 
@@ -146,7 +182,7 @@ class CustomerViewModel (private val customerId : Long) : ViewModel() {
         }
         viewModelScope.launch(Dispatchers.Main) {
             CustomerApi.service.updateCustomerById(
-                customerId,
+                repo.customer_id,
                 customer.contactPs1,
                 customer.contactPs2
             )
@@ -155,19 +191,27 @@ class CustomerViewModel (private val customerId : Long) : ViewModel() {
     }
 
 
-    fun doneErrorToast(){
+    fun doneErrorToast() {
         _errorToast.postValue(false);
     }
-    fun doneSuccessToast(){
+
+    fun doneSuccessToast() {
         _successToast.postValue(false);
     }
 
-    fun getError():String?{
+    fun getError(): String? {
         return _form.value!!.getError();
     }
 
 
-    /*init {
-        _klant.addSource(database.get(customerId), _klant::setValue)
-    }*/
+    init {
+        runBlocking {
+            val customer = repo.getById();
+
+            if (customer != null) {
+                _klant.postValue(customer)
+            }
+        }
+    }
 }
+

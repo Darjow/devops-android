@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.hogent.android.R
-import com.hogent.android.database.DatabaseImp
+import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentProfielBinding
 import com.hogent.android.util.closeKeyboardOnTouch
 
@@ -19,12 +19,10 @@ class CustomerProfileFragment: Fragment() {
 
     override fun onCreateView( inflater: LayoutInflater,   container: ViewGroup?,   savedInstanceState: Bundle?): View? {
         val binding: FragmentProfielBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profiel, container, false);
-        val application = requireNotNull(this.activity).application
 
         val customerId : Long = arguments!!.get("customerId") as Long
 
-        val db = DatabaseImp.getInstance(application).customerDao;
-        val viewModelFactory = CustomerViewModelFactory(customerId, db);
+        val viewModelFactory = CustomerViewModelFactory(CustomerRepository(customerId));
 
         val customerView = ViewModelProvider(this, viewModelFactory)[(CustomerViewModel::class.java)];
 
