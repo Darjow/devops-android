@@ -4,7 +4,7 @@ package com.hogent.android.ui.login
 import android.app.Application
 import android.text.Editable
 import androidx.lifecycle.*
-import com.hogent.android.network.CustomerApi
+import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
