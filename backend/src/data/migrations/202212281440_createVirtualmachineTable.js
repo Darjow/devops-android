@@ -14,23 +14,25 @@ module.exports = {
       table.integer("cpu", 10).notNullable()
       table.string('mode', 10).notNullable();
 
-
       table.date('latest_backup').notNullable();
       table.string('backup_type').notNullable();
-      
-      table.string("fqdn", 30);
-      table.string("ipAdres", 20);
-      table.string("username", 30);
-      table.string("password", 50);
+      table.string("fqdn", 30).nullable()
+      table.string("ipAdres", 20).nullable()
+      table.string("username", 30).nullable()
+      table.string("password", 50).nullable()
 
       table.integer('project_id').notNullable();
       table.integer('contract_id').notNullable();
-    
-      table.foreign("project_id", "fk_virtualmachines_projectid")
-        .references('id').inTable(tables.project)
-      
-      table.foreign("contract_id", "fk_virtualmachines_contractid")
-        .references('id').inTable(tables.contract);
+
+      table.foreign('project_id').references('project.id')
+      .onDelete("SET NULL")
+      .onUpdate("CASCADE")
+
+      table.foreign('contract_id').references('contract.id')
+      .onDelete("SET NULL")
+      .onUpdate("CASCADE")
+
+
     });
   },
   down: (knex) => {

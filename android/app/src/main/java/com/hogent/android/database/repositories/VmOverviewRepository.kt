@@ -13,7 +13,7 @@ class VmOverviewRepository {
     private val projectApi = ProjectApi.retrofitService;
 
 
-    suspend fun getByCustomerId(id: Long): List<Project>?{
+    suspend fun getByCustomerId(id: Int): List<Project>?{
         return projectApi.getByCustomerId(id)
 
     }

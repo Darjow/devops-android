@@ -8,6 +8,7 @@ import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class LoginViewModel(val repository: CustomerRepository): ViewModel(){
 
@@ -46,11 +47,17 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
 
 
     fun login() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch() {
             if(_mail.value == null || _pass.value == null){
                 _errorToastLogin.postValue(true);
             }else{
-                repository.login(mail.value.toString(), _pass.value.toString())
+                try {
+                    repository.login(mail.value.toString(), _pass.value.toString())
+                }catch(e: java.lang.Exception){
+                    Timber.e(e.message)
+                    Timber.e(e.stackTraceToString())
+                }
+
                 if(AuthenticationManager.loggedIn()){
                     _successToastLogin.postValue(true);
                     _navigateToProfile.postValue(true);

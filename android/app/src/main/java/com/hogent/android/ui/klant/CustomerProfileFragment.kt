@@ -20,7 +20,7 @@ class CustomerProfileFragment: Fragment() {
     override fun onCreateView( inflater: LayoutInflater,   container: ViewGroup?,   savedInstanceState: Bundle?): View? {
         val binding: FragmentProfielBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profiel, container, false);
 
-        val customerId : Long = arguments!!.get("customerId") as Long
+        val customerId : Int = arguments!!.get("customerId") as Int
 
         val viewModelFactory = CustomerViewModelFactory(CustomerRepository(customerId));
 

@@ -19,7 +19,6 @@ import com.hogent.android.util.closeKeyboardOnTouch
 class LoginFragment : Fragment() {
 
     override fun onCreateView(   inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View? {
-        val application = requireNotNull(this.activity).application
         val binding: FragmentLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         val viewModelFactory = LoginViewModelFactory(CustomerRepository());

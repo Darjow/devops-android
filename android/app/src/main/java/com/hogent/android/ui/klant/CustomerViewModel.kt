@@ -116,15 +116,15 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
         if (contactps1 != null) {
             contactOne = ContactOne(
-                contactps1.contact1_email,
-                contactps1.contact1_phone,
+                contactps1.contact1_email!!,
+                contactps1.contact1_phone!!,
                 contactps1.contact1_firstname + " " + contactps1.contact1_lastname
             );
         }
         if (contactps2 != null) {
             contactTwo = ContactTwo(
-                contactps2.contact2_email,
-                contactps2.contact2_phone,
+                contactps2.contact2_email!!,
+                contactps2.contact2_phone!!,
                 contactps2.contact2_firstname + " " + contactps2.contact2_lastname
             );
         }

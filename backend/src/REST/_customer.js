@@ -7,12 +7,14 @@ const getCustomers = async (ctx) => {
 
 const login = async (ctx) => {
   console.log("Login request has been called.");
-  console.log( "--------------------------------\n"+ ctx.request.body.email + "\n--------------------------------")
-    ctx.body = await customerService.loginCustomer(
+    let temp = await customerService.loginCustomer(
       {
         email : ctx.request.body.email,
         password : ctx.request.body.password
       })
+      ctx.body = temp
+  console.log("Returning: ");
+  console.log(temp);
 }
 const register = async(ctx) => {
   ctx.body = await customerService.registerCustomer({
