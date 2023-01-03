@@ -1,7 +1,7 @@
 {
   "name": "android_api",
   "scripts": {
-    "start": "nodemon src/index2.js"
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
     "@koa/cors": "^4.0.0",
