@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController);
         setDrawerOptions();
 
-        AuthenticationManager.getInstance(this.application).authenticationState.observe(this, Observer {
+        AuthenticationManager.getInstance().authenticationState.observe(this, Observer {
             onCreateOptionsMenu(menu)
         })
     }
@@ -65,9 +65,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun logOut(item: MenuItem){
-        AuthenticationManager.getInstance(this.application).logOut();
+        AuthenticationManager.getInstance().logOut();
         findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment);
-
 
     }
 

@@ -3,12 +3,10 @@ package com.hogent.android.ui.klant
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.*
-import com.hogent.android.database.daos.CustomerDao
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
 import com.hogent.android.database.repositories.CustomerRepository
-import com.hogent.android.network.CustomerApi
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
@@ -181,12 +179,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             customer.contactPs2 = contactDetails2
         }
         viewModelScope.launch(Dispatchers.Main) {
-            CustomerApi.service.updateCustomerById(
-                repo.customer_id,
-                customer.contactPs1,
-                customer.contactPs2
-            )
-
+            repo.updateCustomer(customer.id, customer)
         }
     }
 
@@ -202,6 +195,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
     fun getError(): String? {
         return _form.value!!.getError();
     }
+
 
 
     init {

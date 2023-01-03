@@ -5,7 +5,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.Contract
 import com.hogent.android.database.entities.VirtualMachine
 import com.hogent.android.database.repositories.VmDetailRepository

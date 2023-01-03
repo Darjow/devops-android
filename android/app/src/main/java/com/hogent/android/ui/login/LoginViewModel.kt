@@ -1,15 +1,14 @@
 package com.hogent.android.ui.login
 
 
-import android.app.Application
 import android.text.Editable
 import androidx.lifecycle.*
-import com.hogent.android.network.CustomerApi
+import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel(app: Application): ViewModel(){
+class LoginViewModel(val repository: CustomerRepository): ViewModel(){
 
 
     val mail = MutableLiveData<String>()
@@ -27,7 +26,6 @@ class LoginViewModel(app: Application): ViewModel(){
         pass.value = v.toString();
     }
 
-    private val application = app;
 
     private val _navigateToProfile = MutableLiveData<Boolean>()
     val navigateToProfile : LiveData<Boolean>
@@ -53,7 +51,7 @@ class LoginViewModel(app: Application): ViewModel(){
             }else{
                 //val manager: AuthenticationManager = AuthenticationManager.getInstance(application);
                 //manager.login(_mail.value!!, _pass.value!!)
-                CustomerApi.service.loginCustomer(_mail.value.toString(), _pass.value.toString())
+                repository.login(_mail.value.toString(), _pass.value.toString())
                 if(AuthenticationManager.loggedIn()){
                     _successToastLogin.postValue(true);
                     _navigateToProfile.postValue(true);

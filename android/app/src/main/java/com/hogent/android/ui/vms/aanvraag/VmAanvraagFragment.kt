@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
-import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.BackupType
 import com.hogent.android.database.entities.OperatingSystem
 import com.hogent.android.database.repositories.VmAanvraagRepository

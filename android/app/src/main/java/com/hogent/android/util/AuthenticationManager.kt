@@ -1,16 +1,10 @@
 package com.hogent.android.util
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.hogent.android.database.DatabaseImp
-import com.hogent.android.database.daos.CustomerDao
 import com.hogent.android.database.entities.Customer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 
-class AuthenticationManager(private val db: CustomerDao) {
+class AuthenticationManager() {
 
     val klant = MutableLiveData<Customer?>()
     var authenticationState = MutableLiveData(AuthenticationState.UNAUTHENTICATED)
@@ -21,11 +15,10 @@ class AuthenticationManager(private val db: CustomerDao) {
         @Volatile
         private lateinit var instance: AuthenticationManager
 
-        fun getInstance(application: Application): AuthenticationManager {
+        fun getInstance(): AuthenticationManager {
             synchronized(this) {
                 if (!::instance.isInitialized) {
-                    val db = DatabaseImp.getInstance(application).customerDao
-                    instance = AuthenticationManager(db)
+                    instance = AuthenticationManager()
                 }
                 return instance;
             }
@@ -43,6 +36,14 @@ class AuthenticationManager(private val db: CustomerDao) {
             }
             return instance.loggedIn()
         }
+        fun setCustomer(customer: Customer){
+            if (!::instance.isInitialized) {
+                throw IllegalArgumentException("")
+            }else{
+                instance.klant.postValue(customer)
+                instance.authenticationState.postValue(AuthenticationState.AUTHENTICATED)
+            }
+        }
     }
 
     fun loggedIn(): Boolean{
@@ -53,20 +54,6 @@ class AuthenticationManager(private val db: CustomerDao) {
         authenticationState.postValue(AuthenticationState.UNAUTHENTICATED);
     }
 
-    suspend fun login(email: String, pass: String) =
-         withContext(Dispatchers.Default) {
-            Timber.d(String.format("LOG_IN HAS BEEN CALLED with parameters: %s, %s", email, pass))
-            val c: Customer? = db.login(email, pass)
-            klant.postValue(c);
-
-            authenticationState.postValue(
-                if (c != null) {
-                    AuthenticationState.AUTHENTICATED;
-                } else {
-                    AuthenticationState.UNAUTHENTICATED;
-                });
-
-        }
 }
 
 

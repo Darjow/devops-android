@@ -7,18 +7,13 @@ import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.Customer
-import com.hogent.android.database.repositories.RegisterRepository
-import com.hogent.android.network.CustomerApi
+import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.RegisterForm
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-class RegisterViewModel (val application: Application) : ViewModel() {
-
-
-    //private val repository = RegisterRepository(DatabaseImp.getInstance(application).customerDao)
+class RegisterViewModel (val repo: CustomerRepository, val app : Application) : ViewModel() {
 
 
     val registerForm = MutableLiveData(RegisterForm("","","","","",""))
@@ -74,10 +69,10 @@ class RegisterViewModel (val application: Application) : ViewModel() {
             _requireToast.postValue(true);
         }else{
             runBlocking {
-                val users = CustomerApi.service.getCustomers()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
+                val users = repo.getAll()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
                 if(users != null) {
                     if (users!!.isNotEmpty()) {
-                        Toast.makeText(application, "Email bestaat al", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(app, "Email bestaat al", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else{
@@ -88,7 +83,7 @@ class RegisterViewModel (val application: Application) : ViewModel() {
                         phoneNumber = registerForm.value!!.inputPhoneNumber,
                         password = registerForm.value!!.inputPassword
                     )
-                    CustomerApi.service.regsiterCustomer(c);
+                    repo.registerCustomer(c);
                     _navigateHome.postValue(true)
                 }
             }
