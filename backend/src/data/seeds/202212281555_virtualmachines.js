@@ -13,7 +13,7 @@ module.exports = {
                     password:"DW2]]YmiPrvz34-dh5]g",                    
                     status: "Running",
                     operatingsystem: "Linux Kali",
-                    cores : 2,
+                    cpu : 2,
                     memory: 4000,
                     storage: 50000,
                     mode: "SAAS",
