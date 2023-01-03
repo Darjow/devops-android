@@ -2,14 +2,14 @@ package com.hogent.android.ui.vms.overview
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.hogent.android.database.DatabaseImp
+import com.hogent.android.database.repositories.VmOverviewRepository
 
-class VMListViewModelFactory( val db: DatabaseImp): ViewModelProvider.Factory {
+class VMListViewModelFactory( private val vmOverviewRepository: VmOverviewRepository): ViewModelProvider.Factory {
 
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(VMListViewModel::class.java)){
-                return VMListViewModel(db) as T;
+                return VMListViewModel(vmOverviewRepository) as T;
             }
             return super.create(modelClass)
         }

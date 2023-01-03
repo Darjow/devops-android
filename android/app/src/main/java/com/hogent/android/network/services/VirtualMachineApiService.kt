@@ -1,6 +1,5 @@
 package com.hogent.android.network.services
 
-
 import com.hogent.android.database.entities.VirtualMachine
 import com.hogent.android.network.Config
 import retrofit2.http.Body

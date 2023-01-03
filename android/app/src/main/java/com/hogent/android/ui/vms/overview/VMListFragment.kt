@@ -12,9 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.database.DatabaseImp
+import com.hogent.android.database.repositories.VmOverviewRepository
 import com.hogent.android.databinding.FragmentVmlistBinding
-import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.closeKeyboardOnTouch
 import timber.log.Timber
 
@@ -38,8 +37,7 @@ class VMListFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_vmlist, container, false);
         application = requireNotNull(this.activity).application
 
-        val db = DatabaseImp.getInstance(application);
-        val viewModelFactory = VMListViewModelFactory(db);
+        val viewModelFactory = VMListViewModelFactory(VmOverviewRepository());
 
         viewModel = ViewModelProvider(this, viewModelFactory)[(VMListViewModel::class.java)];
 
