@@ -2,7 +2,7 @@ const repoCustomer = require('../repository/customer')
 
 const getAll = async () => {
   const customers = await repoCustomer.getAll()
-  return {customers}
+  return customers
 }
 
 const updateCustomerById = async (id, {customer}) => {
@@ -13,7 +13,7 @@ const updateCustomerById = async (id, {customer}) => {
 
 const getCustomerById = async (id) => {
   const customer = await repoCustomer.getCustomerById(id)
-  return {customer}
+  return customer
 }
 
 const registerCustomer = async ({firstname_c, lastname_c, email_c, password_c, phonenumber_c, 

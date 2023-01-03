@@ -2,7 +2,7 @@ const repoVm = require('../repository/virtualmachine')
 
 const getAll = async () => {
     const vms = await getKnex()(tables.virtualmachine).select()
-    return {vms}
+    return vms
 }
 
 const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm, 
@@ -24,7 +24,7 @@ const getVirtualmachinesByProjectId = async ({id}) => {
     if(!vm){
         return "geen vm gevonden met dat projectId"
     }
-    return {vm}
+    return vm
 }
 
 const getVirtualmachineByContractId = async ({id})=> {
@@ -32,7 +32,7 @@ const getVirtualmachineByContractId = async ({id})=> {
     if(!vm){
         return "geen vm gevonden met dat contractid"
     }
-    return {vm}
+    return vm
 }
 
 const getVirtualmachinesById= async ({id}) => {
@@ -40,7 +40,7 @@ const getVirtualmachinesById= async ({id}) => {
     if(!vm){
         return "geen vm gevonden met dat id"
     }
-    return {vm}
+    return vm
 }
   
 

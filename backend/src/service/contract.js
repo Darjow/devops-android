@@ -2,7 +2,7 @@ const contractRepo = require('../repository/contract')
 
 const getAll = async () => {
   const contracts = contractRepo.getAll();
-  return {contracts}
+  return contracts
 }
 
 const addContract = async ({start, end}) => {
@@ -26,13 +26,13 @@ const contractActiveren = async (id) => {
 
 const getContractById = async(id) => {
     const contract = await contractRepo.getContractById(id)
-    return {contract}
+    return contract
 }
 
 const updateContract = async(id, {contract}) => {
     await contractRepo.updateContract(id, contract);
     const cont = await contractRepo.getContractById(id)
-    return {cont}
+    return cont
 }
 
 module.exports = {
