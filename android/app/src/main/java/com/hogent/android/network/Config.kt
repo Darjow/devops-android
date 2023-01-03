@@ -15,7 +15,7 @@ class Config {
         fun createRetrofit(endpoint : String): Retrofit{
             return Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .baseUrl(endpoint)
+                .baseUrl(BASE_URL + endpoint)
                 .build()
         }
 
