@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.hogent.android.database.DatabaseImp
 import com.hogent.android.database.entities.Customer
 import com.hogent.android.database.repositories.RegisterRepository
+import com.hogent.android.network.CustomerApi
 import com.hogent.android.ui.components.forms.RegisterForm
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -17,7 +18,7 @@ import timber.log.Timber
 class RegisterViewModel (val application: Application) : ViewModel() {
 
 
-    private val repository = RegisterRepository(DatabaseImp.getInstance(application).customerDao)
+    //private val repository = RegisterRepository(DatabaseImp.getInstance(application).customerDao)
 
 
     val registerForm = MutableLiveData(RegisterForm("","","","","",""))
@@ -73,7 +74,7 @@ class RegisterViewModel (val application: Application) : ViewModel() {
             _requireToast.postValue(true);
         }else{
             runBlocking {
-                val users = repository.klanten.value?.filter{ c -> c.email == registerForm.value!!.inputEmail }
+                val users = CustomerApi.service.getCustomers()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
                 if(users != null) {
                     if (users!!.isNotEmpty()) {
                         Toast.makeText(application, "Email bestaat al", Toast.LENGTH_SHORT).show()
@@ -87,7 +88,7 @@ class RegisterViewModel (val application: Application) : ViewModel() {
                         phoneNumber = registerForm.value!!.inputPhoneNumber,
                         password = registerForm.value!!.inputPassword
                     )
-                    repository.insert(c);
+                    CustomerApi.service.regsiterCustomer(c);
                     _navigateHome.postValue(true)
                 }
             }

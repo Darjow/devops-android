@@ -2,23 +2,23 @@ package com.hogent.android.ui.klant
 
 import android.text.Editable
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.hogent.android.database.daos.CustomerDao
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
+import com.hogent.android.network.CustomerApi
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewModel() {
+class CustomerViewModel (private val customerId : Long) : ViewModel() {
 
 
-    private val database = db;
+    //private val database = db;
 
     private val _form = MutableLiveData(CustomerContactEditForm())
     private val _klant = MediatorLiveData<Customer>()
@@ -128,13 +128,30 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
     private fun persistCustomer() {
         val customer: Customer = klant!!.value!!.copy()
 
-        val contactDetails1 = ContactDetails1(_form.value!!.contact1.phone, _form.value!!.contact1.email, _form.value!!.contact1.fullName.split(" ")[0], _form.value!!.contact1.fullName.substringAfter(" "));
+        val contactDetails1 = ContactDetails1(
+            _form.value!!.contact1.phone,
+            _form.value!!.contact1.email,
+            _form.value!!.contact1.fullName.split(" ")[0],
+            _form.value!!.contact1.fullName.substringAfter(" ")
+        );
         customer.contactPs1 = contactDetails1
-        if(_form.value!!.contact2.isValid()){
-            val contactDetails2 = ContactDetails2(_form.value!!.contact2.phone, _form.value!!.contact2.email, _form.value!!.contact2.fullName.split(" ")[0], _form.value!!.contact2.fullName.substringAfter(" "));
+        if (_form.value!!.contact2.isValid()) {
+            val contactDetails2 = ContactDetails2(
+                _form.value!!.contact2.phone,
+                _form.value!!.contact2.email,
+                _form.value!!.contact2.fullName.split(" ")[0],
+                _form.value!!.contact2.fullName.substringAfter(" ")
+            );
             customer.contactPs2 = contactDetails2
         }
-        database.update(customer);
+        viewModelScope.launch(Dispatchers.Main) {
+            CustomerApi.service.updateCustomerById(
+                customerId,
+                customer.contactPs1,
+                customer.contactPs2
+            )
+
+        }
     }
 
 
@@ -150,7 +167,7 @@ class CustomerViewModel (private val customerId : Long, db: CustomerDao) : ViewM
     }
 
 
-    init {
+    /*init {
         _klant.addSource(database.get(customerId), _klant::setValue)
-    }
+    }*/
 }
