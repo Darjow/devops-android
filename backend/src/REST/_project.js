@@ -10,7 +10,8 @@ const getProjectById = async(ctx) => {
 }
 
 const getProjectByCustomerId = async(ctx) => {
-  ctx.body = await projectService.getProjectByCustomerId(ctx.params.cust_id)
+  console.log("Projects request received with customer id: " + ctx.params.id);
+  ctx.body = await projectService.getByCustomerId(ctx.params.id)
 }
 
 module.exports = (app) => {

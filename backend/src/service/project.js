@@ -8,7 +8,7 @@ const getAll = async () => {
 const getProjectById = async (id) => {
    const project = await repoProject.getProjectById(id);
    if(!project){
-    return "Geen project gevonden"
+    return null;
   }
   return project
 }
@@ -16,7 +16,7 @@ const getProjectById = async (id) => {
 const getByCustomerId = async (cust_id) => {
   const project = await repoProject.getByCustomerId(cust_id);
    if(!project){
-    return "Geen project gevonden"
+    return null;
   }
   return project
 }
