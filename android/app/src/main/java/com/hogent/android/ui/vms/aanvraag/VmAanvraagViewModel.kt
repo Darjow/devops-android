@@ -60,11 +60,11 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
 
     fun projectChanged(naam: String){
-        if(projecten.value.isNullOrEmpty()){
-            throw IllegalArgumentException("Selected a wrong type of project")
-        }
-
         val __form = _form.value!!;
+
+        if(projecten.value.isNullOrEmpty()){
+            __form.project_id = -1
+        }
 
 
         if(projecten.value!!.none { it.name == naam }){
