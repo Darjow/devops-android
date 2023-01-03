@@ -1,8 +1,10 @@
 package com.hogent.android.database.entities
 
 import androidx.room.*
+import com.hogent.android.network.NullSafe
 
 
+@NullSafe
 @Entity(tableName = "customer_table")
 data class Customer(
     val lastName: String,

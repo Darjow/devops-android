@@ -3,11 +3,13 @@ package com.hogent.android.database.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import com.hogent.android.network.NullSafe
 import org.json.JSONObject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
+@NullSafe
 @Entity(tableName = "contract_table")
 data class Contract(
     val startDate: LocalDate,
