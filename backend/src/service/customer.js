@@ -22,13 +22,15 @@ const registerCustomer = async ({firstname_c, lastname_c, email_c, password_c, p
   const id = await repoCustomer.registerCustomer(firstname_c, lastname_c, email_c, password_c, phonenumber_c, 
   bedrijf_c, opleiding_c, contactpersoon1_c,contactpersoon2_c)
 
-  return repoCustomer.getCustomerById(id)
+  return await repoCustomer.getCustomerById(id)
 }
 
 const loginCustomer = async ({email,password}) => {
   const customer = await repoCustomer.loginCustomer(email, password)
-  console.log( "--------------------------------\n"+ customer + "\n--------------------------------")
-  return customer
+  if(customer){
+    return customer;
+  }
+  return null
 }
 
 module.exports = {
