@@ -33,9 +33,8 @@ class VmAanvraagFragment : Fragment(){
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val application = requireNotNull(this.activity).application
         val binding: AddvmFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.addvm_fragment, container, false);
-        val viewModelFactory = VmAanvraagFactoryModel(VmAanvraagRepository(DatabaseImp.getInstance(application)))
+        val viewModelFactory = VmAanvraagFactoryModel(VmAanvraagRepository())
         val vmAanvraagView = ViewModelProvider(this, viewModelFactory)[VmAanvraagViewModel::class.java]
 
         binding.viewmodel = vmAanvraagView
