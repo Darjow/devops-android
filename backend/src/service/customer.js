@@ -26,10 +26,8 @@ const registerCustomer = async ({firstname_c, lastname_c, email_c, password_c, p
 }
 
 const loginCustomer = async ({email,password}) => {
-  const customer = repoCustomer.loginCustomer(email, password)
-  if(!customer){
-    return "Foute gegevens"
-  }
+  const customer = await repoCustomer.loginCustomer(email, password)
+  console.log( "--------------------------------\n"+ customer + "\n--------------------------------")
   return customer
 }
 

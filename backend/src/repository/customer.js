@@ -40,9 +40,9 @@ bedrijf_c, opleiding_c, contactpersoon1_c,contactpersoon2_c) => {
 
 const loginCustomer = async (email,password) => {
   const customer =  await getKnex()(tables.customer)
-  .where(getKnex().raw(`email = "${email}"`))
-  .where(getKnex().raw(`password = "${password}"`))
-    return customer
+    .where("email", email)
+    .where("password", password)
+  return customer
 }
 
 module.exports = {
