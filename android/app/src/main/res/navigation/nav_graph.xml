@@ -55,6 +55,10 @@
             android:name="customerId"
             app:argType="integer"
             />
+        <action
+            android:id="@+id/action_from_profile_to_login"
+            app:destination="@+id/loginFragment">
+        </action>
 
     </fragment>
     <fragment

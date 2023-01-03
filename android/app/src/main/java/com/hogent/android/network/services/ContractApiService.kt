@@ -13,7 +13,7 @@ private val retrofit = Config.createRetrofit(API)
 
 interface ContractApiService{
 
-    @GET(":id")
+    @GET("{id}")
     suspend fun getById(@Path("id") id: Long): Contract?
 
     @POST

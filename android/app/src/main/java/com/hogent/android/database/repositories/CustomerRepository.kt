@@ -14,9 +14,6 @@ class CustomerRepository(private  val customer_id: Int? = -1) {
 
     private val customerApi = CustomerApi.service;
 
-    suspend fun getById(): Customer? {
-        return customerApi.getCustomerById(customer_id!!)
-    }
     suspend fun updateCustomer(id: Int, cust: Customer): Customer? {
         return customerApi.updateCustomer(id, cust)
     }

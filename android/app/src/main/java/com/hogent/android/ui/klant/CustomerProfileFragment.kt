@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
 import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentProfielBinding
@@ -40,6 +41,13 @@ class CustomerProfileFragment: Fragment() {
             if(it){
                 Toast.makeText(requireContext(),customerView.getError(), Toast.LENGTH_LONG).show();
                 customerView.doneErrorToast()
+            }
+        })
+
+        customerView.failsafeRedirect.observe(viewLifecycleOwner, Observer{
+            if(it){
+                NavHostFragment.findNavController(this).navigate(CustomerProfileFragmentDirections.actionFromProfileToLogin())
+                customerView.doneNavigation()
             }
         })
 

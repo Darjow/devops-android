@@ -26,10 +26,10 @@ interface CustomerService{
     @POST
     suspend fun registerCustomer(@Body customer: Customer): Customer
 
-    @GET(":id")
+    @GET("{id}")
     suspend fun getCustomerById(@Path("id") id: Int): Customer?
 
-    @PUT(":id")
+    @PUT("{id}")
     suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: Customer): Customer?
 }
 

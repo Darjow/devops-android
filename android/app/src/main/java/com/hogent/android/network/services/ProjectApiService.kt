@@ -17,10 +17,10 @@ interface ProjectApiService {
     @GET
     suspend fun getAll(): List<Project>?
 
-    @GET(":id")
+    @GET("{id}")
     suspend fun getById(@Path("id") id: Long): Project?
 
-    @GET("customer/:id")
+    @GET("customer/{id}")
     suspend fun getByCustomerId(@Path("id") id: Int): List<Project>?
 
     }

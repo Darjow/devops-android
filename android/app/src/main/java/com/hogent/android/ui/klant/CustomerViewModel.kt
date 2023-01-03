@@ -3,6 +3,10 @@ package com.hogent.android.ui.klant
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.*
+import androidx.navigation.NavGraph
+import androidx.navigation.NavHost
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.database.entities.ContactDetails1
 import com.hogent.android.database.entities.ContactDetails2
 import com.hogent.android.database.entities.Customer
@@ -10,6 +14,7 @@ import com.hogent.android.database.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
+import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -25,6 +30,8 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     private val _errorToast = MutableLiveData<Boolean>()
     private val _successToast = MutableLiveData<Boolean>()
+    private val _failsafeRedirect = MutableLiveData(false)
+
 
 
     val klant: LiveData<Customer>
@@ -33,7 +40,8 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
         get() = _successToast
     val error: LiveData<Boolean>
         get() = _errorToast
-
+    val failsafeRedirect : LiveData<Boolean>
+        get() = _failsafeRedirect
 
     fun setEmail(contactPerson: Int, text: Editable) {
         if (contactPerson == 1) {
@@ -196,15 +204,16 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
         return _form.value!!.getError();
     }
 
+    fun doneNavigation() {
+        _failsafeRedirect.postValue(false)
+    }
 
 
     init {
-        runBlocking {
-            val customer = repo.getById();
-
-            if (customer != null) {
-                _klant.postValue(customer)
-            }
+        if(!AuthenticationManager.loggedIn()){
+            _failsafeRedirect.postValue(true)
+        }else{
+            _klant.postValue(AuthenticationManager.getCustomer())
         }
     }
 }

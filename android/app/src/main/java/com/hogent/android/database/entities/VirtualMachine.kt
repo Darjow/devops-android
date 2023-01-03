@@ -1,10 +1,11 @@
 package com.hogent.android.database.entities
 import androidx.core.text.isDigitsOnly
 import androidx.room.*
+import com.squareup.moshi.JsonClass
 import org.json.JSONObject
 import java.time.LocalDate
 
-
+@JsonClass(generateAdapter = true)
 data class VirtualMachine(
     val name : String,
     val connection : Connection? = null,
@@ -83,6 +84,7 @@ enum class OperatingSystem {
         }
     }
 
+@JsonClass(generateAdapter = true)
     data class Backup(
         val type: BackupType?,
         val date: LocalDate?,
