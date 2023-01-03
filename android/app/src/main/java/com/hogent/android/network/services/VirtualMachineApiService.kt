@@ -8,7 +8,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 
-private const val API = "vm"
+private const val API = "vm/"
 private val retrofit = Config.createRetrofit(API)
 
 interface VirtualMachineApiService{

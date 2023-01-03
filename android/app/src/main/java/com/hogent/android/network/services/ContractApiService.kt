@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-private const val API = "contract"
+private const val API = "contract/"
 private val retrofit = Config.createRetrofit(API)
 
 

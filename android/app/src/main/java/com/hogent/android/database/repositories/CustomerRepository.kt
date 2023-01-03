@@ -1,6 +1,7 @@
 package com.hogent.android.database.repositories
 
 import com.hogent.android.database.entities.Customer
+import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.util.AuthenticationManager
 
@@ -21,7 +22,7 @@ class CustomerRepository(private  val customer_id: Long? = -1) {
         return customerApi.registerCustomer(customer)
     }
     suspend fun login(email: String, password: String): Customer?{
-        val customer: Customer? = customerApi.loginCustomer(email, password)
+        val customer: Customer? = customerApi.loginCustomer(LoginCredentials(email, password))
         if(customer != null){
             AuthenticationManager.setCustomer(customer)
         }

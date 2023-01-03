@@ -4,6 +4,7 @@ package com.hogent.android.ui.login
 import android.text.Editable
 import androidx.lifecycle.*
 import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,9 +50,7 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
             if(_mail.value == null || _pass.value == null){
                 _errorToastLogin.postValue(true);
             }else{
-                //val manager: AuthenticationManager = AuthenticationManager.getInstance(application);
-                //manager.login(_mail.value!!, _pass.value!!)
-                repository.login(_mail.value.toString(), _pass.value.toString())
+                repository.login(mail.value.toString(), _pass.value.toString())
                 if(AuthenticationManager.loggedIn()){
                     _successToastLogin.postValue(true);
                     _navigateToProfile.postValue(true);

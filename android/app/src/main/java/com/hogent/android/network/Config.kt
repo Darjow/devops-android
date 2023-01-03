@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class Config {
     companion object{
-        const val BASE_URL = "http://localhost:9000/api/"
+        const val BASE_URL = "http://10.0.2.2:9000/api/"
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()

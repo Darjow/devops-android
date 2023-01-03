@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-private const val API = "project"
+private const val API = "project/"
 private val retrofit = Config.createRetrofit(API)
 
 interface ProjectApiService {
