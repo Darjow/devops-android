@@ -1,5 +1,6 @@
 {
   "name": "android_api",
+  "license": "MIT",
   "scripts": {
     "start": "nodemon src/index.js"
   },

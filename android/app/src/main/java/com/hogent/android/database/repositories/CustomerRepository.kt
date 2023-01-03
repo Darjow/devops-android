@@ -18,7 +18,7 @@ class CustomerRepository(private  val customer_id: Long? = -1) {
     suspend fun getAll(): List<Customer>?{
         return customerApi.getCustomers();
     }
-    suspend fun registerCustomer(customer: Customer): Customer{
+    suspend fun registerCustomer(customer: Customer): Customer {
         return customerApi.registerCustomer(customer)
     }
     suspend fun login(email: String, password: String): Customer?{
