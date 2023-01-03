@@ -21,7 +21,6 @@ interface VirtualMachineDao {
     @Query("SELECT * FROM virtualmachine_table WHERE projectId = :key")
     fun getByProjectId(key: Long): List<VirtualMachine>?
 
-
 }
 
 
