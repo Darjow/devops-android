@@ -21,7 +21,7 @@ interface ProjectApiService {
     suspend fun getById(@Path("id") id: Long): Project?
 
     @GET("customer/:id")
-    suspend fun getByCustomerId(@Path("id") id: Long): List<Project>?
+    suspend fun getByCustomerId(@Path("id") id: Int): List<Project>?
 
     }
 
