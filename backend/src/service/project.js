@@ -2,7 +2,7 @@ const repoProject = require('../repository/project')
 
 const getAll = async () => {
   const projects = await repoProject.getAll();
-  return {projects}
+  return projects
 }
 
 const getProjectById = async (id) => {
@@ -10,7 +10,7 @@ const getProjectById = async (id) => {
    if(!project){
     return "Geen project gevonden"
   }
-  return {project}
+  return project
 }
 
 const getByCustomerId = async (cust_id) => {
@@ -18,7 +18,7 @@ const getByCustomerId = async (cust_id) => {
    if(!project){
     return "Geen project gevonden"
   }
-  return {project}
+  return project
 }
 
 module.exports = {
