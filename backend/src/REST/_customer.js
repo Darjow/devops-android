@@ -8,8 +8,8 @@ const getCustomers = async (ctx) => {
 const login = async (ctx) => {
     ctx.body = await customerService.loginCustomer(
       {
-        email : ctx.request.body.email,
-        password : ctx.request.body.password
+        email : ctx.request.body.loginCredentials.email,
+        password : ctx.request.body.loginCredentials.password
       })
 }
 const register = async(ctx) => {
