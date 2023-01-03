@@ -1,8 +1,8 @@
 package com.hogent.android.database.repositories
 
-import com.hogent.android.database.entities.Contract
-import com.hogent.android.database.entities.Project
-import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.entities.Contract
+import com.hogent.android.entities.Project
+import com.hogent.android.entities.VirtualMachine
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
