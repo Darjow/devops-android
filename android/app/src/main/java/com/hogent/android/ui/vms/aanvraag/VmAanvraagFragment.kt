@@ -21,6 +21,7 @@ import com.hogent.android.database.entities.BackupType
 import com.hogent.android.database.entities.OperatingSystem
 import com.hogent.android.database.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
+import com.hogent.android.util.clearForm
 import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.NonDisposableHandle.parent
 import timber.log.Timber
@@ -52,7 +53,7 @@ class VmAanvraagFragment : Fragment(){
         vmAanvraagView.success.observe(viewLifecycleOwner) {
             if (it) {
                 Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
-                clearForm(binding.vmaanvraaglayout)
+                binding.vmaanvraaglayout.clearForm()
                 vmAanvraagView.doneSuccess()
 
             }
@@ -61,19 +62,6 @@ class VmAanvraagFragment : Fragment(){
         return binding.root
     }
 
-
-    private fun clearForm(parent: ViewGroup){
-        for (i in 0 until parent.childCount){
-            when(val child = parent.getChildAt(i)){
-                is Spinner -> child.setSelection(0)//geen waarde voor spinner
-                is EditText -> child.setText("")
-                is SeekBar -> child.progress = 0
-                is DatePicker -> child.updateDate(LocalDate.now().year, LocalDate.now().monthValue, LocalDate.now().dayOfMonth)
-                is RadioGroup -> child.clearCheck()
-                is ViewGroup -> clearForm(child) //recursief om de edit en spinners te clearen
-            }
-        }
-    }
 
 
     private fun initializeComponents(binding: AddvmFragmentBinding) {
