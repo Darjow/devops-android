@@ -5,9 +5,9 @@ const getAll = async () => {
   return {customers}
 }
 
-const updateCustomerById = async (id, {contactpersoon1_c,contactpersoon2_c}) => {
-  console.log(id, contactpersoon1_c, contactpersoon2_c)
-  await repoCustomer.updateCustomerById(id, contactpersoon1_c, contactpersoon2_c);
+const updateCustomerById = async (id, {customer}) => {
+  console.log(id, customer)
+  await repoCustomer.updateCustomerById(id, customer);
   return repoCustomer.getCustomerById(id)
 }
 

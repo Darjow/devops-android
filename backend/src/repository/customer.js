@@ -4,11 +4,11 @@ const getAll = async () => {
   return await getKnex()(tables.project).select();
 }
 
-const updateCustomerById = async (id, contactpersoon1_c,contactpersoon2_c) => {
+const updateCustomerById = async (id, customer) => {
     await getKnex()(tables.customer)
           .update({
-            contactpersoon1 :contactpersoon1_c,
-            contactpersoon2 : contactpersoon2_c
+            "contactpersoon1" : customer.contactpersoon1,
+            "contactpersoon2" : customer.contactpersoon2
           })
           .where("id", id)
     return id
