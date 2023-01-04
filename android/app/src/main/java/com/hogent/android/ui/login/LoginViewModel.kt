@@ -29,9 +29,6 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
     }
 
 
-    private val _navigateToProfile = MutableLiveData<Boolean>()
-    val navigateToProfile : LiveData<Boolean>
-        get() = _navigateToProfile;
 
     private val _navToRegister = MutableLiveData<Boolean>()
     val navToRegister : LiveData<Boolean>
@@ -41,47 +38,40 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
     val errorToast:  LiveData<Boolean>
         get() = _errorToastLogin
 
-    private val _successToastLogin = MutableLiveData<Boolean>()
-    val successToast:  LiveData<Boolean>
-        get() = _successToastLogin
+    private val _success = MutableLiveData<Boolean>()
+    val success:  LiveData<Boolean>
+        get() = _success
 
 
     fun login() {
         viewModelScope.launch() {
-            if(_mail.value == null || _pass.value == null){
+            if (_mail.value == null || _pass.value == null) {
                 _errorToastLogin.postValue(true);
-            }else{
-                try {
-                    repository.login(mail.value.toString(), _pass.value.toString())
-                }catch(e: java.lang.Exception){
-                    Timber.e(e.message)
-                    Timber.e(e.stackTraceToString())
-                }
+                return@launch
+            }
 
-                if(AuthenticationManager.loggedIn()){
-                    _successToastLogin.postValue(true);
-                    _navigateToProfile.postValue(true);
+            repository.login(mail.value.toString(), _pass.value.toString()).let {
+                if (it != null) {
+                    _success.postValue(true)
                 }else{
                     _errorToastLogin.postValue(true)
                 }
             }
         }
-
     }
 
     fun navToRegister(){
         _navToRegister.postValue(true);
     }
-
     fun doneNavigating() {
         _navToRegister.postValue(false);
-        _navigateToProfile.postValue(false);
     }
+
     fun doneErrorToast(){
         _errorToastLogin.postValue(false);
     }
-    fun doneSuccessToast(){
-        _successToastLogin.postValue(false);
+    fun doneSuccess(){
+        _success.postValue(false);
     }
 
 

@@ -36,7 +36,7 @@ class AuthenticationManager() {
             }
             return instance.loggedIn()
         }
-        fun setCustomer(customer: Customer){
+        fun setCustomer(customer: Customer?){
             if (!::instance.isInitialized) {
                 throw IllegalArgumentException("")
             }else{

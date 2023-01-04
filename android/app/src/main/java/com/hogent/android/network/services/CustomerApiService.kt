@@ -6,6 +6,7 @@ import com.hogent.android.network.Config
 import com.hogent.android.network.dtos.LoginCredentials
 import com.squareup.moshi.Types
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,13 +22,10 @@ interface CustomerService{
     suspend fun getCustomers(): List<Customer>?
 
     @POST("login")
-    suspend fun loginCustomer(@Body loginCredentials: LoginCredentials): Customer?
+    suspend fun loginCustomer(@Body loginCredentials: LoginCredentials): Response<Customer?>
 
     @POST
     suspend fun registerCustomer(@Body customer: Customer): Customer
-
-    @GET("{id}")
-    suspend fun getCustomerById(@Path("id") id: Int): Customer?
 
     @PUT("{id}")
     suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: Customer): Customer?

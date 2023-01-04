@@ -1,7 +1,9 @@
 package com.hogent.android.network
 
+import com.hogent.android.database.entities.Customer
 import com.hogent.android.network.Config.Companion.moshi
 import com.squareup.moshi.*
+import com.squareup.moshi.internal.NullSafeJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

@@ -30,11 +30,12 @@ class LoginFragment : Fragment() {
         binding.root.closeKeyboardOnTouch();
 
 
-        loginView.navigateToProfile.observe(viewLifecycleOwner, Observer {
+        loginView.success.observe(viewLifecycleOwner, Observer {
             if (it) {
-                NavHostFragment.findNavController(this)
-                    .navigate(LoginFragmentDirections.loginToProfile(AuthenticationManager.getCustomer()!!.id!!));
-                loginView.doneNavigating();
+                Toast.makeText(requireContext(), "Welkom terug!", Toast.LENGTH_SHORT)
+                    .show();
+                NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginToProfile());
+                loginView.doneSuccess();
             }
         });
 
@@ -52,13 +53,7 @@ class LoginFragment : Fragment() {
                 loginView.doneErrorToast();
             }
         })
-        loginView.successToast.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                Toast.makeText(requireContext(), "Welkom terug!", Toast.LENGTH_SHORT)
-                    .show();
-                loginView.doneSuccessToast();
-            }
-        })
+
 
         Toast.makeText(context, "Log in met je account", Toast.LENGTH_SHORT).show()
         return binding.root

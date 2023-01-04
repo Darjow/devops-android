@@ -1,16 +1,18 @@
 package com.hogent.android.database.repositories
 
+import androidx.lifecycle.LiveData
 import com.hogent.android.database.entities.Customer
 import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.util.AuthenticationManager
+import com.hogent.android.util.TimberUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.await
 import timber.log.Timber
 
-class CustomerRepository(private  val customer_id: Int? = -1) {
+class CustomerRepository {
 
     private val customerApi = CustomerApi.service;
 
@@ -24,13 +26,15 @@ class CustomerRepository(private  val customer_id: Int? = -1) {
         return customerApi.registerCustomer(customer)
     }
 
-    suspend fun login(email: String, password: String): Customer?{
-        Timber.d("Login request")
-        val customer: Customer? = customerApi.loginCustomer(LoginCredentials(email, password))
-        if(customer != null){
-            AuthenticationManager.setCustomer(customer!!)
+    suspend fun login(email: String, password: String): Customer? {
+        val response = customerApi.loginCustomer(LoginCredentials(email, password))
+        TimberUtils.logRequest(response)
+
+        if(response.isSuccessful){
+            response.body()?.let{
+                AuthenticationManager.setCustomer(it)
+            }
         }
-        Timber.d(String.format("Customer is null? %s", (customer == null).toString()))
-        return customer;
+        return response.body();
     }
 }
