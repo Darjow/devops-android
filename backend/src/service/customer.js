@@ -30,7 +30,7 @@ const loginCustomer = async ({email,password}) => {
   if(customer){
     return customer[0];
   }
-  return null
+  return ""
 }
 
 module.exports = {
