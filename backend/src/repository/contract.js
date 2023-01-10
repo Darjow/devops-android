@@ -4,11 +4,11 @@ const getAll = async () => {
   return getKnex()(tables.contract).select();
 }
 
-const addContract = async ({start, end}) => {
+const addContract = async (start, end) => {
     try {    
-        const [id] = await getKnex()(tables.contract).insert({
-        start_date : start,
-        end_date: end})  
+        [id] = await getKnex()(tables.contract).insert({
+        startDate : start,
+        endDate: end})
         return id
     } catch (error) {
         console.log(error)

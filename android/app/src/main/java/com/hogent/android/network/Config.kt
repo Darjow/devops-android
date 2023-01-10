@@ -8,6 +8,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.lang.reflect.Type
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class Config {
@@ -16,6 +21,7 @@ class Config {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .add(LocalDateAdapter())
+            .add(OffsetDateTimeAdapter())
             .build()
 
         fun createRetrofit(endpoint : String): Retrofit{
@@ -45,7 +51,9 @@ public class LocalDateAdapter : JsonAdapter<LocalDate>() {
             reader.nextNull<Unit>()
             return null
         }
-        return LocalDate.parse(reader.nextString())
+        val dateString = reader.nextString()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        return LocalDate.from(LocalDateTime.parse(dateString, formatter))
     }
 }
 
@@ -61,3 +69,22 @@ class NullOnEmptyConverterFactory : Converter.Factory() {
     }
 }
 
+
+public class OffsetDateTimeAdapter : JsonAdapter<OffsetDateTime>() {
+
+    @ToJson
+    override fun toJson(writer: JsonWriter, value: OffsetDateTime?) {
+    }
+
+    @FromJson
+    override fun fromJson(reader: JsonReader): OffsetDateTime? {
+        if (reader.peek() == JsonReader.Token.NULL) {
+            reader.nextNull<Unit>()
+            return null
+        }
+        return OffsetDateTime.parse(
+            reader.nextString(),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        )
+    }
+}

@@ -6,9 +6,10 @@ const getContracts = async (ctx) => {
 }
 
 const addContract = async (ctx) => {
-  contract = await contractService.addContract(ctx.request.body)
-  console.log("added contract : \n")
-  console.log(contract)
+  contract = await contractService.addContract({
+    start : ctx.request.body.start,
+    end : ctx.request.body.end
+  })
   ctx.body = contract
     
 }

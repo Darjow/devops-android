@@ -11,7 +11,10 @@ const addContract = async ({start, end}) => {
     console.log("adding contract with these parameters: " + start + ' ' + end)
     try {    
         const id = await contractRepo.addContract(start,end);
-        return contractRepo.getContractById(id)
+        const contract = await getContractById(id)
+        console.log("Contract is toegevoegd: ")
+        console.log(contract)
+        return contract[0]
     } catch (error) {
         console.log(error)
     }

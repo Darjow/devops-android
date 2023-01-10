@@ -2,6 +2,8 @@ package com.hogent.android.network.services
 
 import com.hogent.android.data.entities.Contract
 import com.hogent.android.network.Config
+import com.hogent.android.network.dtos.ContractDto
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,8 +18,8 @@ interface ContractApiService{
     @GET("{id}")
     suspend fun getById(@Path("id") id: Int): Contract?
 
-    @POST
-    suspend fun createContract(@Body contract: Contract): Contract
+    @POST(".")
+    suspend fun createContract(@Body dto: ContractDto): Response<Contract>
 
 }
 
