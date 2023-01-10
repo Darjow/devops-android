@@ -1,5 +1,6 @@
 package com.hogent.android.data.entities
 
+import androidx.room.Embedded
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,7 +14,7 @@ data class Customer(
     @Json(name = "phonenumber")
     val phoneNumber: String,
     val email: String,
-    val password: String,
+    val password: String?, //voor security geen password verplicht, enkel voor registratie (je zou mss gewoon u registerform kunnen meegeven met de repo ipv customer meegeven)
     var bedrijf_opleiding: String = Course.NONE.toString(),
     var contactPs1: ContactDetails1? = ContactDetails1(),
     var contactPs2: ContactDetails2? = ContactDetails2(),

@@ -7,8 +7,14 @@ const getAll = async () => {
 const updateCustomerById = async (id, customer) => {
     await getKnex()(tables.customer)
           .update({
-            "contactpersoon1" : customer.contactpersoon1,
-            "contactpersoon2" : customer.contactpersoon2
+            "contact1_phone" : customer.contactPs1.contact1_phone,
+            "contact1_email" : customer.contactPs1.contact1_email,
+            "contact1_firstname": customer.contactPs1.contact1_firstname,
+            "contact1_lastname": customer.contactPs1.contact1_lastname,
+            "contact2_phone" : customer.contactPs2.contact2_phone,
+            "contact2_email" : customer.contactPs2.contact2_email,
+            "contact2_firstname": customer.contactPs2.contact2_firstname,
+            "contact2_lastname": customer.contactPs2.contact2_lastname,
           })
           .where("id", id)
     return id
@@ -18,14 +24,15 @@ const getCustomerById = async (id) => {
   return await getKnex()(tables.customer).select().where("id",id)
 }
 
+//const registerCustomer = async (customer)
 const registerCustomer = async (firstname_c, lastname_c, email_c, password_c, phonenumber_c, bedrijf_opleiding_c,
   contactpersoon1_phone_c ,contactpersoon1_email_c ,contactpersoon1_firstname_c ,contactpersoon1_lastname_c ,contactpersoon2_phone_c ,
 contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c) => {
   try{
     const [id] = await getKnex()(tables.customer).insert({
       email: email_c,
-      phonenumber : phonenumber_c , 
-      firstname : firstname_c,
+      phonenumber : phonenumber_c , //customer.phonenumber
+      firstname : firstname_c,  //....
       lastname : lastname_c,
       password: password_c,
       bedrijf_opleiding : bedrijf_opleiding_c,

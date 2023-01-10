@@ -4,6 +4,7 @@ package com.hogent.android.network.services
 import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.Config
 import com.hogent.android.network.dtos.LoginCredentials
+import com.hogent.android.network.dtos.Register
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,10 +21,10 @@ interface CustomerService{
     suspend fun getCustomers(): List<Customer>?
 
     @POST("login")
-    suspend fun loginCustomer(@Body loginCredentials: LoginCredentials): Response<Customer>
+    suspend fun loginCustomer(@Body dto: LoginCredentials): Response<Customer>
 
     @POST(".")
-    suspend fun registerCustomer(@Body customer: Customer): Customer
+    suspend fun registerCustomer(@Body dto: Register): Customer
 
     @PUT("{id}")
     suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: Customer): Customer?

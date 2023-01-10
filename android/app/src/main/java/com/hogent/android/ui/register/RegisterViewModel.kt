@@ -81,15 +81,8 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
                 else{
 
                     Timber.d("MAKING CUSTOMER")
-                    val c = Customer(
-                        email = registerForm.value!!.inputEmail,
-                        firstName = registerForm.value!!.inputFirstName,
-                        lastName = registerForm.value!!.inputLastName,
-                        phoneNumber = registerForm.value!!.inputPhoneNumber,
-                        password = registerForm.value!!.inputPassword
-                    )
-                    Timber.d(c.toString())
-                    repo.registerCustomer(c);
+                    Timber.d(registerForm.value.toString())
+                    repo.registerCustomer(registerForm.value!!);
                     _navigateHome.postValue(true)
                 }
             }
