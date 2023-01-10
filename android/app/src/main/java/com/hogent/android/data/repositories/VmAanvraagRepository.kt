@@ -6,6 +6,8 @@ import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
+import timber.log.Timber
+import java.util.*
 
 
 class VmAanvraagRepository() {
@@ -20,10 +22,10 @@ class VmAanvraagRepository() {
     suspend fun create(form: RequestForm){
         val hardware = HardWare(form.memory!!, form.storage!!, form.cpuCoresValue!!)
         val backup = Backup(form.backUpType, null)
-        val contract = contractApi.createContract(Contract(form.startDate!!, form.endDate!!))
+        val contract = contractApi.createContract(Contract(form.startDate!!, form.endDate!!, active = 0))
         val vm = VirtualMachine(name = form.naamVm!!, status = VirtualMachineStatus.AANGEVRAAGD, mode = form.modeVm!!, hardware = hardware, backup = backup, operatingSystem = form.os!!, contractId = contract.id, projectId = form.project_id!!)
+        Timber.d(vm.toString())
         vmApi.createVM(vm)
-
     }
 
     suspend fun getProjecten(): List<Project>?{

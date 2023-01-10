@@ -16,7 +16,7 @@ interface ContractApiService{
     @GET("{id}")
     suspend fun getById(@Path("id") id: Long): Contract?
 
-    @POST
+    @POST(".")
     suspend fun createContract(@Body contract: Contract): Contract
 
 }

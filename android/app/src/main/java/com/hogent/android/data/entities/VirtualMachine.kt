@@ -89,6 +89,7 @@ enum class OperatingSystem {
     )
 
     enum class BackupType() {
+        GEEN,
         DAGELIJKS,
         WEKELIJKS,
         MAANDELIJKS;

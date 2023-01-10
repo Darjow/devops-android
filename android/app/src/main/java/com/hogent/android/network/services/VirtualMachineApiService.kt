@@ -16,7 +16,7 @@ interface VirtualMachineApiService{
     @GET("{id}")
     suspend fun getById(@Path("id") id: Long): VirtualMachine?
 
-    @POST
+    @POST(".")
     suspend fun createVM(@Body vm: VirtualMachine): VirtualMachine
 
     @GET("project/{id}")
