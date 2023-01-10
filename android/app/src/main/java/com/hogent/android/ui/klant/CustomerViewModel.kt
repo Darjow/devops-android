@@ -206,6 +206,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     init {
         if(!AuthenticationManager.loggedIn()){
+            Timber.d("yo momma gay");
             _failsafeRedirect.postValue(true)
         }else{
             _klant.postValue(AuthenticationManager.getCustomer())
