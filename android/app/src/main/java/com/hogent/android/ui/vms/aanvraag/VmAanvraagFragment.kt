@@ -2,31 +2,23 @@ package com.hogent.android.ui.vms.aanvraag
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
-import androidx.core.view.marginBottom
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
-import com.hogent.android.database.entities.BackupType
-import com.hogent.android.database.entities.OperatingSystem
-import com.hogent.android.database.repositories.VmAanvraagRepository
+import com.hogent.android.data.entities.BackupType
+import com.hogent.android.data.entities.OperatingSystem
+import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
 import com.hogent.android.util.clearForm
 import com.hogent.android.util.closeKeyboardOnTouch
-import kotlinx.coroutines.NonDisposableHandle.parent
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.Month
-import java.util.*
 
 class VmAanvraagFragment : Fragment(){
 

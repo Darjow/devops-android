@@ -1,4 +1,4 @@
-package com.hogent.android.database.entities
+package com.hogent.android.data.entities
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

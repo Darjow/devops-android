@@ -2,7 +2,7 @@ package com.hogent.android.ui.vms.overview
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.hogent.android.database.repositories.VmOverviewRepository
+import com.hogent.android.data.repositories.VmOverviewRepository
 
 class VMListViewModelFactory( private val vmOverviewRepository: VmOverviewRepository): ViewModelProvider.Factory {
 

@@ -3,8 +3,8 @@ package com.hogent.android.ui.vms.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.entities.*
-import com.hogent.android.database.repositories.VmOverviewRepository
+import com.hogent.android.data.entities.*
+import com.hogent.android.data.repositories.VmOverviewRepository
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber

@@ -1,11 +1,10 @@
-package com.hogent.android.database.daos
+package com.hogent.android.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.hogent.android.database.entities.Customer
-import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.data.entities.VirtualMachine
 
 @Dao
 interface VirtualMachineDao {

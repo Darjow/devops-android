@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.database.repositories.VmOverviewRepository
+import com.hogent.android.data.repositories.VmOverviewRepository
 import com.hogent.android.databinding.FragmentVmlistBinding
 import com.hogent.android.util.closeKeyboardOnTouch
 import timber.log.Timber

@@ -1,9 +1,8 @@
 package com.hogent.android.ui.vms.aanvraag
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.hogent.android.database.repositories.VmAanvraagRepository
+import com.hogent.android.data.repositories.VmAanvraagRepository
 
 class VmAanvraagFactoryModel(private val vmAanvraagRepository: VmAanvraagRepository): ViewModelProvider.Factory {
 

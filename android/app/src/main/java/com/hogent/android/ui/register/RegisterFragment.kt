@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
-import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentRegisterBinding
 import com.hogent.android.ui.login.LoginFragment
 import com.hogent.android.util.closeKeyboardOnTouch

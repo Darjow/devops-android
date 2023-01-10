@@ -27,11 +27,11 @@ const registerCustomer = async ({firstname_c, lastname_c, email_c, password_c, p
 }
 
 const loginCustomer = async ({email,password}) => {
-  const customer = await repoCustomer.loginCustomer(email, password)
+  const customer = await repoCustomer.loginCustomer(email, password)[0]
   if(customer){
-    return customer[0];
+    return customer;
   }
-  return ""
+  return null;
 }
 
 module.exports = {

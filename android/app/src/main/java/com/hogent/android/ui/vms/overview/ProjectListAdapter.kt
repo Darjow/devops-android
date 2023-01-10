@@ -1,6 +1,5 @@
 package com.hogent.android.ui.vms.overview
 
-import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.database.entities.Project
-import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.data.entities.Project
+import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.devOps_Android.ui.vms.overview.VirtualMachineListAdapter
-import timber.log.Timber
 
 class ProjectListAdapter(
     private val projectList: List<Project>,

@@ -1,12 +1,9 @@
 package com.hogent.android.ui.components.forms
 
-import androidx.lifecycle.MutableLiveData
-import com.hogent.android.database.entities.BackupType
-import com.hogent.android.database.entities.OperatingSystem
-import com.hogent.android.database.entities.VirtualMachineModus
-import java.text.Normalizer.Form
+import com.hogent.android.data.entities.BackupType
+import com.hogent.android.data.entities.OperatingSystem
+import com.hogent.android.data.entities.VirtualMachineModus
 import java.time.LocalDate
-import java.util.*
 
 data class RequestForm(
      var naamVm : String? = "",

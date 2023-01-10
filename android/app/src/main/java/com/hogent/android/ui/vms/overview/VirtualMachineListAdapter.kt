@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.ui.vms.overview.VMListFragmentDirections
 import com.hogent.android.util.AuthenticationManager
 

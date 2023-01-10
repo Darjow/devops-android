@@ -11,9 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
-import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentLoginBinding
-import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.closeKeyboardOnTouch
 
 class LoginFragment : Fragment() {

@@ -3,12 +3,11 @@ package com.hogent.android.ui.register
 import android.app.Application
 import android.text.Editable
 import android.widget.Toast
-import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.entities.Customer
-import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.data.entities.Customer
+import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.RegisterForm
 import kotlinx.coroutines.*
 import timber.log.Timber
