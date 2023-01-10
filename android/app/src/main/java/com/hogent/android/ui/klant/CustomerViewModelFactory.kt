@@ -2,8 +2,7 @@ package com.hogent.android.ui.klant
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.hogent.android.database.daos.CustomerDao
-import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.data.repositories.CustomerRepository
 
 class CustomerViewModelFactory(private val customerRepo: CustomerRepository) : ViewModelProvider.Factory{
 

@@ -1,7 +1,7 @@
 package com.hogent.android.util
 
 import androidx.lifecycle.MutableLiveData
-import com.hogent.android.database.entities.Customer
+import com.hogent.android.data.entities.Customer
 
 
 class AuthenticationManager() {

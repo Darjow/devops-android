@@ -35,11 +35,11 @@ contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c
 }
 
 const loginCustomer = async ({email,password}) => {
-  const customer = await repoCustomer.loginCustomer(email, password)
+  const customer = await repoCustomer.loginCustomer(email, password)[0]
   if(customer){
-    return customer[0];
+    return customer;
   }
-  return ""
+  return null;
 }
 
 module.exports = {

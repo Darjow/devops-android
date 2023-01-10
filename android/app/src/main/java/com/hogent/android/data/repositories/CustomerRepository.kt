@@ -1,16 +1,11 @@
-package com.hogent.android.database.repositories
+package com.hogent.android.data.repositories
 
-import androidx.lifecycle.LiveData
-import com.hogent.android.database.entities.Customer
+import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.await
-import timber.log.Timber
+import java.net.HttpURLConnection
 
 class CustomerRepository {
 
@@ -27,14 +22,11 @@ class CustomerRepository {
     }
 
     suspend fun login(email: String, password: String): Customer? {
-        val response = customerApi.loginCustomer(LoginCredentials(email, password))
+        val response  = customerApi.loginCustomer(LoginCredentials(email, password))
         TimberUtils.logRequest(response)
-
-        if(response.isSuccessful){
-            response.body()?.let{
-                AuthenticationManager.setCustomer(it)
-            }
+        if(response.code() == HttpURLConnection.HTTP_OK) {
+            return response.body();
         }
-        return response.body();
+        return null;
     }
 }

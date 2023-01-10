@@ -1,6 +1,6 @@
 package com.hogent.android.network.services
 
-import com.hogent.android.database.entities.Contract
+import com.hogent.android.data.entities.Contract
 import com.hogent.android.network.Config
 import retrofit2.http.Body
 import retrofit2.http.GET

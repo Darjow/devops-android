@@ -1,13 +1,8 @@
 package com.hogent.android.network.services
 
-import androidx.room.Insert
-import androidx.room.Query
-import com.hogent.android.database.entities.Project
-import com.hogent.android.database.entities.VirtualMachine
+import com.hogent.android.data.entities.Project
 import com.hogent.android.network.Config
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
 private const val API = "project/"

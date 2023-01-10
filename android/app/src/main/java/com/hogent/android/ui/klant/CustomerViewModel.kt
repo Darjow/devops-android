@@ -3,21 +3,16 @@ package com.hogent.android.ui.klant
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.*
-import androidx.navigation.NavGraph
-import androidx.navigation.NavHost
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import com.hogent.android.database.entities.ContactDetails1
-import com.hogent.android.database.entities.ContactDetails2
-import com.hogent.android.database.entities.Customer
-import com.hogent.android.database.repositories.CustomerRepository
+import com.hogent.android.data.entities.ContactDetails1
+import com.hogent.android.data.entities.ContactDetails2
+import com.hogent.android.data.entities.Customer
+import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {

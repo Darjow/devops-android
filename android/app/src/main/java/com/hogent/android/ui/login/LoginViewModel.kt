@@ -3,12 +3,8 @@ package com.hogent.android.ui.login
 
 import android.text.Editable
 import androidx.lifecycle.*
-import com.hogent.android.database.repositories.CustomerRepository
-import com.hogent.android.network.dtos.LoginCredentials
-import com.hogent.android.util.AuthenticationManager
-import kotlinx.coroutines.Dispatchers
+import com.hogent.android.data.repositories.CustomerRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class LoginViewModel(val repository: CustomerRepository): ViewModel(){
 

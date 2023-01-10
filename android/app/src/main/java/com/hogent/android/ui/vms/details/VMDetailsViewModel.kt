@@ -1,13 +1,12 @@
 
 package com.hogent.android.ui.vms.details
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.database.entities.Contract
-import com.hogent.android.database.entities.VirtualMachine
-import com.hogent.android.database.repositories.VmDetailRepository
+import com.hogent.android.data.entities.Contract
+import com.hogent.android.data.entities.VirtualMachine
+import com.hogent.android.data.repositories.VmDetailRepository
 import kotlinx.coroutines.runBlocking
 
 class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {

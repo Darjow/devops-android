@@ -1,8 +1,6 @@
-package com.hogent.android.database.entities
+package com.hogent.android.data.entities
 import androidx.core.text.isDigitsOnly
-import androidx.room.*
 import com.squareup.moshi.JsonClass
-import org.json.JSONObject
 import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)

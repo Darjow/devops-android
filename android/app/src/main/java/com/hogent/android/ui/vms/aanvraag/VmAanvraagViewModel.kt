@@ -1,13 +1,11 @@
 package com.hogent.android.ui.vms.aanvraag
 
 import android.text.Editable
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.R
-import com.hogent.android.database.entities.*
-import com.hogent.android.database.repositories.VmAanvraagRepository
+import com.hogent.android.data.entities.*
+import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.ui.components.forms.RequestForm
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber

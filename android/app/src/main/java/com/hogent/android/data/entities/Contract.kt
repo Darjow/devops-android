@@ -1,6 +1,5 @@
-package com.hogent.android.database.entities
+package com.hogent.android.data.entities
 
-import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 

@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
-import com.hogent.android.database.repositories.VmDetailRepository
+import com.hogent.android.data.repositories.VmDetailRepository
 import com.hogent.android.databinding.FragmentVmDetailsBinding
 
 class VMDetailsFragment : Fragment() {

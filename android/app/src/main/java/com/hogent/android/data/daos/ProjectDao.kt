@@ -1,7 +1,7 @@
-package com.hogent.android.database.daos
+package com.hogent.android.data.daos
 
 import androidx.room.*
-import com.hogent.android.database.entities.Project
+import com.hogent.android.data.entities.Project
 
 @Dao
 interface ProjectDao {
