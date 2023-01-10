@@ -29,6 +29,7 @@ class VMListViewModel(private val repo: VmOverviewRepository) : ViewModel() {
 
             _projecten.value = repo.getByCustomerId(customerId)
             Timber.d(String.format("Landed on vmlist viewmodel page, this user has %d projects", projecten.value?.size ?: 0))
+            Timber.wtf(_projecten.value.toString())
 
             _projecten.value?.forEach { project ->
                 val projectVMs = repo.getByProjectId(project.id)

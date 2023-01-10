@@ -15,7 +15,7 @@ data class RequestForm(
      var storage : Int? = 0,
      var startDate : LocalDate?= null,
      var endDate : LocalDate? = null,
-     var project_id: Long? = 0L
+     var project_id: Int? = 0
 ): IFormValidation {
 
     var error_message = ""

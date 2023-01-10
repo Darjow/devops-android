@@ -21,7 +21,7 @@ const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm,
 
 }
 
-const getVirtualmachinesByProjectId = async ({id}) => {
+const getVirtualmachinesByProjectId = async (id) => {
     console.log("getting vm with projectid: " + id)
     const vm = await repoVm.getVirtualmachinesByProjectId(id);
     if(!vm){
@@ -29,8 +29,9 @@ const getVirtualmachinesByProjectId = async ({id}) => {
         return null
         
     }
-    console.log("returning vm: \n"+vm)
-    return vm
+    console.log("returning vm:");
+    console.log(outputVms(vm));
+    return outputVms(vm)
 }
 
 const getVirtualmachineByContractId = async ({id})=> {
@@ -40,8 +41,8 @@ const getVirtualmachineByContractId = async ({id})=> {
         console.log("geen vm gevonden")
         return null
     }
-    console.log("returning vm: \n"+vm)
-    return vm
+    console.log("returning vm: \n"+ outputVms(vm))
+    return outputVms(vm)
 }
 
 const getVirtualmachinesById= async ({id}) => {
@@ -51,15 +52,58 @@ const getVirtualmachinesById= async ({id}) => {
         console.log("geen vm gevonden")
         return null
     }
-    console.log("returning vm: "+vm)
-    return vm
+    console.log("returning vm: "+outputVms(vm))
+    return outputVms(vm)
 }
   
 
-module.exports = {
-  getAll,
-  createVm,
-  getVirtualmachinesByProjectId,
-  getVirtualmachineByContractId,
-  getVirtualmachinesById
+function outputVms(vms){
+    let output = []
+
+    for(let vm of vms){
+        let hw = {
+            memory : vm.memory,
+            storage: vm.storage,
+            cpu: vm.cpu
+        }
+        let _connection = {
+            fqdn: vm.fqdn,
+            ipAdres: vm.ipAdres,
+            username: vm.username,
+            password: vm.password
+        }
+        let _backup = {
+            latest_backup: vm.latest_backup,
+            backup_type: vm.backup_type
+        }
+
+        output.push(
+           {
+            name: vm.name,
+            connection: _connection,
+            status: vm.status,
+            operatingsystem: vm.operatingsystem,
+            hardware: hw,
+            projectId: vm.project_id,
+            mode: vm.mode,
+            contractId: vm.contract_id,
+            backup: _backup,
+            id: vm.id,
+           } 
+        )
+    }
+
+    return output;
+
+
+
+
 }
+
+module.exports = {
+    getAll,
+    createVm,
+    getVirtualmachinesByProjectId,
+    getVirtualmachineByContractId,
+    getVirtualmachinesById
+  }

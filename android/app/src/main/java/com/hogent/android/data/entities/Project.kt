@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 data class Project(
     val name : String,
     val customer_id : Long,
-    val id: Long = 0,
+    val id: Int = 0,
     )
 
 

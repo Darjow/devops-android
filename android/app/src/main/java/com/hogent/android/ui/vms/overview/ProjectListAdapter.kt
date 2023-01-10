@@ -47,7 +47,7 @@ class ProjectListAdapter(
     }
 
 
-    private fun filterVirtualMachines(projectId: Long) {
+    private fun filterVirtualMachines(projectId: Int) {
         newvirtualMachineList.clear()
         virtualmachineList?.forEach { i ->
             if (i.projectId == projectId) {

@@ -64,7 +64,7 @@
 
         <argument
             android:name="vm_id"
-            app:argType="long"
+            app:argType="integer"
             />
         <action
             android:id="@+id/action_from_detail_to_vmlist"

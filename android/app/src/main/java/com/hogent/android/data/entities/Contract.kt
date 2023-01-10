@@ -8,5 +8,5 @@ data class Contract(
     val startDate: LocalDate,
     var endDate: LocalDate,
     var active: Boolean? = false,
-    val id: Long = 0L,
+    val id: Int = 0,
 )

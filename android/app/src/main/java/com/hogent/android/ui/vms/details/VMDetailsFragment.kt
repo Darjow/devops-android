@@ -25,7 +25,7 @@ class VMDetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vm_details, container, false)
 
 
-        var vm_id : Long = arguments!!.getLong("vm_id")
+        var vm_id : Int = arguments!!.getInt("vm_id")
         val viewModelFactory = VMDetailsViewModelFactory(VmDetailRepository(vm_id))
         val viewModel = ViewModelProvider(this, viewModelFactory)[VMDetailsViewModel::class.java];
 

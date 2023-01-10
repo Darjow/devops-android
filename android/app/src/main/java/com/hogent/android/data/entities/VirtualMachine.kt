@@ -10,11 +10,11 @@ data class VirtualMachine(
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
     val operatingSystem: OperatingSystem = OperatingSystem.NONE,
     val hardware: HardWare,
-    val projectId : Long,
+    val projectId : Int,
     val mode : VirtualMachineModus = VirtualMachineModus.NONE,
-    val contractId : Long,
+    val contractId : Int,
     val backup : Backup,
-    val id: Long = 0,
+    val id: Int = 0,
 
 )
 
@@ -23,7 +23,7 @@ enum class VirtualMachineModus {
     PAAS,
     IAAS;
 
-    override fun toString(): String {
+    fun to_string(): String {
         return when (this.name) {
             "NONE" -> "Geen"
             "PAAS" -> "PaaS"
@@ -49,7 +49,7 @@ enum class OperatingSystem {
     LINUX_KALI,
     RASPBERRY_PI;
 
-    override fun toString(): String {
+    fun to_string(): String {
         val strings = this.name.split("_")
         var output = "";
 
@@ -77,7 +77,7 @@ enum class OperatingSystem {
         TERMINATED,
         AANGEVRAAGD;
 
-        override fun toString(): String {
+        fun to_string(): String {
             return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
         }
     }
@@ -93,7 +93,7 @@ enum class OperatingSystem {
         WEKELIJKS,
         MAANDELIJKS;
 
-        override fun toString(): String {
+        fun to_string(): String {
             return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
         }
     }

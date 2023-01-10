@@ -5,7 +5,7 @@ import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.VirtualMachineApi
 
-class VmDetailRepository(val vm_id : Long) {
+class VmDetailRepository(val vm_id : Int) {
 
     private val contractApi = ContractApi.retrofitService;
     private val vmApi = VirtualMachineApi.retrofitService;
@@ -16,7 +16,7 @@ class VmDetailRepository(val vm_id : Long) {
 
     }
 
-    suspend fun getContract(id: Long): Contract?{
+    suspend fun getContract(id: Int): Contract?{
         return contractApi.getById(id)
     }
 }

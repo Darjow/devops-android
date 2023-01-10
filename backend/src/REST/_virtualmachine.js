@@ -18,7 +18,7 @@ const getVirtualmachineByContractId= async (ctx) => {
 }
 
 const getVirtualmachineByProjectId= async (ctx) => {
-    ctx.body = await wmService.getVirtualmachinesByProjectId(ctx.request.body)
+    ctx.body = await wmService.getVirtualmachinesByProjectId(ctx.params.id)
 }
 
 module.exports = (app) => {

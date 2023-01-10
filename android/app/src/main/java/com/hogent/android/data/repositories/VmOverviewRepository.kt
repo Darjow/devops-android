@@ -16,7 +16,7 @@ class VmOverviewRepository {
 
     }
 
-    suspend fun getByProjectId(id: Long): List<VirtualMachine>?{
+    suspend fun getByProjectId(id: Int): List<VirtualMachine>?{
         return vmApi.getByProjectId(id)
     }
 }
