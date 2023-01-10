@@ -49,6 +49,7 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
             repository.login(mail.value.toString(), _pass.value.toString()).let {
                 if (it != null) {
                     _success.postValue(true)
+
                 }else{
                     _errorToastLogin.postValue(true)
                 }
