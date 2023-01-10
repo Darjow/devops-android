@@ -24,9 +24,14 @@ class CustomerRepository {
     suspend fun login(email: String, password: String): Customer? {
         val response  = customerApi.loginCustomer(LoginCredentials(email, password))
         TimberUtils.logRequest(response)
+
         if(response.code() == HttpURLConnection.HTTP_OK) {
-            return response.body();
+            if(response.body() != null){
+                AuthenticationManager.setCustomer(response.body())
+                return response.body();
+            }
         }
+        
         return null;
     }
 }
