@@ -1,6 +1,7 @@
 package com.hogent.android.data.repositories
 
 import com.hogent.android.data.entities.*
+import com.hogent.android.network.dtos.ContractDto
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
@@ -22,9 +23,17 @@ class VmAanvraagRepository() {
     suspend fun create(form: RequestForm){
         val hardware = HardWare(form.memory!!, form.storage!!, form.cpuCoresValue!!)
         val backup = Backup(form.backUpType, null)
-        val contract = contractApi.createContract(Contract(form.startDate!!, form.endDate!!, active = 0))
+
+        /*Dto maken*/
+        val startDate = form.startDate!!
+        val endDate = form.endDate!!
+        val dto = ContractDto(startDate, endDate)
+        val contract = contractApi.createContract(dto)
+
+        /*vm maken*/
         val vm = VirtualMachine(name = form.naamVm!!, status = VirtualMachineStatus.AANGEVRAAGD, mode = form.modeVm!!, hardware = hardware, backup = backup, operatingSystem = form.os!!, contractId = contract.id, projectId = form.project_id!!)
         Timber.d(vm.toString())
+
         vmApi.createVM(vm)
     }
 

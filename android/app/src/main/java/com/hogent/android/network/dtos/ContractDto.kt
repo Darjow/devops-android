@@ -1,3 +1,5 @@
 package com.hogent.android.network.dtos
 
-class Contract(val start) {}
+import java.time.LocalDate
+
+class ContractDto(val start : LocalDate, val end : LocalDate) {}
