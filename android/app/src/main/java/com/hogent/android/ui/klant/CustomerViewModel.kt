@@ -123,6 +123,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
                 contactps1.contact1_phone!!,
                 contactps1.contact1_firstname + " " + contactps1.contact1_lastname
             );
+            Timber.d("Contactps1: %s", contactOne.toString())
         }
         if (contactps2 != null) {
             contactTwo = ContactTwo(
@@ -182,7 +183,9 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             customer.contactPs2 = contactDetails2
         }
         viewModelScope.launch(Dispatchers.Main) {
-            repo.updateCustomer(customer.id, customer)
+            Timber.d("Sending to backend ID: %d  and customer: %s", customer.id, customer.toString())
+            val customer = repo.updateCustomer(customer.id, customer)
+            _klant.postValue(customer!!);
         }
     }
 
@@ -206,10 +209,10 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     init {
         if(!AuthenticationManager.loggedIn()){
-            Timber.d("yo momma gay");
             _failsafeRedirect.postValue(true)
         }else{
             _klant.postValue(AuthenticationManager.getCustomer())
+            Timber.d(_klant.toString())
         }
     }
 }

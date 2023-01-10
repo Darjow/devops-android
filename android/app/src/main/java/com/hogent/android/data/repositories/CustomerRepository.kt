@@ -2,6 +2,7 @@ package com.hogent.android.data.repositories
 
 import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.dtos.LoginCredentials
+import com.hogent.android.network.dtos.Register
 import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.ui.components.forms.RegisterForm
 import com.hogent.android.util.AuthenticationManager
@@ -18,11 +19,17 @@ class CustomerRepository {
     suspend fun getAll(): List<Customer>? {
         return customerApi.getCustomers()
     }
-    suspend fun registerCustomer(registerFrom: RegisterForm): Customer {
-        return customerApi.registerCustomer(
-            Customer(lastName = registerFrom.inputLastName, firstName = registerFrom.inputFirstName, email = registerFrom.inputEmail,
-            phoneNumber = registerFrom.inputPhoneNumber, password =  registerFrom.inputPassword)
-        )
+    suspend fun registerCustomer(registerForm: RegisterForm): Customer {
+        val firstname = registerForm.inputFirstName
+        val lastname = registerForm.inputLastName
+        val email = registerForm.inputEmail
+        val pw = registerForm.inputPassword
+        val phonenumber = registerForm.inputPhoneNumber
+
+        val dto = Register(firstname, lastname, email, pw, phonenumber)
+
+
+        return customerApi.registerCustomer(dto)
     }
 
     suspend fun login(email: String, password: String): Customer? {
@@ -35,7 +42,7 @@ class CustomerRepository {
                 return response.body();
             }
         }
-        
+
         return null;
     }
 }

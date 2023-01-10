@@ -81,6 +81,7 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
                 else{
 
                     Timber.d("MAKING CUSTOMER")
+                    Timber.d(registerForm.value.toString())
                     repo.registerCustomer(registerForm.value!!);
                     _navigateHome.postValue(true)
                 }
