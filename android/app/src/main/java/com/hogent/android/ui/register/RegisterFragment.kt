@@ -16,10 +16,11 @@ import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentRegisterBinding
 import com.hogent.android.ui.login.LoginFragment
 import com.hogent.android.util.closeKeyboardOnTouch
+import kotlinx.coroutines.runBlocking
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var viewModel : RegisterViewModel
+    private lateinit var viewModel: RegisterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,9 +37,10 @@ class RegisterFragment : Fragment() {
         binding.root.closeKeyboardOnTouch()
 
         Log.d("registercreated", "register fragment created")
-        viewModel.navigateHome.observe(viewLifecycleOwner, Observer{
-            if(it){
-                NavHostFragment.findNavController(this).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+        viewModel.navigateHome.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                NavHostFragment.findNavController(this)
+                    .navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 viewModel.navigated()
             }
         })
@@ -49,16 +51,21 @@ class RegisterFragment : Fragment() {
         loginFrag.arguments = bundle
 
         viewModel.navToLogin.observe(viewLifecycleOwner, Observer {
-            if(it){
-                NavHostFragment.findNavController(this).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+            if (it) {
+                NavHostFragment.findNavController(this)
+                    .navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 viewModel.navigated()
             }
         })
 
-        viewModel.requireToast.observe(viewLifecycleOwner, Observer{
-            if(it){
+        viewModel.requireToast.observe(viewLifecycleOwner, Observer {
+            if (it) {
                 println("Should send toast here")
-                Toast.makeText(requireContext(), viewModel.registerForm.value!!.getError(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    viewModel.registerForm.value!!.getError(),
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.errorSent()
             }
         })
@@ -67,3 +74,4 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 }
+

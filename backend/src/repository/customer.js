@@ -1,7 +1,7 @@
 const {tables, getKnex} = require("../data/index");
 
 const getAll = async () => {
-  return await getKnex()(tables.project).select();
+  return await getKnex()(tables.customer).select();
 }
 
 const updateCustomerById = async (id, customer) => {
@@ -18,8 +18,9 @@ const getCustomerById = async (id) => {
   return await getKnex()(tables.customer).select().where("id",id)
 }
 
-const registerCustomer = async (firstname_c, lastname_c, email_c, password_c, phonenumber_c, 
-bedrijf_c, opleiding_c, contactpersoon1_c,contactpersoon2_c) => {
+const registerCustomer = async (firstname_c, lastname_c, email_c, password_c, phonenumber_c, bedrijf_opleiding_c,
+  contactpersoon1_phone_c ,contactpersoon1_email_c ,contactpersoon1_firstname_c ,contactpersoon1_lastname_c ,contactpersoon2_phone_c ,
+contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c) => {
   try{
     const [id] = await getKnex()(tables.customer).insert({
       email: email_c,
@@ -27,10 +28,17 @@ bedrijf_c, opleiding_c, contactpersoon1_c,contactpersoon2_c) => {
       firstname : firstname_c,
       lastname : lastname_c,
       password: password_c,
-      bedrijf : bedrijf_c,
-      opleiding : opleiding_c,
-      contactpersoon1 : JSON.stringify(contactpersoon1_c),
-      contactpersoon2 : JSON.stringify(contactpersoon2_c),
+      bedrijf_opleiding : bedrijf_opleiding_c,
+
+      contact1_phone : contactpersoon1_phone_c,
+      contact1_email : contactpersoon1_email_c,
+      contact1_firstname : contactpersoon1_firstname_c,
+      contact1_lastname : contactpersoon1_lastname_c,
+
+      contact2_phone : contactpersoon2_phone_c,
+      contact2_email : contactpersoon2_email_c,
+      contact2_firstname : contactpersoon2_firstname_c,
+      contact2_lastname : contactpersoon2_lastname_c,
     });
     return id
   }catch (error){

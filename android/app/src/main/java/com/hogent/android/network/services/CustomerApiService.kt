@@ -16,13 +16,13 @@ private val retrofit = Config.createRetrofit(url)
 
 interface CustomerService{
 
-    @GET
+    @GET(".")
     suspend fun getCustomers(): List<Customer>?
 
     @POST("login")
     suspend fun loginCustomer(@Body loginCredentials: LoginCredentials): Response<Customer>
 
-    @POST
+    @POST(".")
     suspend fun registerCustomer(@Body customer: Customer): Customer
 
     @PUT("{id}")

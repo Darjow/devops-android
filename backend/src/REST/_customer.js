@@ -17,16 +17,24 @@ const login = async (ctx) => {
   console.log(temp);
 }
 const register = async(ctx) => {
+  console.log('Registering a customer....')
   ctx.body = await customerService.registerCustomer({
     firstname_c : ctx.request.body.firstname, 
     lastname_c : ctx.request.body.lastname, 
     email_c : ctx.request.body.email, 
     password_c : ctx.request.body.password, 
     phonenumber_c : ctx.request.body.phonenumber, 
-    bedrijf_c : ctx.request.body.bedrijf, 
-    opleiding_c : ctx.request.body.opleiding, 
-    contactpersoon1_c : ctx.request.body.constactpersoon1,
-    contactpersoon2_c : ctx.request.body.constactpersoon2
+    bedrijf_opleiding_c : ctx.request.body.bedrijf_opleiding,
+    /*contactps 1*/
+    contactpersoon1_phone_c : ctx.request.body.contactPs1.contact1_phone,
+    contactpersoon1_email_c : ctx.request.body.contactPs1.contact1_email,
+    contactpersoon1_firstname_c : ctx.request.body.contactPs1.contact1_firstname,
+    contactpersoon1_lastname_c : ctx.request.body.contactPs1.contact1_lastname,
+  /*contactps 2*/
+    contactpersoon2_phone_c : ctx.request.body.contactPs2.contact1_phone,
+    contactpersoon2_email_c : ctx.request.body.contactPs2.contact1_email,
+    contactpersoon2_firstname_c : ctx.request.body.contactPs2.contact1_firstname,
+    contactpersoon2_lastname_c : ctx.request.body.contactPs2.contact1_lastname,
   })
 }
 
