@@ -2,6 +2,7 @@ package com.hogent.android.ui.register
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
@@ -22,7 +23,6 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
     private val _requireToast = MutableLiveData(false)
     private val _navigateHome = MutableLiveData<Boolean>(false)
     private val _navToLogin = MutableLiveData<Boolean>(false)
-
 
     val requireToast : LiveData<Boolean>
         get() = _requireToast
@@ -64,18 +64,24 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
     }
 
     fun submitButton(){
+        Timber.d("PRESSED SUBMIT")
         if(!registerForm.value!!.isValid()) {
             Timber.d("FORM IS NOT VALID")
             _requireToast.postValue(true);
-        }else{
+        }
+        else{
             runBlocking {
-                val users = repo.getAll()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
-                if(users != null) {
-                    if (users!!.isNotEmpty()) {
+            Timber.d("EMAIL VALIDATIE")
+            val user = repo.getAll()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
+            Timber.d(user.toString())
+                if(user != null && user.isNotEmpty()) {
+                    if (user!!.isNotEmpty()) {
                         Toast.makeText(app, "Email bestaat al", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else{
+
+                    Timber.d("MAKING CUSTOMER")
                     val c = Customer(
                         email = registerForm.value!!.inputEmail,
                         firstName = registerForm.value!!.inputFirstName,
@@ -83,6 +89,7 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
                         phoneNumber = registerForm.value!!.inputPhoneNumber,
                         password = registerForm.value!!.inputPassword
                     )
+                    Timber.d(c.toString())
                     repo.registerCustomer(c);
                     _navigateHome.postValue(true)
                 }
@@ -101,8 +108,5 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
     fun errorSent() {
         _requireToast.postValue(false)
     }
-
-
-
 
 }
