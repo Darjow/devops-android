@@ -4,7 +4,7 @@ module.exports = {
   up: async (knex) => {
     await knex.schema.createTable(tables.virtualmachine, (table) => {
 
-      table.integer('id').primary();
+      table.increments('id').primary();
 
       table.string('name', 255).notNullable(); 
       table.string('status',40).notNullable();
@@ -14,7 +14,7 @@ module.exports = {
       table.integer("cpu", 10).notNullable()
       table.string('mode', 10).notNullable();
 
-      table.date('latest_backup').notNullable();
+      table.date('latest_backup');
       table.string('backup_type').notNullable();
       table.string("fqdn", 30).nullable()
       table.string("ipAdres", 20).nullable()
@@ -28,10 +28,7 @@ module.exports = {
       .onDelete("SET NULL")
       .onUpdate("CASCADE")
 
-      table.foreign('contract_id').references('contract.id')
-      .onDelete("SET NULL")
-      .onUpdate("CASCADE")
-
+      
 
     });
   },

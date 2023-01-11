@@ -21,18 +21,10 @@ const getById = async (id) =>{
 
 
 }
-//deze eeft geen parameter
-const createVm = async (/*{...vm}*/) => {
-  console.log(
-            "New vm: " + 
-                name_vm, connection_vm, status_vm, hardware_vm, 
-                operatingsystem_vm, mode_vm, backup_type_vm, 
-                latest_backup_vm, project_id_vm, contract_id_vm
-            );
-    const id = await repoVm.createVm(name_vm, connection_vm, status_vm, hardware_vm, 
-    operatingsystem_vm, mode_vm, backup_type_vm, latest_backup_vm, project_id_vm, contract_id_vm)
+const createVm = async ({...vm}) => {
+    const id = await repoVm.createVm(serializeVM(vm))
     const vmm =  await repoVm.getVirtualmachinesById(id)
-    return outputVms(vmm)
+    return outputVms(vmm[0])
 
 }
 
@@ -117,6 +109,64 @@ function OUTVM(vm){
             backup_type: vm.backup_type
         },
         id: vm.id,
+    }
+}
+
+function serializeVM(vm){
+    let _connection = vm.connection;
+    let _hardware = vm.hardware 
+    let _backup = vm.backup
+    
+    console.log("VM REceived to serialize: !!!!! +" + JSON.stringify(vm));
+    if(!vm.connection || !vm.fqdn){
+        _connection = {
+            fqdn : null,
+            ipAdres : null,
+            username : null,
+            password : null
+        }
+    }
+    if(!vm.hardware || !vm.hardware.memory){
+        _hardware = {
+            memory : null,
+            storage : null,
+            cpu : null,
+        }
+    }
+    if(!vm.backup || !vm.backup.backup_type){
+        _backup = {
+            backup_type : null,
+            date : null,
+        }   
+    }
+
+    console.log();
+    console.log();
+    console.log();
+
+    console.log(JSON.stringify(_backup));
+
+    console.log();
+    console.log();
+    console.log();
+    return {
+        id: vm.id,
+        name: vm.name,
+        status: vm.status,
+        operatingsystem: vm.operatingsystem,
+        memory: _hardware.memory,
+        storage: _hardware.storage,
+        cpu: _hardware.cpu,
+        mode: vm.mode,
+        latest_backup: _backup.date,
+        backup_type: _backup.backup_type,
+        fqdn: _connection.fqdn,
+        ipAdres: _connection.ipAdres,
+        username: _connection.username,
+        password: _connection.password,
+        project_id: vm.projectId,
+        contract_id: vm.contractId
+        
     }
 }
 
