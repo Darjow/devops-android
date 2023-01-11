@@ -45,7 +45,6 @@ class VirtualMachineListAdapter (
             holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
             holder.itemView.setOnClickListener {
-                Timber.d(String.format("VM ID :  %s", virtualmachine!!.id.toString()))
                 Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id))
             }
 

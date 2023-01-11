@@ -9,6 +9,7 @@ const DATABASE_HOST = config.get('database.host');
 const DATABASE_PORT = config.get('database.port');
 const DATABASE_USERNAME = config.get('database.username');
 const DATABASE_PASSWORD = config.get('database.password');
+const TYPECASTING = config.get("database.typeCast")
 
 let knexInstance;
 
@@ -28,6 +29,7 @@ async function initializeData() {
       user: DATABASE_USERNAME,
       password: DATABASE_PASSWORD,
       insecureAuth: true,
+      typeCast: TYPECASTING
     },
     debug: false,
 

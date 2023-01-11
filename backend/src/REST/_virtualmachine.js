@@ -1,24 +1,28 @@
 const Router = require("@koa/router");
-const wmService = require("../service/virtualmachine");
+const vmService = require("../service/virtualmachine");
 
 
 const createVirtualmachine = async (ctx) => {
-  const newVM= await wmService.createVm(ctx.request.body);
+  const newVM= await vmService.createVm(ctx.request.body);
   ctx.body = newVM;
   ctx.status = 201;
 }
 
+const getVirtualMachineById = async (ctx) => {
+  ctx.body = await vmService.getById(ctx.params.id);
+}
+
 
 const getVirtualmachines = async (ctx) => {
-  ctx.body = await wmService.getAll();
+  ctx.body = await vmService.getAll();
 }
 
 const getVirtualmachineByContractId= async (ctx) => {
-    ctx.body = await wmService.getVirtualmachineByContractId(ctx.request.body)
+    ctx.body = await vmService.getVirtualmachineByContractId(ctx.request.body)
 }
 
 const getVirtualmachineByProjectId= async (ctx) => {
-    ctx.body = await wmService.getVirtualmachinesByProjectId(ctx.params.id)
+    ctx.body = await vmService.getVirtualmachinesByProjectId(ctx.params.id)
 }
 
 module.exports = (app) => {
@@ -26,6 +30,7 @@ module.exports = (app) => {
 
     router.get("/", getVirtualmachines);
     router.post("/", createVirtualmachine);
+    router.get("/:id", getVirtualMachineById)
     router.get("/contract/:id", getVirtualmachineByContractId)
     router.get("/project/:id", getVirtualmachineByProjectId)
 

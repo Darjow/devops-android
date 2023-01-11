@@ -9,6 +9,12 @@ module.exports = {
     port: 3306,
     name: 'android_app',
     username: "root",
-    password:"root"
+    password:"root",
+    typeCast: function(field, next) {
+      if (field.type == 'TINY' && field.length == 1) {
+          return (field.string() == '1')
+      }
+      return next();
+    }
   },
 };

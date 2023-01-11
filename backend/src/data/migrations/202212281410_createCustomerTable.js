@@ -9,17 +9,18 @@ module.exports = {
             table.string('email', 40).notNullable();
             table.string('password', 40).notNullable();
             table.string('phonenumber',40).notNullable();
-            table.string('bedrijf_opleiding',40).nullable().defaultTo("");
+            table.string('bedrijf_opleiding',40).nullable()
 
-            table.string("contact1_phone", 20).nullable().defaultTo("");
-            table.string("contact1_email", 40).nullable().defaultTo("");
-            table.string("contact1_firstname", 20).nullable().defaultTo("");
-            table.string("contact1_lastname", 20).nullable().defaultTo("");
+            //dit zouden foreign keys moeten geweest zijn
+            table.string("contact1_phone", 20).nullable();
+            table.string("contact1_email", 40).nullable()
+            table.string("contact1_firstname", 20).nullable()
+            table.string("contact1_lastname", 20).nullable()
            
-            table.string("contact2_phone", 20).nullable().defaultTo("");
-            table.string("contact2_email", 40).nullable().defaultTo("");
-            table.string("contact2_firstname", 20).nullable().defaultTo("");
-            table.string("contact2_lastname", 20).nullable().defaultTo("");
+            table.string("contact2_phone", 20).nullable()
+            table.string("contact2_email", 40).nullable()
+            table.string("contact2_firstname", 20).nullable()
+            table.string("contact2_lastname", 20).nullable()
 
         })
     },

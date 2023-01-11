@@ -8,6 +8,7 @@ import com.hogent.android.data.entities.Contract
 import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.data.repositories.VmDetailRepository
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {
 

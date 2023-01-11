@@ -2,6 +2,7 @@ package com.hogent.android.network.services
 
 import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.Config
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -14,13 +15,13 @@ private val retrofit = Config.createRetrofit(API)
 interface VirtualMachineApiService{
 
     @GET("{id}")
-    suspend fun getById(@Path("id") id: Int): VirtualMachine?
+    suspend fun getById(@Path("id") id: Int): Response<VirtualMachine?>
 
     @POST(".")
     suspend fun createVM(@Body vm: VirtualMachine): VirtualMachine
 
     @GET("project/{id}")
-    suspend fun getByProjectId(@Path("id") id: Int): List<VirtualMachine>?
+    suspend fun getByProjectId(@Path("id") id: Int): Response<List<VirtualMachine>?>
 
 }
 

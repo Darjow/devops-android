@@ -21,7 +21,6 @@ class Config {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .add(LocalDateAdapter())
-            .add(OffsetDateTimeAdapter())
             .build()
 
         fun createRetrofit(endpoint : String): Retrofit{
@@ -57,34 +56,3 @@ public class LocalDateAdapter : JsonAdapter<LocalDate>() {
     }
 }
 
-class NullOnEmptyConverterFactory : Converter.Factory() {
-    override fun responseBodyConverter(
-        type: Type,
-        annotations: Array<Annotation>,
-        retrofit: Retrofit
-    ): Converter<ResponseBody, *> {
-        val delegate: Converter<ResponseBody, *> =
-            retrofit.nextResponseBodyConverter<Any>(this, type, annotations)
-        return Converter { body -> if (body.contentLength() == 0L) null else delegate.convert(body) }
-    }
-}
-
-
-public class OffsetDateTimeAdapter : JsonAdapter<OffsetDateTime>() {
-
-    @ToJson
-    override fun toJson(writer: JsonWriter, value: OffsetDateTime?) {
-    }
-
-    @FromJson
-    override fun fromJson(reader: JsonReader): OffsetDateTime? {
-        if (reader.peek() == JsonReader.Token.NULL) {
-            reader.nextNull<Unit>()
-            return null
-        }
-        return OffsetDateTime.parse(
-            reader.nextString(),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        )
-    }
-}

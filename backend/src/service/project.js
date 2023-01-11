@@ -19,6 +19,8 @@ const getProjectById = async (id) => {
 }
 
 const getByCustomerId = async (id) => {
+  console.log("Projects request received with customer id: " + id);
+
   const project = await repoProject.getByCustomerId(id);
    if(!project){
     console.log("no project found")

@@ -1,5 +1,6 @@
 package com.hogent.android.data.entities
 import androidx.core.text.isDigitsOnly
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
@@ -8,6 +9,7 @@ data class VirtualMachine(
     val name : String,
     val connection : Connection? = null,
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
+    @Json(name = "operatingsystem")
     val operatingSystem: OperatingSystem = OperatingSystem.NONE,
     val hardware: HardWare,
     val projectId : Int,
@@ -84,7 +86,9 @@ enum class OperatingSystem {
 
 @JsonClass(generateAdapter = true)
     data class Backup(
+        @Json(name = "backup_type")
         val type: BackupType?,
+        @Json(name = "latest_backup")
         val date: LocalDate?,
     )
 

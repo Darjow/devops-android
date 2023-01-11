@@ -3,12 +3,26 @@ const repoVm = require('../repository/virtualmachine')
 const getAll = async () => {
     const vms = await getKnex()(tables.virtualmachine).select()
     console.log('returing all vms\n')
-    console.log(vms)
-    return vms
+    console.log(JSON.stringify(outputVms(vms)));
+    return outputVms(vms)
 }
 
-const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm, 
-    operatingsystem_vm, mode_vm, backup_type_vm, latest_backup_vm, project_id_vm, contract_id_vm}) => {
+const getById = async (id) =>{
+    console.log("Getting VM with id: " + id);
+    const vm = await repoVm.getById(id);
+    if(!vm[0]){
+        console.log("Geen vm gevonden met id: " + id);
+        return null;
+    }
+    console.log('received vm service: \n')
+    console.log(JSON.stringify(vm));
+
+    return outputVms(vm[0]);
+
+
+}
+//deze eeft geen parameter
+const createVm = async (/*{...vm}*/) => {
   console.log(
             "New vm: " + 
                 name_vm, connection_vm, status_vm, hardware_vm, 
@@ -17,80 +31,57 @@ const createVm = async ({name_vm, connection_vm, status_vm, hardware_vm,
             );
     const id = await repoVm.createVm(name_vm, connection_vm, status_vm, hardware_vm, 
     operatingsystem_vm, mode_vm, backup_type_vm, latest_backup_vm, project_id_vm, contract_id_vm)
-    return repoVm.getVirtualmachinesById(id)
+    const vmm =  await repoVm.getVirtualmachinesById(id)
+    return outputVms(vmm)
 
 }
 
 const getVirtualmachinesByProjectId = async (id) => {
     console.log("getting vm with projectid: " + id)
     const vm = await repoVm.getVirtualmachinesByProjectId(id);
-    if(!vm){
+    if(!vm[0]){
         console.log("geen vm gevonden")
         return null
         
     }
     console.log("returning vm:");
-    console.log(outputVms(vm));
+    console.log(JSON.stringify(outputVms(vm)));
     return outputVms(vm)
 }
 
 const getVirtualmachineByContractId = async ({id})=> {
     console.log("getting vm with contractID: " + id)
     const vm = await repoVm.getVirtualmachineByContractId(id);
-    if(!vm){
+    if(!vm[0]){
         console.log("geen vm gevonden")
         return null
     }
-    console.log("returning vm: \n"+ outputVms(vm))
+    console.log("returning vm:");
+    console.log(JSON.stringify(outputVms(vm)));
     return outputVms(vm)
 }
 
 const getVirtualmachinesById= async ({id}) => {
     console.log("getting vm with ID: " + id)
     const vm = await repoVm.getVirtualmachinesById(id);
-    if(!vm){
+    if(!vm[0]){
         console.log("geen vm gevonden")
         return null
     }
-    console.log("returning vm: "+outputVms(vm))
+    console.log("returning vm:");
+    console.log(JSON.stringify(outputVms(vm)));
     return outputVms(vm)
 }
   
 
+
 function outputVms(vms){
     let output = []
 
-    for(let vm of vms){
-        let hw = {
-            memory : vm.memory,
-            storage: vm.storage,
-            cpu: vm.cpu
-        }
-        let _connection = {
-            fqdn: vm.fqdn,
-            ipAdres: vm.ipAdres,
-            username: vm.username,
-            password: vm.password
-        }
-        let _backup = {
-            latest_backup: vm.latest_backup,
-            backup_type: vm.backup_type
-        }
-
-        output.push(
-           {
-            name: vm.name,
-            connection: _connection,
-            status: vm.status,
-            operatingsystem: vm.operatingsystem,
-            hardware: hw,
-            projectId: vm.project_id,
-            mode: vm.mode,
-            contractId: vm.contract_id,
-            backup: _backup,
-            id: vm.id,
-           } 
-        )
+    if(Array.isArray(vms)){
+        vms.forEach(e => output.push(OUTVM(e)))
+    }else{
+        output = OUTVM(vms)
     }
 
     return output;
@@ -99,11 +90,41 @@ function outputVms(vms){
 
 
 }
+  //doordat we snel een db hebben gemaakt en deze niet beoordeeld werdhebben we niet echt rekening gehouden met foreign keys
+  //uiteindelijk hebben we beter een mongoDB gebruikt of firebase. 
+function OUTVM(vm){
+    return  {
+        name: vm.name,
+        connection: {
+            fqdn: vm.fqdn,
+            ipAdres: vm.ipAdres,
+            username: vm.username,
+            password: vm.password
+        },
+        status: vm.status,
+        operatingsystem: vm.operatingsystem,
+        hardware: {
+            memory : vm.memory,
+            storage: vm.storage,
+            cpu: vm.cpu
+
+        },
+        projectId: vm.project_id,
+        mode: vm.mode,
+        contractId: vm.contract_id,
+        backup: {
+            latest_backup: vm.latest_backup,
+            backup_type: vm.backup_type
+        },
+        id: vm.id,
+    }
+}
 
 module.exports = {
     getAll,
     createVm,
     getVirtualmachinesByProjectId,
     getVirtualmachineByContractId,
-    getVirtualmachinesById
+    getVirtualmachinesById,
+    getById
   }

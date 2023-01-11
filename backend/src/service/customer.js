@@ -20,31 +20,27 @@ const getCustomerById = async (id) => {
   return outputUser(customer[0])
 }
 
-//registerCustomer = async ({...customer})
-const registerCustomer = async ({firstname_c, lastname_c, email_c, password_c, phonenumber_c, bedrijf_opleiding_c,
-  contactpersoon1_phone_c ,contactpersoon1_email_c ,contactpersoon1_firstname_c ,contactpersoon1_lastname_c ,contactpersoon2_phone_c ,
-contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c}) => {
-    console.log('register customer with: ')
-    console.log(firstname_c, lastname_c, email_c, password_c, phonenumber_c, bedrijf_opleiding_c, 
-      contactpersoon1_phone_c ,contactpersoon1_email_c ,contactpersoon1_firstname_c ,contactpersoon1_lastname_c ,contactpersoon2_phone_c ,
-    contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c)
+const registerCustomer = async ({... customer}) => {
+    console.log('register customer: ')
+    console.log(JSON.stringify(customer));
 
-  const id = await repoCustomer.registerCustomer(firstname_c, lastname_c, email_c, password_c, phonenumber_c, bedrijf_opleiding_c,
-  contactpersoon1_phone_c ,contactpersoon1_email_c ,contactpersoon1_firstname_c ,contactpersoon1_lastname_c ,contactpersoon2_phone_c ,
-  contactpersoon2_email_c ,contactpersoon2_firstname_c ,contactpersoon2_lastname_c)
-
+  const id = await repoCustomer.registerCustomer(serializeUser(customer))
   customer = await repoCustomer.getCustomerById(id)
   return outputUser(customer[0])
 }
 
 const loginCustomer = async ({email,password}) => {
   const customer = await repoCustomer.loginCustomer(email, password)
-  if(customer[0]){
+  if(!customer[0]){
+    return null;
+  }
     return outputUser(customer[0]);
   }
-  return null;
-}
 
+
+
+  //doordat we snel een db hebben gemaakt en deze niet beoordeeld werdhebben we niet echt rekening gehouden met foreign keys
+  //uiteindelijk hebben we beter een mongoDB gebruikt of firebase. 
 function outputUser(user){
   let cp1 = null
   let cp2 = null
@@ -107,7 +103,8 @@ function outputUser(user){
     phonenumber: user.phonenumber,
     bedrijf_opleiding: user.bedrijf_opleiding,
     contactPs1: cp1,
-    contactPs2: cp2
+    contactPs2: cp2,
+    password: user.password
   
   }
 }

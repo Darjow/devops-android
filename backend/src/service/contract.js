@@ -20,7 +20,7 @@ const addContract = async ({start, end}) => {
     }
 }
 
- /*word eiglk ni gebruikt \_(^_^)_/*/
+ /*word eiglk ni gebruikt \_(^_^)_/ lmao */
 const contractActiveren = async (id) => {
     try {
         await contractRepo.contractActiveren(id)
@@ -31,8 +31,15 @@ const contractActiveren = async (id) => {
 }
 
 const getContractById = async(id) => {
+    console.log("Grabbing contract with id:" + id);
     const contract = await contractRepo.getContractById(id)
-    return contract
+    if(!contract[0]){
+        return null;
+    }
+    contract[0].active = false
+    console.log(JSON.stringify(contract[0]));
+    console.log("/n");
+    return contract[0]
 }
 
 const updateContract = async(id, {contract}) => {

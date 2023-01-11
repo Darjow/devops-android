@@ -28,7 +28,7 @@ class VmAanvraagRepository() {
         val startDate = form.startDate!!
         val endDate = form.endDate!!
         val dto = ContractDto(startDate, endDate)
-        val contract = contractApi.createContract(dto)
+        val contract: Contract = contractApi.createContract(dto)
 
         /*vm maken*/
         val vm = VirtualMachine(name = form.naamVm!!, status = VirtualMachineStatus.AANGEVRAAGD, mode = form.modeVm!!, hardware = hardware, backup = backup, operatingSystem = form.os!!, contractId = contract.id, projectId = form.project_id!!)

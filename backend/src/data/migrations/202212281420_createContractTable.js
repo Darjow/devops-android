@@ -7,7 +7,7 @@ module.exports = {
       table.increments('id').primary();
       table.date('startDate').notNullable();
       table.date('endDate').notNullable();
-      table.integer("active").notNullable().defaultTo(0);
+      table.boolean("active").notNullable().defaultTo(false);
     });
   },
   down: (knex) => {
