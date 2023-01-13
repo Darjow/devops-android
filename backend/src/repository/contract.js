@@ -5,14 +5,8 @@ const getAll = async () => {
 }
 
 const addContract = async (start, end) => {
-    try {    
-        [id] = await getKnex()(tables.contract).insert({
-        startDate : start,
-        endDate: end})
+        [id] = await getKnex()(tables.contract).insert({ startDate : start, endDate: end})
         return id
-    } catch (error) {
-        console.log(error)
-    }
 }
 
 const contractActiveren = async (id) => {

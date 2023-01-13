@@ -9,15 +9,10 @@ const getAll = async () => {
 
 const addContract = async ({start, end}) => {
     console.log("adding contract with these parameters: " + start + ' ' + end)
-    try {    
-        const id = await contractRepo.addContract(start,end);
-        const contract = await getContractById(id)
-        console.log("Contract is toegevoegd: ")
-        console.log(contract)
-        return contract
-    } catch (error) {
-        console.log(error)
-    }
+    const id = await contractRepo.addContract(start,end);
+    const contract = await getContractById(id)
+    console.log("Contract is toegevoegd: ")
+    return contract
 }
 
  /*word eiglk ni gebruikt \_(^_^)_/ lmao */
@@ -36,7 +31,6 @@ const getContractById = async(id) => {
     if(!contract[0]){
         return null;
     }
-    contract[0].active = false
     console.log(JSON.stringify(contract[0]));
     return contract[0]
 }

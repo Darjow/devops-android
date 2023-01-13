@@ -6,22 +6,19 @@ const getAll = async () => {
 const getById = async (id) => {
     return getKnex()(tables.virtualmachine).select().where("id", id)
 }
-const createVm = async ({name_vm, status_vm, operatingsystem_vm, hardware, 
-    projectId, VirtualMachineModus, contractId, backup}) => {
-
-        console.table(vm_mode)
-        
+const createVm = async (vm) => {
+    console.log("Creating VM with parameters: " + JSON.stringify(vm));
     const [id]= await getKnex()(tables.virtualmachine).insert({
-        name : name_vm, 
-        status : status_vm, 
-        operatingsystem : operatingsystem_vm, 
-        memory : hardware.memory,
-        storage : hardware.storage,
-        cpu : hardware.cpu,
-        mode : VirtualMachineModus,
-        backup_type : backup.backup_type,
-        project_id : projectId, 
-        contract_id: contractId
+        name: vm.name,
+        status: vm.status,
+        memory: vm.memory,
+        storage: vm.storage,
+        cpu: vm.cpu,
+        operatingsystem : vm.operatingsystem,
+        mode : vm.mode,
+        backup_type : vm.backup_type,
+        project_id : vm.project_id,
+        contract_id : vm.contract_id
     });
     return id
 }

@@ -10,6 +10,7 @@ const addContract = async (ctx) => {
     start : ctx.request.body.start,
     end : ctx.request.body.end
   })
+  console.log("--- return contract : " + JSON.stringify(contract) );
   ctx.body = contract
     
 }

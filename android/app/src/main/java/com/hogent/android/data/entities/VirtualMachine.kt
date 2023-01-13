@@ -105,10 +105,10 @@ enum class OperatingSystem {
 
 
     data class Connection(
-        val fqdn: String,
-        val ipAdres: String,
-        val username: String,
-        val password: String,
+        val fqdn: String? = null,
+        val ipAdres: String? = null,
+        val username: String? = null,
+        val password: String? = null,
     )
 
 
