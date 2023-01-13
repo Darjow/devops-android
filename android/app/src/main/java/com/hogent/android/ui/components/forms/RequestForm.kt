@@ -6,16 +6,16 @@ import com.hogent.android.data.entities.VirtualMachineModus
 import java.time.LocalDate
 
 data class RequestForm(
-     var naamVm : String? = "",
-     var os : OperatingSystem? = null,
-     var cpuCoresValue : Int? = 0,
-     var memory : Int? = 0,
-     var backUpType : BackupType? = null,
-     var modeVm : VirtualMachineModus? = null,
-     var storage : Int? = 0,
-     var startDate : LocalDate?= null,
-     var endDate : LocalDate? = null,
-     var project_id: Int? = 0
+    var naamVm : String? = "",
+    var os : OperatingSystem? = null,
+    var cpuCoresValue : Int? = 0,
+    var memory : Int? = 0,
+    var backUpType : BackupType? = null,
+    var modeVm : VirtualMachineModus? = null,
+    var storage : Int? = 0,
+    var startDate : LocalDate?= null,
+    var endDate : LocalDate? = null,
+    var project_id: Int? = 0
 ): IFormValidation {
 
     var error_message = ""
