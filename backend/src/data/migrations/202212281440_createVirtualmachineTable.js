@@ -15,7 +15,7 @@ module.exports = {
       table.string('mode', 10).notNullable();
 
       table.date('latest_backup').notNullable();
-      table.string('backup_type').notNullable();
+      table.string('backup_type').notNullable().defaultTo(new Date);
       table.string("fqdn", 30).nullable()
       table.string("ipAdres", 20).nullable()
       table.string("username", 30).nullable()
@@ -23,7 +23,7 @@ module.exports = {
 
       table.integer('project_id').notNullable();
       table.integer('contract_id').notNullable();
-
+/*
       table.foreign('project_id').references('project.id')
       .onDelete("SET NULL")
       .onUpdate("CASCADE")
@@ -32,7 +32,7 @@ module.exports = {
       .onDelete("SET NULL")
       .onUpdate("CASCADE")
 
-
+*/
     });
   },
   down: (knex) => {

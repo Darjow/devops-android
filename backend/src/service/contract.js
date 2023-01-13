@@ -14,7 +14,7 @@ const addContract = async ({start, end}) => {
         const contract = await getContractById(id)
         console.log("Contract is toegevoegd: ")
         console.log(contract)
-        return contract[0]
+        return contract
     } catch (error) {
         console.log(error)
     }
@@ -38,7 +38,6 @@ const getContractById = async(id) => {
     }
     contract[0].active = false
     console.log(JSON.stringify(contract[0]));
-    console.log("/n");
     return contract[0]
 }
 

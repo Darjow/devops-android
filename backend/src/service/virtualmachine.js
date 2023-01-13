@@ -22,17 +22,11 @@ const getById = async (id) =>{
 
 }
 //deze eeft geen parameter
-const createVm = async (/*{...vm}*/) => {
-  console.log(
-            "New vm: " + 
-                name_vm, connection_vm, status_vm, hardware_vm, 
-                operatingsystem_vm, mode_vm, backup_type_vm, 
-                latest_backup_vm, project_id_vm, contract_id_vm
-            );
-    const id = await repoVm.createVm(name_vm, connection_vm, status_vm, hardware_vm, 
-    operatingsystem_vm, mode_vm, backup_type_vm, latest_backup_vm, project_id_vm, contract_id_vm)
+const createVm = async ({...vm}) => {
+  console.log("Creating new vm : ",vm);
+    const id = await repoVm.createVm(vm)
     const vmm =  await repoVm.getVirtualmachinesById(id)
-    return outputVms(vmm)
+    return outputVms(vm)
 
 }
 

@@ -19,7 +19,7 @@ const updateContract = async (ctx) => {
   {
     contract : ctx.request.body
   })
-  return contract
+  return ctx.body = contract
 }
 
 const getContractById = async (ctx) => {
