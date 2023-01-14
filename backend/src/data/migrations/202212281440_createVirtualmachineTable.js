@@ -23,12 +23,12 @@ module.exports = {
 
       table.integer('project_id').notNullable();
       table.integer('contract_id').notNullable();
-/*
+
       table.foreign('project_id').references('project.id')
       .onDelete("SET NULL")
       .onUpdate("CASCADE")
 
-      */
+      
 
     });
   },

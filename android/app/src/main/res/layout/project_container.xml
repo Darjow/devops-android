@@ -40,7 +40,8 @@
             android:layout_width="339dp"
             android:layout_height="wrap_content"
             tools:context=".ui.vms.overview.VMListFragment"
-            tools:listitem="@layout/virtual_machine_container">
+            tools:listitem="@layout/virtual_machine_container"
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

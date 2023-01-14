@@ -36,10 +36,13 @@ class ProjectListAdapter(
         val project = projectList[position]
         holder.textView1.text = project.name;
 
-        holder.recyclerView.layoutManager = LinearLayoutManager(context)
-        filterVirtualMachines(project.id)
-        holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
-        holder.textView1.text = project.name
+        if(project.id > 0) {
+
+            holder.recyclerView.layoutManager = LinearLayoutManager(context)
+            filterVirtualMachines(project.id)
+            holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
+            holder.textView1.text = project.name
+        }
     }
 
     override fun getItemCount(): Int {
