@@ -15,6 +15,7 @@ import com.hogent.android.R
 import com.hogent.android.data.repositories.VmOverviewRepository
 import com.hogent.android.databinding.FragmentVmlistBinding
 import com.hogent.android.util.closeKeyboardOnTouch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 
@@ -61,6 +62,13 @@ class VMListFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume();
+        runBlocking {
+            viewModel.refreshProjects();
+        }
     }
 }
 

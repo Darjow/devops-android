@@ -32,7 +32,6 @@ const getContractById = async(id) => {
         return null;
     }
     console.log(JSON.stringify(contract[0]));
-    console.log("/n");
     return contract[0]
 }
 

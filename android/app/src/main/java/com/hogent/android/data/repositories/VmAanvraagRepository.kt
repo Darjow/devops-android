@@ -2,6 +2,7 @@ package com.hogent.android.data.repositories
 
 import com.hogent.android.data.entities.*
 import com.hogent.android.network.dtos.ContractDto
+import com.hogent.android.network.dtos.ProjectDto
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
@@ -39,5 +40,10 @@ class VmAanvraagRepository() {
 
     suspend fun getProjecten(): List<Project>?{
         return projectApi.getByCustomerId(customerId)
+    }
+
+    suspend fun  createProject(name : String): Project?{
+        val proj = ProjectDto(nameProject = name, cust_Id = customerId)
+        return  projectApi.createProject(proj)
     }
 }

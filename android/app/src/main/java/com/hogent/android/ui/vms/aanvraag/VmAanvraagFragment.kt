@@ -1,14 +1,18 @@
 package com.hogent.android.ui.vms.aanvraag
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
 import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.OperatingSystem
@@ -16,6 +20,7 @@ import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
 import com.hogent.android.util.clearForm
 import com.hogent.android.util.closeKeyboardOnTouch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.Month
@@ -45,7 +50,14 @@ class VmAanvraagFragment : Fragment(){
                 Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
                 binding.vmaanvraaglayout.clearForm()
                 vmAanvraagView.doneSuccess()
+                NavHostFragment.findNavController(this).navigate(VmAanvraagFragmentDirections.actionFromRequestToList());
+            }
+        }
 
+        vmAanvraagView.projectNaamCheck.observe(viewLifecycleOwner){
+            if (it) {
+                Toast.makeText(requireContext(), "Projectnaam moet uniek zijn!", Toast.LENGTH_SHORT).show()
+                vmAanvraagView.naamCheckProjectReset()
             }
         }
 
@@ -56,16 +68,18 @@ class VmAanvraagFragment : Fragment(){
 
     private fun initializeComponents(binding: AddvmFragmentBinding) {
         val context = requireContext()
-
+        val tintBlack = Color.BLACK
+        val tintlist = ColorStateList.valueOf(tintBlack)
 //OS
         val buttonContainer: RadioGroup = binding.root.findViewById(R.id.group_os_vm)
         OperatingSystem.values().sortedBy { it.name }.forEachIndexed{ index, it ->
             if(it.name != "NONE"){
                 val btn = RadioButton(buttonContainer.context)
                 btn.text = it.toString()
+                btn.setHintTextColor(Color.BLACK)
                 btn.setTextColor(Color.BLACK)
+                btn.buttonTintList = tintlist
                 buttonContainer.addView(btn)
-
             }
         }
 
@@ -119,9 +133,13 @@ class VmAanvraagFragment : Fragment(){
         val spinnerProject = binding.root.findViewById<Spinner>(R.id.spinner_project)
         val adapterProject = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayListOf<String>())
         adapterProject.setDropDownViewResource(R.layout.spinner_dropdown_item)
+
+        Timber.d("Lijst van projects: ", binding.viewmodel!!.projecten.value.toString())
+
         binding.viewmodel!!.projecten.observe(viewLifecycleOwner) {
             adapterProject.clear();
             adapterProject.add("")
+            adapterProject.add("+ Project toevoegen")
             it.forEach { project ->
                 adapterProject.add(project.name)
             }
@@ -132,7 +150,16 @@ class VmAanvraagFragment : Fragment(){
         spinnerProject.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, Id: Long) {
                 val project_naam = parent!!.getItemAtPosition(pos) as String
-                binding.viewmodel!!.projectChanged(project_naam)
+                var form =binding.root.findViewById<LinearLayout>(R.id.ProjectMakenForm)
+                if(project_naam.equals("+ Project toevoegen")){
+                    val animation = AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_in)
+                    form.startAnimation(animation)
+                    form.visibility = View.VISIBLE
+                }
+                else{
+                    binding.viewmodel!!.projectChanged(project_naam)
+                    form.visibility = View.GONE
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}

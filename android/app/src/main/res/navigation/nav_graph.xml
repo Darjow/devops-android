@@ -40,8 +40,8 @@
 
         <action
             android:id="@+id/action_from_request_to_list"
-            app:destination="@id/VMListFragment">
-        </action>
+            app:destination="@id/VMListFragment"
+            app:enterAnim="@android:anim/fade_in"></action>
     </fragment>
 
 
