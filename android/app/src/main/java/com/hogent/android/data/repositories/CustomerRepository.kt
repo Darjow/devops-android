@@ -1,5 +1,6 @@
 package com.hogent.android.data.repositories
 
+import com.hogent.android.data.entities.Course
 import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.dtos.LoginCredentials
 import com.hogent.android.network.dtos.Register
@@ -26,7 +27,7 @@ class CustomerRepository {
         val pw = registerForm.inputPassword
         val phonenumber = registerForm.inputPhoneNumber
 
-        val dto = Register(firstname, lastname, email, pw, phonenumber)
+        val dto = Register(firstname, lastname, email, pw, phonenumber, Course.NONE)
 
 
         return customerApi.registerCustomer(dto)
