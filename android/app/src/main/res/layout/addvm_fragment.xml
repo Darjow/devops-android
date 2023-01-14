@@ -122,7 +122,8 @@
                         android:textColorHint="@color/black"
                         android:backgroundTint="@color/blue_med"
                         android:hint="@string/projectAanMakenHint"
-                        android:afterTextChanged="@{viewmodel::setProjectNaam}"/>
+                        android:afterTextChanged="@{viewmodel::setProjectNaam}"
+                        android:imeOptions="actionDone"/>
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

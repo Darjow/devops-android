@@ -8,10 +8,10 @@ module.exports = {
       table.string('name', 50).notNullable();
       table.integer("customer_id").notNullable();
 
-      /*table.foreign('customer_id').references(`${tables.customer}.id`)
+      table.foreign('customer_id').references(`${tables.customer}.id`)
           .onDelete("CASCADE")
           .onUpdate("CASCADE")
-*/
+
     });
   },
   down: (knex) => {

@@ -8,5 +8,4 @@ class Register(        val firstname : String,
                        val password : String,
                        val phonenumber : String,
                        val bedrijf_opleiding: Course
-) {
-}
+)

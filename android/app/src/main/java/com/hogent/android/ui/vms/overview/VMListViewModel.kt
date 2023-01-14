@@ -10,10 +10,11 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 
-class VMListViewModel(public val repo: VmOverviewRepository) : ViewModel() {
+class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
     private val _projecten = MutableLiveData<List<Project>>()
     private var _virtualmachine = MutableLiveData<List<VirtualMachine>>()
+
 
 
     val projecten: LiveData<List<Project>>
@@ -40,7 +41,14 @@ class VMListViewModel(public val repo: VmOverviewRepository) : ViewModel() {
                     projecten.value?.size ?: 0
                 )
             )
+
             Timber.wtf(_projecten.value.toString())
+
+
+            if(_projecten.value == null || _projecten.value!!.isEmpty()){
+                _projecten.postValue(listOf( Project("Geen projecten", customerId, -1)))
+                return@runBlocking
+            }
 
             _projecten.value?.forEach { project ->
                 val projectVMs = repo.getByProjectId(project.id)
