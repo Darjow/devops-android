@@ -46,7 +46,7 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
 
             if(_projecten.value == null || _projecten.value!!.isEmpty()){
-                _projecten.postValue(listOf( Project("Geen project", customerId, -1)))
+                _projecten.postValue(listOf( Project("Geen projecten", customerId, -1)))
                 return@runBlocking
             }
 
