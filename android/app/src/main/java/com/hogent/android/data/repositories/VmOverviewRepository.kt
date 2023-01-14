@@ -21,7 +21,7 @@ class VmOverviewRepository {
 
     suspend fun getByProjectId(id: Int): List<VirtualMachine>?{
         Timber.d("Retrieving vms with project id: %d", id)
-        val output : Response<List<VirtualMachine>?> = vmApi.getByProjectId(id)
+        val output = vmApi.getByProjectId(id)
         if(output.isSuccessful && output.body() != null){
             Timber.d("Request was succesfull, retrieved: %n%s", output.body())
             return output.body()!!;

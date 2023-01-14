@@ -43,7 +43,7 @@ data class RequestForm(
             error_message = "Opslag moet positief zijn"
             return false;
         }
-        if(project_id!! < 1L ){
+        if(project_id!! < 1L || project_id!! == 0 ){
             error_message = "Selecteer een project"
             return false;
         }

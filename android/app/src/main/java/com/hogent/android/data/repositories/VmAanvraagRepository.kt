@@ -8,6 +8,7 @@ import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
+import retrofit2.Response
 import timber.log.Timber
 import java.util.*
 
@@ -45,5 +46,9 @@ class VmAanvraagRepository() {
     suspend fun  createProject(name : String): Project?{
         val proj = ProjectDto(nameProject = name, cust_Id = customerId)
         return  projectApi.createProject(proj)
+    }
+
+    suspend fun  getVmsByProjectId(id : Int): Response<List<VirtualMachine>?>{
+        return vmApi.getByProjectId(id);
     }
 }

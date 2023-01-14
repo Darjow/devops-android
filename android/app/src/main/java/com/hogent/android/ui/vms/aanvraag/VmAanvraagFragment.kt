@@ -1,5 +1,7 @@
 package com.hogent.android.ui.vms.aanvraag
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -8,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.internal.ViewUtils
 import com.hogent.android.R
 import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.OperatingSystem
@@ -50,21 +54,42 @@ class VmAanvraagFragment : Fragment(){
                 Toast.makeText(requireContext(), "Verzoek werd verstuurd", Toast.LENGTH_SHORT).show()
                 binding.vmaanvraaglayout.clearForm()
                 vmAanvraagView.doneSuccess()
-                NavHostFragment.findNavController(this).navigate(VmAanvraagFragmentDirections.actionFromRequestToList());
             }
         }
 
         vmAanvraagView.projectNaamCheck.observe(viewLifecycleOwner){
             if (it) {
-                Toast.makeText(requireContext(), "Projectnaam moet uniek zijn!", Toast.LENGTH_SHORT).show()
+                val toast = Toast.makeText(requireContext(), "Projectnaam moet uniek zijn!", Toast.LENGTH_SHORT)
+                    toast.setGravity(Gravity.TOP, 0 , 0)
+                    toast.show()
                 vmAanvraagView.naamCheckProjectReset()
             }
         }
 
+        vmAanvraagView.closeKeyBoard.observe(viewLifecycleOwner){
+            if(it){
+                ViewUtils.hideKeyboard(this.view!!);
+                vmAanvraagView.keyboardHidden()
+                Toast.makeText(requireContext(), "Je hebt een nieuw project toegevoegd!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        vmAanvraagView.vmNaamBestaatAl.observe(viewLifecycleOwner){
+            if(it){
+                Toast.makeText(requireContext(), "Naam van virtualmachine moet uniek zijn!", Toast.LENGTH_SHORT).show()
+                vmAanvraagView.naamCheckVmReset()
+            }
+        }
+
+      /*  vmAanvraagView.navToList.observe(viewLifecycleOwner){
+            if(it){
+                NavHostFragment.findNavController(this).navigate(VmAanvraagFragmentDirections.actionFromRequestToList());
+                vmAanvraagView.doneNavToList()
+            }
+        }*/
+
         return binding.root
     }
-
-
 
     private fun initializeComponents(binding: AddvmFragmentBinding) {
         val context = requireContext()
@@ -155,6 +180,7 @@ class VmAanvraagFragment : Fragment(){
                     val animation = AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_in)
                     form.startAnimation(animation)
                     form.visibility = View.VISIBLE
+                    binding.viewmodel!!.projectChanged(project_naam)
                 }
                 else{
                     binding.viewmodel!!.projectChanged(project_naam)

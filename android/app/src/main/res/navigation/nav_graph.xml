@@ -55,6 +55,9 @@
             android:id="@+id/action_from_profile_to_login"
             app:destination="@+id/loginFragment">
         </action>
+        <action
+            android:id="@+id/action_profielFragment_to_addVmFragment"
+            app:destination="@id/addVmFragment" />
 
     </fragment>
     <fragment
@@ -82,6 +85,9 @@
             app:destination="@+id/detailsFragment">
 
         </action>
+        <action
+            android:id="@+id/action_VMListFragment_to_addVmFragment"
+            app:destination="@id/addVmFragment" />
 
 
     </fragment>
