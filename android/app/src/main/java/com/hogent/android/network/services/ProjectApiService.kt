@@ -2,7 +2,10 @@ package com.hogent.android.network.services
 
 import com.hogent.android.data.entities.Project
 import com.hogent.android.network.Config
+import com.hogent.android.network.dtos.ProjectDto
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 private const val API = "project/"
@@ -17,6 +20,9 @@ interface ProjectApiService {
 
     @GET("customer/{id}")
     suspend fun getByCustomerId(@Path("id") id: Int): List<Project>?
+
+    @POST(".")
+    suspend fun  createProject(@Body proj : ProjectDto): Project?
 
     }
 

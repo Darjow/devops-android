@@ -100,7 +100,34 @@
                         app:layout_constraintEnd_toEndOf="@+id/spinner_project"
                         app:layout_constraintTop_toTopOf="@+id/spinner_project"
                         app:srcCompat="@drawable/white_drop_down" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:background="@drawable/border"
+                    android:visibility="gone"
+                    android:id="@+id/ProjectMakenForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/no_projects_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/projectNaam"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:backgroundTint="@color/blue_med"
+                        android:hint="@string/projectAanMakenHint"
+                        android:afterTextChanged="@{viewmodel::setProjectNaam}"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/projectAanMaken"
+                        android:onClick="@{() -> viewmodel.projectMaken()}"/>
+                </LinearLayout>
 
 
                 <TextView

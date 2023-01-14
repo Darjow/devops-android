@@ -4,6 +4,7 @@ const getAll = async () => {
   return getKnex()(tables.project).select();
 }
 
+
 const getProjectById = async (id) => {
    const project= getKnex()(tables.project).select().where("id", id)
 
@@ -18,8 +19,17 @@ const getByCustomerId = async (cust_id) => {
    return project
 }
 
+const addProject = async(project) => {
+  const [id] = await getKnex()(tables.project).insert({
+    name : project.nameProject,
+    customer_id : project.cust_Id
+  })
+  return id
+}
+
 module.exports = {
   getAll,
   getProjectById,
-  getByCustomerId
+  getByCustomerId,
+  addProject
 }

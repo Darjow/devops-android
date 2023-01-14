@@ -14,13 +14,8 @@ module.exports = {
       table.integer("cpu", 10).notNullable()
       table.string('mode', 10).notNullable();
 
-<<<<<<< HEAD
-      table.date('latest_backup').notNullable();
-      table.string('backup_type').notNullable().defaultTo(new Date);
-=======
       table.date('latest_backup');
       table.string('backup_type').notNullable();
->>>>>>> bb9ef5764b18fba1bf60c3d91a869630fb4cd840
       table.string("fqdn", 30).nullable()
       table.string("ipAdres", 20).nullable()
       table.string("username", 30).nullable()
@@ -33,16 +28,8 @@ module.exports = {
       .onDelete("SET NULL")
       .onUpdate("CASCADE")
 
-<<<<<<< HEAD
-      table.foreign('contract_id').references('contract.id')
-      .onDelete("SET NULL")
-      .onUpdate("CASCADE")
+      */
 
-*/
-=======
-      
-
->>>>>>> bb9ef5764b18fba1bf60c3d91a869630fb4cd840
     });
   },
   down: (knex) => {

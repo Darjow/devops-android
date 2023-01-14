@@ -27,12 +27,23 @@ const getByCustomerId = async (id) => {
     return null;
   }
   console.log("returning project:\n")
-  console.log(JSON.stringify(project))
+  console.log(JSON.stringify(project) , new Date())
   return project
+}
+
+const addProject = async (project) => {
+  console.log("making project with",project)
+
+  const id = await repoProject.addProject(project);
+  const proj= await repoProject.getProjectById(id);
+  console.log("Project toegevoegd")
+  console.log("returing" , proj)
+  return proj[0]
 }
 
 module.exports = {
   getAll,
   getProjectById,
-  getByCustomerId
+  getByCustomerId,
+  addProject
 }

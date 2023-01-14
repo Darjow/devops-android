@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 
-class VMListViewModel(private val repo: VmOverviewRepository) : ViewModel() {
+class VMListViewModel(public val repo: VmOverviewRepository) : ViewModel() {
 
     private val _projecten = MutableLiveData<List<Project>>()
     private var _virtualmachine = MutableLiveData<List<VirtualMachine>>()
@@ -24,25 +24,42 @@ class VMListViewModel(private val repo: VmOverviewRepository) : ViewModel() {
 
     init {
         runBlocking {
+            refreshProjects();
+        }
+    }
+
+    suspend fun refreshProjects() {
+        runBlocking {
             val customerId = AuthenticationManager.getCustomer()!!.id
             val virtualMachineList = mutableListOf<VirtualMachine>()
 
             _projecten.value = repo.getByCustomerId(customerId)
-            Timber.d(String.format("Landed on vmlist viewmodel page, this user has %d projects", projecten.value?.size ?: 0))
+            Timber.d(
+                String.format(
+                    "Landed on vmlist viewmodel page, this user has %d projects",
+                    projecten.value?.size ?: 0
+                )
+            )
             Timber.wtf(_projecten.value.toString())
 
             _projecten.value?.forEach { project ->
                 val projectVMs = repo.getByProjectId(project.id)
 
-                Timber.d(String.format("project: %s, has %d virtual machine(s)", project.name, projectVMs?.size ?: 0))
+                Timber.d(
+                    String.format(
+                        "project: %s, has %d virtual machine(s)",
+                        project.name,
+                        projectVMs?.size ?: 0
+                    )
+                )
 
                 if (projectVMs != null) {
                     virtualMachineList.addAll(projectVMs)
                 }
+
             }
             _virtualmachine.value = virtualMachineList
         }
-
     }
 }
 

@@ -100,4 +100,10 @@
     <string name="vm_details_fragment">VM Details</string>
     <string name="vmModusDetail">Mode: %1$s</string>
     <string name="selecteer_project">Selecteer een project</string>
+
+
+    <!--Projects-->
+    <string name="projectNaam">Project naam:</string>
+    <string name="projectAanMaken">Maak project</string>
+    <string name="projectAanMakenHint">Project A</string>
 </resources>

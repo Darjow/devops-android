@@ -1,9 +1,11 @@
 package com.hogent.android.ui.vms.aanvraag
 
 import android.text.Editable
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.hogent.android.data.entities.*
 import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.ui.components.forms.RequestForm
@@ -19,26 +21,40 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     private val _form = MutableLiveData(RequestForm())
     private val _errorToast = MutableLiveData(false)
     private val _success = MutableLiveData(false)
-
+    private val _naamCreatedProject = MutableLiveData<String>("")
+    private val _projectNaamCheck = MutableLiveData(false)
 
     init {
+        Timber.d("INIT IN VMAANVRAAG VIEWMODEL")
         runBlocking {
-            _projecten.postValue(repo.getProjecten())
+            refreshProjects()
         }
+    }
 
+    suspend fun refreshProjects(){
+            _projecten.postValue(repo.getProjecten())
+            Timber.d("Grootte lijst van projects: ", projecten.value?.size)
+            Timber.d("Of is de list null?", projecten.value.isNullOrEmpty().toString())
     }
 
     val projecten : LiveData<List<Project>>
         get() = _projecten
-
     val form : LiveData<RequestForm>
         get() = _form
     val errorToast:  LiveData<Boolean>
         get() = _errorToast
     val success: LiveData<Boolean>
         get() = _success
+    val naamCreatedProject : LiveData<String>
+        get() = _naamCreatedProject
+    val projectNaamCheck : LiveData<Boolean>
+        get()  = _projectNaamCheck
 
 
+    fun setProjectNaam(v : Editable){
+        val naam = v.toString()
+        _naamCreatedProject.postValue(naam)
+    }
 
     fun setNaamVm(v : Editable){
         val __form = _form.value
@@ -147,6 +163,21 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     }
 
+    fun projectMaken(){
+        runBlocking {
+            var proj = repo.getProjecten()?.filter { p -> p.name.equals(naamCreatedProject.value, true)}
+            if(proj.isNullOrEmpty()){
+                repo.createProject(naamCreatedProject.value.toString())
+            }
+            else{
+                _projectNaamCheck.postValue(true)
+            }
+        }
+        runBlocking {
+            refreshProjects()
+        }
+    }
+
 
     fun doneToastingError(){
         _errorToast.postValue(false)
@@ -154,5 +185,8 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     fun doneSuccess(){
         _success.postValue(false)
+    }
+    fun naamCheckProjectReset(){
+        _projectNaamCheck.postValue(false)
     }
 }
