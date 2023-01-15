@@ -11,6 +11,7 @@ import com.hogent.android.R
 import com.hogent.android.data.entities.Project
 import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.devOps_Android.ui.vms.overview.VirtualMachineListAdapter
+import timber.log.Timber
 
 class ProjectListAdapter(
     private val projectList: List<Project>,
@@ -37,7 +38,6 @@ class ProjectListAdapter(
         holder.textView1.text = project.name;
 
         if(project.id > 0) {
-
             holder.recyclerView.layoutManager = LinearLayoutManager(context)
             filterVirtualMachines(project.id)
             holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
@@ -51,12 +51,16 @@ class ProjectListAdapter(
 
 
     private fun filterVirtualMachines(projectId: Int) {
+        Timber.e("Previous length of vms inside project with id: %d   =  %d",projectId, newvirtualMachineList.size)
         newvirtualMachineList.clear()
+
+        //de nieuw gecreërde VM zit niet in deze lijst
         virtualmachineList?.forEach { i ->
             if (i.projectId == projectId) {
                 newvirtualMachineList.add(i)
             }
         }
+        Timber.e("After refreshing project with id: %d   =  %d", projectId, newvirtualMachineList.size)
 
     }
 }

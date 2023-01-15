@@ -115,7 +115,6 @@
                         android:layout_height="match_parent"
                         android:text="@string/projectNaam"/>
                     <EditText
-                        android:imeOptions="actionDone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/black"
@@ -123,6 +122,7 @@
                         android:backgroundTint="@color/blue_med"
                         android:hint="@string/projectAanMakenHint"
                         android:afterTextChanged="@{viewmodel::setProjectNaam}"
+                        android:inputType="text"
                         android:imeOptions="actionDone"/>
                     <Button
                         android:layout_width="match_parent"

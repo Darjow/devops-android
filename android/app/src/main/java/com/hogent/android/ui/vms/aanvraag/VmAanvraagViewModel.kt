@@ -30,7 +30,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     init {
         Timber.d("INIT IN VMAANVRAAG VIEWMODEL")
-        Timber.wtf("")
         runBlocking {
             refreshProjects()
         }
@@ -160,32 +159,39 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     fun aanvragen(){
         Timber.d("vmaanvraag is binnengekomen: " + form.value.toString())
-        if(_form.value!!.isValid()){
-            runBlocking {
-                val vm = repo.getVmsByProjectId(_form.value!!.project_id!!)
-                if (vm.isSuccessful()) {
-                    val listvm = vm.body()
-                    if (listvm != null){
-                        val vm = listvm!!.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
-                        if(vm!!.isNotEmpty()) {
-                            _vmNaamBestaatAl.postValue(true);
-                        }
-                        else {
-                            handleSuccessfulResponse()
-                            _navToList.postValue(true)
-                        }
-                    }
-                    else {
-                        handleSuccessfulResponse()
-                        _navToList.postValue(true)
-                    }
-                }
-            }
 
-        }else{
+        if(!_form.value!!.isValid()){
             _errorToast.postValue(true)
         }
+        
+        else{
+            runBlocking {
+                val vm = repo.getVmsByProjectId(_form.value!!.project_id!!)
 
+                if (!vm.isSuccessful) {
+                    _errorToast.postValue(true)
+                    return@runBlocking
+                }
+
+                val listvm = vm.body()
+
+                if (listvm == null || listvm.isEmpty()) {
+                    handleSuccessfulResponse()
+                    _navToList.postValue(true)
+                    return@runBlocking
+                }
+
+                val vms = listvm!!.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
+
+                if (vms!!.isNotEmpty()) {
+                    _vmNaamBestaatAl.postValue(true);
+                    return@runBlocking
+                } else {
+                    handleSuccessfulResponse()
+                    _navToList.postValue(true)
+                }
+            }
+        }
 
     }
 

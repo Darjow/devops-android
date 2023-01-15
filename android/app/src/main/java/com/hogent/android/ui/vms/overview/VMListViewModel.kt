@@ -30,44 +30,43 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
     }
 
     suspend fun refreshProjects() {
-        runBlocking {
-            val customerId = AuthenticationManager.getCustomer()!!.id
-            val virtualMachineList = mutableListOf<VirtualMachine>()
+        val customerId = AuthenticationManager.getCustomer()!!.id
+        val virtualMachineList = mutableListOf<VirtualMachine>()
 
-            _projecten.value = repo.getByCustomerId(customerId)
+        _projecten.value = repo.getByCustomerId(customerId)
+        Timber.d(
+            String.format(
+                "Landed on vmlist viewmodel page, this user has %d projects",
+                projecten.value?.size ?: 0
+            )
+        )
+
+        Timber.wtf(_projecten.value.toString())
+
+
+        if(_projecten.value == null || _projecten.value!!.isEmpty()){
+            _projecten.postValue(listOf( Project("Geen projecten", customerId, -1)))
+            return
+        }
+
+        _projecten.value?.forEach { project ->
+            val projectVMs = repo.getByProjectId(project.id)
+
             Timber.d(
                 String.format(
-                    "Landed on vmlist viewmodel page, this user has %d projects",
-                    projecten.value?.size ?: 0
+                    "project: %s, has %d virtual machine(s)",
+                    project.name,
+                    projectVMs?.size ?: 0
                 )
             )
 
-            Timber.wtf(_projecten.value.toString())
-
-
-            if(_projecten.value == null || _projecten.value!!.isEmpty()){
-                _projecten.postValue(listOf( Project("Geen projecten", customerId, -1)))
-                return@runBlocking
+            if (projectVMs != null) {
+                virtualMachineList.addAll(projectVMs)
             }
 
-            _projecten.value?.forEach { project ->
-                val projectVMs = repo.getByProjectId(project.id)
-
-                Timber.d(
-                    String.format(
-                        "project: %s, has %d virtual machine(s)",
-                        project.name,
-                        projectVMs?.size ?: 0
-                    )
-                )
-
-                if (projectVMs != null) {
-                    virtualMachineList.addAll(projectVMs)
-                }
-
-            }
-            _virtualmachine.value = virtualMachineList
         }
+        _virtualmachine.value = virtualMachineList
     }
 }
+
 
