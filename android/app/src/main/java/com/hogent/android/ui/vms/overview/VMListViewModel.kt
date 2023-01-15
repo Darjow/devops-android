@@ -16,7 +16,6 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
     private var _virtualmachine = MutableLiveData<List<VirtualMachine>>()
 
 
-
     val projecten: LiveData<List<Project>>
         get() = _projecten;
 

@@ -46,6 +46,10 @@ class VMListFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.root.closeKeyboardOnTouch()
 
+        runBlocking {
+            viewModel.refreshProjects()
+        }
+
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.project_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this.context);
 
