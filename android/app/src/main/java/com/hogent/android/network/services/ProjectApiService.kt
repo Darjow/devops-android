@@ -12,11 +12,6 @@ private const val API = "project/"
 private val retrofit = Config.createRetrofit(API)
 
 interface ProjectApiService {
-    @GET
-    suspend fun getAll(): List<Project>?
-
-    @GET("{id}")
-    suspend fun getById(@Path("id") id: Long): Project?
 
     @GET("customer/{id}")
     suspend fun getByCustomerId(@Path("id") id: Int): List<Project>?

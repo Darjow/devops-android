@@ -33,11 +33,9 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
         val virtualMachineList = mutableListOf<VirtualMachine>()
 
         _projecten.value = repo.getByCustomerId(customerId)
-        Timber.d(
-            String.format(
-                "Landed on vmlist viewmodel page, this user has %d projects",
+        Timber.d("Landed on vmlist viewmodel page, this user has %d projects",
                 projecten.value?.size ?: 0
-            )
+
         )
 
         Timber.wtf(_projecten.value.toString())
