@@ -1,17 +1,13 @@
 package com.hogent.android.ui.vms.aanvraag
 
 import android.text.Editable
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.hogent.android.data.entities.*
 import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.ui.components.forms.RequestForm
 import kotlinx.coroutines.runBlocking
-import retrofit2.Response
 import timber.log.Timber
 import java.time.LocalDate
 
