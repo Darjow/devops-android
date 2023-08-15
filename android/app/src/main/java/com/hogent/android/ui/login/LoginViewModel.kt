@@ -4,9 +4,11 @@ package com.hogent.android.ui.login
 import android.text.Editable
 import androidx.lifecycle.*
 import com.hogent.android.data.repositories.CustomerRepository
+import com.hogent.android.network.services.AuthService
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class LoginViewModel(val repository: CustomerRepository): ViewModel(){
+class LoginViewModel(val repository: AuthService): ViewModel(){
 
 
     val mail = MutableLiveData<String>()
@@ -45,7 +47,6 @@ class LoginViewModel(val repository: CustomerRepository): ViewModel(){
                 _errorToastLogin.postValue(true);
                 return@launch
             }
-
             repository.login(mail.value.toString(), _pass.value.toString()).let {
                 if (it != null) {
                     _success.postValue(true)

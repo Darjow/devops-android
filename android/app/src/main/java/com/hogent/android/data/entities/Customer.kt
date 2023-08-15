@@ -7,32 +7,29 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Customer(
-    @Json(name = "lastname")
-    val lastName: String,
-    @Json(name = "firstname")
+    val name: String,
     val firstName: String,
-    @Json(name = "phonenumber")
     val phoneNumber: String,
     val email: String,
-    val password: String?, //voor security geen password verplicht, enkel voor registratie (je zou mss gewoon u registerform kunnen meegeven met de repo ipv customer meegeven)
-    var bedrijf_opleiding: String? = Course.NONE.toString(),
-    var contactPs1: ContactDetails1? = ContactDetails1(),
-    var contactPs2: ContactDetails2? = ContactDetails2(),
+    var bedrijfsnaam: String? = null,
+    var opleiding: Course? = null,
+    var contactPersoon: ContactDetails1? = null,
+    var reserveContactPersoon: ContactDetails2? = null,
     val id: Int = 0
 )
 @JsonClass(generateAdapter = true)
 data class ContactDetails1(
-    var contact1_phone: String? = "",
-    var contact1_email: String? = "",
-    var contact1_firstname : String? = "",
-    var contact1_lastname: String? = ""
+    var phoneNumber: String? = null,
+    var email: String? = null,
+    var firstName : String? = null,
+    var lastName: String? = null,
 )
 @JsonClass(generateAdapter = true)
 data class ContactDetails2(
-    var contact2_phone: String? = "",
-    var contact2_email: String? = "",
-    var contact2_firstname : String? = "",
-    var contact2_lastname: String? = ""
+    var phoneNumber: String? = null,
+    var email: String? = null,
+    var firstName : String? = null,
+    var lastName: String? = null,
 )
 
 

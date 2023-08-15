@@ -12,7 +12,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-private const val url = "customer/"
+private const val url = "user/customers/"
 private val retrofit = Config.createRetrofit(url)
 
 interface CustomerService{
@@ -20,14 +20,15 @@ interface CustomerService{
     @GET(".")
     suspend fun getCustomers(): List<Customer>?
 
-    @POST("login")
-    suspend fun loginCustomer(@Body dto: LoginCredentials): Response<Customer>
-
     @POST(".")
     suspend fun registerCustomer(@Body dto: Register): Customer
 
     @PUT("{id}")
     suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: Customer): Customer?
+
+    @GET("{id}")
+    suspend fun  getById(@Path("id") id: Int): Customer?
+
 }
 
 object CustomerApi {

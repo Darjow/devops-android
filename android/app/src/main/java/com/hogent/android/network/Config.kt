@@ -1,7 +1,10 @@
 package com.hogent.android.network
 
+import AuthInterceptor
+import com.hogent.android.data.entities.Course
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -17,23 +20,32 @@ import java.util.*
 
 class Config {
     companion object{
-        private const val BASE_URL = "http://10.0.2.2:9000/api/"
+        private const val BASE_URL = "http://10.0.2.2:5000/api/"
+
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .add(LocalDateAdapter())
+            .add(CourseJsonAdapter())
             .build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor())
+            .build()
+
 
         fun createRetrofit(endpoint : String): Retrofit{
             return Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl(BASE_URL + endpoint)
+                .client(okHttpClient)
                 .build()
         }
+
 
     }
 }
 
-public class LocalDateAdapter : JsonAdapter<LocalDate>() {
+private class LocalDateAdapter : JsonAdapter<LocalDate>() {
 
     @ToJson
     override fun toJson(writer: JsonWriter, value: LocalDate?) {
@@ -56,3 +68,22 @@ public class LocalDateAdapter : JsonAdapter<LocalDate>() {
     }
 }
 
+private class CourseJsonAdapter {
+    @FromJson
+    fun fromJson(value: Int): Course {
+        return when (value) {
+            1 -> Course.TOEGEPASTE_INFORMATICA
+            2 -> Course.AGRO_EN_BIOTECHNOLOGIE
+            3 -> Course.BIOMEDISCHE_LABORATORIUMTECHNOLOGIE
+            4 -> Course.CHEMIE
+            5 -> Course.DIGITAL_DESIGN_AND_DEVELOPMENT
+            6 -> Course.ELEKTROMECHANICA
+            else -> Course.NONE
+        }
+    }
+
+    @ToJson
+    fun toJson(course: Course): Int {
+        return course.ordinal
+    }
+}

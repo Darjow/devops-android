@@ -112,24 +112,24 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     fun onEditButtonPressed() {
         inEditMode.postValue(true)
-        val contactps1 = klant.value!!.contactPs1
-        val contactps2 = klant.value!!.contactPs2
+        val contactps1 = klant.value!!.contactPersoon
+        val contactps2 = klant.value!!.reserveContactPersoon
         var contactOne = ContactOne("", "", "")
         var contactTwo = ContactTwo("", "", "")
 
         if (contactps1 != null) {
             contactOne = ContactOne(
-                contactps1.contact1_email!!,
-                contactps1.contact1_phone!!,
-                contactps1.contact1_firstname + " " + contactps1.contact1_lastname
+                contactps1.email!!,
+                contactps1.phoneNumber!!,
+                contactps1.firstname + " " + contactps1.lastname
             );
             Timber.d("Contactps1: %s", contactOne.toString())
         }
         if (contactps2 != null) {
             contactTwo = ContactTwo(
-                contactps2.contact2_email!!,
-                contactps2.contact2_phone!!,
-                contactps2.contact2_firstname + " " + contactps2.contact2_lastname
+                contactps2.email!!,
+                contactps2.phoneNumber!!,
+                contactps2.firstname + " " + contactps2.lastname
             );
         }
 
@@ -172,7 +172,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             _form.value!!.contact1.fullName.split(" ")[0],
             _form.value!!.contact1.fullName.substringAfter(" ")
         );
-        customer.contactPs1 = contactDetails1
+        customer.contactPersoon = contactDetails1
         if (_form.value!!.contact2.isValid()) {
             val contactDetails2 = ContactDetails2(
                 _form.value!!.contact2.phone,
@@ -180,7 +180,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
                 _form.value!!.contact2.fullName.split(" ")[0],
                 _form.value!!.contact2.fullName.substringAfter(" ")
             );
-            customer.contactPs2 = contactDetails2
+            customer.reserveContactPersoon = contactDetails2
         }
         viewModelScope.launch(Dispatchers.Main) {
             Timber.d("Sending to backend ID: %d  and customer: %s", customer.id, customer.toString())

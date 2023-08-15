@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
 import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentLoginBinding
+import com.hogent.android.network.services.AuthService
 import com.hogent.android.util.closeKeyboardOnTouch
 
 class LoginFragment : Fragment() {
@@ -20,7 +21,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(   inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View? {
         val binding: FragmentLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
-        val viewModelFactory = LoginViewModelFactory(CustomerRepository());
+        val viewModelFactory = LoginViewModelFactory(AuthService());
         val loginView = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java];
 
         binding.loginViewModel = loginView;

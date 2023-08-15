@@ -110,7 +110,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:text="@{customerViewModel.klant.bedrijf_opleiding}"
+                        android:text="@{customerViewModel.klant.bedrijfsnaam != null? customerViewModel.klant.bedrijfsnaam : customerViewModel.klant.opleiding.toString() }"
                         android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -143,7 +143,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:text='@{String.format("%s %s", customerViewModel.klant.firstName, customerViewModel.klant.lastName)}'
+                        android:text='@{String.format("%s %s", customerViewModel.klant.firstName, customerViewModel.klant.name)}'
                         android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -317,7 +317,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:nextFocusForward="@id/contactpersoon_1_phone_input"
-                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_email : ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon != null? customerViewModel.klant.contactPersoon.email : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -338,7 +338,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="phone"
                         android:nextFocusForward="@id/contactpersoon_1_fullname_input"
-                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_phone : ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon != null? customerViewModel.klant.contactPersoon.phoneNumber : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -358,7 +358,7 @@
                         android:hint="@string/example_fullname"
                         android:imeOptions="actionDone"
                         android:inputType="textPersonName"
-                        android:text='@{customerViewModel.klant.contactPs1 != null? customerViewModel.klant.contactPs1.contact1_firstname + " " + customerViewModel.klant.contactPs1.contact1_lastname : ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon != null? customerViewModel.klant.contactPersoon.firstName + " " + customerViewModel.klant.contactPersoon.lastName : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -378,7 +378,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:nextFocusForward="@id/contactpersoon_2_phone_input"
-                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_email : ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null? customerViewModel.klant.reserveContactPersoon.email : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -399,7 +399,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="phone"
                         android:nextFocusForward="@id/contactpersoon_2_fullname_input"
-                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_phone : ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null? customerViewModel.klant.reserveContactPersoon.phoneNumber : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -420,7 +420,7 @@
                         android:hint="@string/example_fullname"
                         android:imeOptions="actionDone"
                         android:inputType="textPersonName"
-                        android:text='@{customerViewModel.klant.contactPs2 != null? customerViewModel.klant.contactPs2.contact2_firstname + " " + customerViewModel.klant.contactPs2.contact2_lastname : ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null? customerViewModel.klant.reserveContactPersoon.firstName + " " + customerViewModel.klant.reserveContactPersoon.lastName : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -455,7 +455,7 @@
                         android:layout_marginEnd="20dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_email : ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null ? customerViewModel.klant.reserveContactPersoon.email : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -472,7 +472,7 @@
                         android:layout_marginEnd="5dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_email : ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon != null ? customerViewModel.klant.contactPersoon.email : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -489,7 +489,7 @@
                         android:layout_marginEnd="5dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_phone : ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon.phoneNumber != null ? customerViewModel.klant.contactPersoon.phoneNumber : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -507,7 +507,7 @@
                         android:layout_marginEnd="20dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_phone : ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null ? customerViewModel.klant.reserveContactPersoon.phoneNumber : ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -559,7 +559,7 @@
                         android:layout_marginEnd="20dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs2 != null ? customerViewModel.klant.contactPs2.contact2_firstname + " " +   customerViewModel.klant.contactPs2.contact2_lastname: ""}'
+                        android:text='@{customerViewModel.klant.reserveContactPersoon != null ? customerViewModel.klant.reserveContactPersoon.firstName + " " +   customerViewModel.klant.reserveContactPersoon.lastName: ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"
@@ -576,7 +576,7 @@
                         android:layout_marginEnd="5dp"
                         android:gravity="center_vertical"
                         android:hint="@string/dash"
-                        android:text='@{customerViewModel.klant.contactPs1 != null ? customerViewModel.klant.contactPs1.contact1_firstname + " " +   customerViewModel.klant.contactPs1.contact1_lastname: ""}'
+                        android:text='@{customerViewModel.klant.contactPersoon != null ? customerViewModel.klant.contactPersoon.firstName + " " +   customerViewModel.klant.contactPersoon.lastName: ""}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/p_font_size"

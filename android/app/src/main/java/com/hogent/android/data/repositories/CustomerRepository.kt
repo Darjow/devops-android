@@ -28,22 +28,6 @@ class CustomerRepository {
         val phonenumber = registerForm.inputPhoneNumber
 
         val dto = Register(firstname, lastname, email, pw, phonenumber, Course.NONE)
-
-
         return customerApi.registerCustomer(dto)
-    }
-
-    suspend fun login(email: String, password: String): Customer? {
-        val response  = customerApi.loginCustomer(LoginCredentials(email, password))
-        TimberUtils.logRequest(response)
-
-        if(response.code() == HttpURLConnection.HTTP_OK) {
-            if(response.body() != null){
-                AuthenticationManager.setCustomer(response.body())
-                return response.body();
-            }
-        }
-
-        return null;
     }
 }

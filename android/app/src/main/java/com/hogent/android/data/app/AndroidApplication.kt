@@ -1,4 +1,4 @@
-package com.hogent.android.app
+package com.hogent.android.data.app
 
 import android.app.Application
 import timber.log.Timber
