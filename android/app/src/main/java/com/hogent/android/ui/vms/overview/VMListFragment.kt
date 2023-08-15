@@ -64,7 +64,6 @@ class VMListFragment : Fragment() {
 
         })
 
-
         return binding.root
     }
 
