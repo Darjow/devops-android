@@ -165,7 +165,7 @@ class VmAanvraagFragment : Fragment(){
             adapterProject.clear();
             adapterProject.add("")
             adapterProject.add("+ Project toevoegen")
-            it.projects.forEach { project ->
+            it.projects?.forEach { project ->
                 adapterProject.add(project.name)
             }
             adapterProject.notifyDataSetChanged()

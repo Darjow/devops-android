@@ -3,6 +3,7 @@ package com.hogent.android.network.services
 import com.hogent.android.network.Config
 import com.hogent.android.network.dtos.requests.ProjectCreate
 import com.hogent.android.network.dtos.responses.ProjectDetails
+import com.hogent.android.network.dtos.responses.ProjectId
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import retrofit2.Response
@@ -24,7 +25,7 @@ interface ProjectApiService {
 
 
     @POST(".")
-    suspend fun  createProject(@Body proj : ProjectCreate): Response<ProjectOverViewItem>
+    suspend fun  createProject(@Body proj : ProjectCreate): Response<ProjectId>
 
     }
 

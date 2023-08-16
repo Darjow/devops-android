@@ -3,6 +3,7 @@ package com.hogent.android.data.repositories
 import com.hogent.android.data.entities.*
 import com.hogent.android.network.dtos.*
 import com.hogent.android.network.dtos.requests.ProjectCreate
+import com.hogent.android.network.dtos.responses.ProjectId
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.services.ContractApi
@@ -42,11 +43,17 @@ class VmAanvraagRepository() {
     }
 
     suspend fun getProjecten(): ProjectOverView? {
-        return projectApi.getAll().body();
+        val response = projectApi.getAll();
+        TimberUtils.logRequest(response);
+
+        if(response.isSuccessful){
+            return response.body();
+        }
+        return null;
     }
 
-    suspend fun  createProject(name : String): ProjectOverViewItem?{
-        val response = projectApi.createProject(ProjectCreate(name, customerId))
+    suspend fun  createProject(name : String): ProjectId? {
+        val response= projectApi.createProject(ProjectCreate(name, customerId))
 
         if(response.isSuccessful){
             return response.body();

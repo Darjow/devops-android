@@ -4,6 +4,7 @@ import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.OperatingSystem
 import com.hogent.android.data.repositories.VmAanvraagRepository
@@ -11,8 +12,10 @@ import com.hogent.android.data.entities.VirtualMachineModus
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.ui.components.forms.RequestForm
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.io.Console
 import java.time.LocalDate
 
 class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
@@ -30,14 +33,14 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     init {
         Timber.d("INIT IN VMAANVRAAG VIEWMODEL")
-        runBlocking {
+        viewModelScope.launch {
             refreshProjects()
         }
     }
 
     suspend fun refreshProjects(){
-            _projecten.postValue(repo.getProjecten())
-            Timber.d("Grootte lijst van projects: ", projecten.value!!.total)
+        val response = repo.getProjecten()
+        _projecten.postValue(response)
     }
 
     val navToList : LiveData<Boolean>
@@ -83,8 +86,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     fun projectChanged(naam: String){
         val __form = _form.value!!;
-
-        if(projecten.value?.total == 0 || naam.equals("+ Project toevoegen")){
+        if(projecten.value == null || projecten.value?.total == 0 || naam == "+ Project toevoegen" || naam == ""){
             __form.project_id = -1
         }
 
@@ -207,13 +209,12 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
             if(proj.isNullOrEmpty() && !naamCreatedProject.value.isNullOrEmpty()){
                 repo.createProject(naamCreatedProject.value.toString())
                 _closeKeyBoard.postValue(true);
-
             }
             else{
                 _projectNaamCheck.postValue(true)
             }
         }
-        runBlocking {
+        viewModelScope.launch {
             refreshProjects()
         }
     }

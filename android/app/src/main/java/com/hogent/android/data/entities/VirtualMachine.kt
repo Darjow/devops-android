@@ -25,12 +25,12 @@ enum class VirtualMachineModus {
     PAUSED,
     STOPPED;
     fun to_string(): String {
-        return when (this.name) {
-            "WAITING_APPROVEMENT" -> "Wachten op goedkeuring"
-            "READY" -> "Idle"
-            "RUNNING" -> "Online"
-            "PAUSED" -> "Gepauzeerd"
-            "STOPPED" -> "Gestopt"
+        return when (this) {
+            WAITING_APPROVEMENT -> "Wachten op goedkeuring"
+            READY -> "Idle"
+            RUNNING -> "Online"
+            PAUSED -> "Gepauzeerd"
+            STOPPED -> "Gestopt"
             else -> throw IllegalArgumentException("Unknown vm modus received");
         }
     }

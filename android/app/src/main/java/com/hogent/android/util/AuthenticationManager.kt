@@ -84,6 +84,7 @@ class AuthenticationManager() {
 
     fun logOut() {
         klant.postValue(null)
+        AuthInterceptor.setAuthToken("");
         authenticationState.postValue(AuthenticationState.UNAUTHENTICATED)
     }
 }

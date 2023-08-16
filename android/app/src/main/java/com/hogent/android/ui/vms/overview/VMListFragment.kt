@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
 import com.hogent.android.data.repositories.VmOverviewRepository
 import com.hogent.android.databinding.FragmentVmlistBinding
+import com.hogent.android.network.dtos.responses.VMIndex
 import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -57,12 +58,15 @@ class VMListFragment : Fragment() {
         Timber.i("Total VMS %d", viewModel.virtualmachine.value?.size?: 0)
 
         viewModel.projecten.observe(viewLifecycleOwner, Observer {
-            recyclerView.adapter = ProjectListAdapter(
-                it,
-                viewModel.virtualmachine.value,
-                this.context);
-
+            if(viewModel.virtualmachine.value?.size?: 0 > 0) {
+                recyclerView.adapter = ProjectListAdapter(
+                    it,
+                    viewModel.virtualmachine.value,
+                    this.context
+                );
+            }
         })
+
 
         return binding.root
     }

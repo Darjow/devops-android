@@ -8,10 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.VMIndex
-import com.hogent.devOps_Android.ui.vms.overview.VirtualMachineListAdapter
 import timber.log.Timber
 
 class ProjectListAdapter(
@@ -21,7 +19,7 @@ class ProjectListAdapter(
 ) : RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
 
 
-    private var newvirtualMachineList = mutableListOf<VirtualMachine>()
+    private var newvirtualMachineList = mutableListOf<VMIndex>()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -40,7 +38,7 @@ class ProjectListAdapter(
 
         if(project.id > 0) {
             holder.recyclerView.layoutManager = LinearLayoutManager(context)
-            //filterVirtualMachines(project.id)
+            filterVirtualMachines(project.id)
             holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
             holder.textView1.text = project.name
         }
@@ -57,9 +55,9 @@ class ProjectListAdapter(
 
         //de nieuw gecreërde VM zit niet in deze lijst
         virtualmachineList?.forEach { i ->
-            //if (i.projectId == projectId) {
-            //    newvirtualMachineList.add(i)
-            //}
+            if (i.projectId == projectId) {
+                newvirtualMachineList.add(i);
+            }
         }
         Timber.e("After refreshing project with id: %d   =  %d", projectId, newvirtualMachineList.size)
 

@@ -58,8 +58,11 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
                 )
             )
 
-            if (projectVMs != null) {
-                virtualMachineList.addAll(projectVMs!!.virtualMachines)
+            projectVMs?.virtualMachines?.let { vms ->
+                val updatedVMs = vms.map { vm ->
+                    VMIndex(vm.id, vm.name, vm.mode, project.id)
+                }
+                virtualMachineList.addAll(updatedVMs)
             }
 
         }

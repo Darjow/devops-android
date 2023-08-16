@@ -1,4 +1,4 @@
-package com.hogent.devOps_Android.ui.vms.overview
+package com.hogent.android.ui.vms.overview
 
 
 import android.view.LayoutInflater
@@ -8,15 +8,12 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.data.entities.VirtualMachine
-import com.hogent.android.ui.vms.overview.VMListFragmentDirections
+import com.hogent.android.network.dtos.responses.VMIndex
 import com.hogent.android.util.AuthenticationManager
-
-import timber.log.Timber
 
 
 class VirtualMachineListAdapter (
-    private var virtualmachineList: List<VirtualMachine>?,
+    private var virtualmachineList: List<VMIndex>?,
 ) : RecyclerView.Adapter<VirtualMachineListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,7 +37,7 @@ class VirtualMachineListAdapter (
             holder.textView3.textSize = 15F
         } else {
             val virtualmachine = virtualmachineList!![position - 1]
-            holder.textView1.text = virtualmachine?.status.toString()
+            holder.textView1.text = virtualmachine?.mode.toString()
             holder.textView2.text = virtualmachine?.name
             holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
