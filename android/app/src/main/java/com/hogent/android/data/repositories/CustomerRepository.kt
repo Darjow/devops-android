@@ -17,17 +17,24 @@ class CustomerRepository {
         var response = customerApi.updateCustomer(id, cust)
         TimberUtils.logRequest(response)
 
-        if(response.isSuccessful){
-            return response.body();
+        if (!response.isSuccessful) {
+            return null;
         }
-        throw IllegalArgumentException();
-
+        return response.body();
     }
 
-    suspend fun isAvailable(email: String): Boolean  {
-        throw NotImplementedError();
-    }
-    suspend fun register(dto: RegisterForm): JWT {
-        return customerApi.registerCustomer(dto)
+    suspend fun register(dto: RegisterForm): JWT? {
+        var available = customerApi.isAvailable(dto.inputEmail)?.body()
+
+        if(available == false){
+            return null;
+        }
+
+        var response =  customerApi.registerCustomer(dto)
+
+        if (!response.isSuccessful){
+            return null;
+        }
+        return response.body();
     }
 }

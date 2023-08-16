@@ -1,5 +1,6 @@
 package com.hogent.android.ui.register
 
+import AuthInterceptor
 import android.app.Application
 import android.text.Editable
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.RegisterForm
+import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -69,19 +71,14 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
         }
         else{
             runBlocking {
-            Timber.d("EMAIL VALIDATIE")
-            val isAvailable = repo.isAvailable(registerForm.value!!.inputEmail)
-            Timber.d(isAvailable.toString())
-                if(!isAvailable) {
-                    Toast.makeText(app, "Email bestaat al", Toast.LENGTH_SHORT).show()
-                }
-                else{
-
-                    Timber.d("MAKING CUSTOMER")
-                    Timber.d(registerForm.value.toString())
-                    repo.register(registerForm.value!!);
+                Timber.d("MAKING CUSTOMER")
+                Timber.d(registerForm.value.toString())
+                val response = repo.register(registerForm.value!!)
+                if(response != null && response.token != null){
+                    AuthenticationManager.setCustomer(response.token);
                     _navigateHome.postValue(true)
                 }
+                // else hndle error with a toast or w/e but atm no register is implemented
             }
         }
     }

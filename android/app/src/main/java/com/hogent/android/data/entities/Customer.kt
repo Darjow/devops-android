@@ -23,7 +23,6 @@ data class ContactDetails(
     var lastName: String? = null,
 )
 
-
 enum class Course{
     NONE,
     TOEGEPASTE_INFORMATICA,

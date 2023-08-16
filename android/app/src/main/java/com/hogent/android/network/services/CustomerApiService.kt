@@ -19,7 +19,7 @@ private val retrofit = Config.createRetrofit(url)
 
 interface CustomerService{
     @POST(".")
-    suspend fun registerCustomer(@Body dto: RegisterForm): JWT
+    suspend fun registerCustomer(@Body dto: RegisterForm): Response<JWT>
 
     @PUT("{id}")
     suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: CustomerEdit): Response<EditedCustomer>
@@ -27,6 +27,8 @@ interface CustomerService{
     @GET("{id}")
     suspend fun  getById(@Path("id") id: Int): Response<Customer?>
 
+    @GET("email")
+    suspend fun isAvailable(@Path("email") email: String): Response<Boolean>
 
 }
 
