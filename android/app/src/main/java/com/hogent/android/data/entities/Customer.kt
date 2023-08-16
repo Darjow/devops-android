@@ -1,7 +1,5 @@
-package com.hogent.android.data.entities
+package com.hogent.android.data.entities;
 
-import androidx.room.Embedded
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 
@@ -13,19 +11,12 @@ data class Customer(
     val email: String,
     var bedrijfsnaam: String? = null,
     var opleiding: Course? = null,
-    var contactPersoon: ContactDetails1? = null,
-    var reserveContactPersoon: ContactDetails2? = null,
+    var contactPersoon: ContactDetails? = null,
+    var reserveContactPersoon: ContactDetails? = null,
     val id: Int = 0
 )
 @JsonClass(generateAdapter = true)
-data class ContactDetails1(
-    var phoneNumber: String? = null,
-    var email: String? = null,
-    var firstName : String? = null,
-    var lastName: String? = null,
-)
-@JsonClass(generateAdapter = true)
-data class ContactDetails2(
+data class ContactDetails(
     var phoneNumber: String? = null,
     var email: String? = null,
     var firstName : String? = null,

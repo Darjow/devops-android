@@ -4,7 +4,6 @@ import retrofit2.Response
 import timber.log.Timber
 
 class TimberUtils {
-    //had ik gebruikt om login async te maken en wat te debuggen, maar heb de response weggedaan
     companion object{
         fun logRequest(response: Response<*>) {
             val stackTrace = Thread.currentThread().stackTrace

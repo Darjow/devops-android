@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.android.data.entities.Contract
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.data.repositories.VmDetailRepository
+import com.hogent.android.data.entities.VirtualMachine
+
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {
 

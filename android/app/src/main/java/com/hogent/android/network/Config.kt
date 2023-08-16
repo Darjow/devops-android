@@ -2,6 +2,7 @@ package com.hogent.android.network
 
 import AuthInterceptor
 import com.hogent.android.data.entities.Course
+import com.hogent.android.data.entities.VirtualMachine
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient

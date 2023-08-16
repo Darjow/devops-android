@@ -3,7 +3,6 @@ package com.hogent.android.network.services
 import com.hogent.android.data.entities.Contract
 import com.hogent.android.network.Config
 import com.hogent.android.network.dtos.ContractDto
-import retrofit2.Response
 import retrofit2.http.*
 
 private const val API = "contract/"

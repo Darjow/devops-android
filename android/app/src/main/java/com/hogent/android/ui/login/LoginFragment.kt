@@ -1,5 +1,6 @@
 package com.hogent.android.ui.login
 
+import AuthInterceptor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,11 +25,11 @@ class LoginFragment : Fragment() {
         val viewModelFactory = LoginViewModelFactory(AuthService());
         val loginView = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java];
 
+
         binding.loginViewModel = loginView;
         binding.lifecycleOwner = this;
 
         binding.root.closeKeyboardOnTouch();
-
 
         loginView.success.observe(viewLifecycleOwner, Observer {
             if (it) {

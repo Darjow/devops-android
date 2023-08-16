@@ -1,8 +1,7 @@
 package com.hogent.android.data.repositories
 
 import com.hogent.android.data.entities.*
-import com.hogent.android.network.dtos.ContractDto
-import com.hogent.android.network.dtos.ProjectDto
+import com.hogent.android.network.dtos.*
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi

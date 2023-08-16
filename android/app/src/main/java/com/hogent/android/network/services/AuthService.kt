@@ -1,17 +1,13 @@
 package com.hogent.android.network.services
 
-import com.hogent.android.data.entities.Contract
 import com.hogent.android.network.Config
-import com.hogent.android.network.dtos.ContractDto
-import com.hogent.android.network.dtos.JWT
-import com.hogent.android.network.dtos.LoginCredentials
+import com.hogent.android.network.dtos.responses.JWT
+import com.hogent.android.network.dtos.requests.LoginCredentials
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import timber.log.Timber
-import java.net.HttpURLConnection
 
 
 private const val API = "authentication/"

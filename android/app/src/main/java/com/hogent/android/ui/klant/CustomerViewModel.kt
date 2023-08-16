@@ -3,10 +3,10 @@ package com.hogent.android.ui.klant
 import android.text.Editable
 import android.view.View
 import androidx.lifecycle.*
-import com.hogent.android.data.entities.ContactDetails1
-import com.hogent.android.data.entities.ContactDetails2
+import com.hogent.android.data.entities.ContactDetails
 import com.hogent.android.data.entities.Customer
 import com.hogent.android.data.repositories.CustomerRepository
+import com.hogent.android.network.dtos.requests.CustomerEdit
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
 import com.hogent.android.ui.components.forms.CustomerContactEditForm
@@ -121,7 +121,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             contactOne = ContactOne(
                 contactps1.email!!,
                 contactps1.phoneNumber!!,
-                contactps1.firstname + " " + contactps1.lastname
+                contactps1.firstName + " " + contactps1.lastName
             );
             Timber.d("Contactps1: %s", contactOne.toString())
         }
@@ -129,7 +129,7 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             contactTwo = ContactTwo(
                 contactps2.email!!,
                 contactps2.phoneNumber!!,
-                contactps2.firstname + " " + contactps2.lastname
+                contactps2.firstName + " " + contactps2.lastName
             );
         }
 
@@ -165,27 +165,31 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     private fun persistCustomer() {
         val customer: Customer = klant!!.value!!.copy()
+        val form = CustomerEdit(customer.firstName, customer.name, customer.phoneNumber, customer.email, customer.opleiding,customer.bedrijfsnaam, customer.contactPersoon, customer.reserveContactPersoon)
 
-        val contactDetails1 = ContactDetails1(
+        val contactDetails1 = ContactDetails(
             _form.value!!.contact1.phone,
             _form.value!!.contact1.email,
             _form.value!!.contact1.fullName.split(" ")[0],
             _form.value!!.contact1.fullName.substringAfter(" ")
         );
+        form.contactPersoon = contactDetails1
         customer.contactPersoon = contactDetails1
+
         if (_form.value!!.contact2.isValid()) {
-            val contactDetails2 = ContactDetails2(
+            val contactDetails2 = ContactDetails(
                 _form.value!!.contact2.phone,
                 _form.value!!.contact2.email,
                 _form.value!!.contact2.fullName.split(" ")[0],
                 _form.value!!.contact2.fullName.substringAfter(" ")
             );
+            form.reserveContactpersoon = contactDetails2
             customer.reserveContactPersoon = contactDetails2
+
         }
         viewModelScope.launch(Dispatchers.Main) {
-            Timber.d("Sending to backend ID: %d  and customer: %s", customer.id, customer.toString())
-            val customer = repo.updateCustomer(customer.id, customer)
-            _klant.postValue(customer!!);
+            repo.updateCustomer(customer.id, form);
+            _klant.postValue(customer);
         }
     }
 

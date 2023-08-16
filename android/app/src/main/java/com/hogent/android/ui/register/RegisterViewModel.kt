@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.data.entities.Customer
 import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.ui.components.forms.RegisterForm
 import kotlinx.coroutines.*
@@ -71,18 +70,16 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
         else{
             runBlocking {
             Timber.d("EMAIL VALIDATIE")
-            val user = repo.getAll()?.filter{ c -> c.email == registerForm.value!!.inputEmail }
-            Timber.d(user.toString())
-                if(user != null && user.isNotEmpty()) {
-                    if (user!!.isNotEmpty()) {
-                        Toast.makeText(app, "Email bestaat al", Toast.LENGTH_SHORT).show()
-                    }
+            val isAvailable = repo.isAvailable(registerForm.value!!.inputEmail)
+            Timber.d(isAvailable.toString())
+                if(!isAvailable) {
+                    Toast.makeText(app, "Email bestaat al", Toast.LENGTH_SHORT).show()
                 }
                 else{
 
                     Timber.d("MAKING CUSTOMER")
                     Timber.d(registerForm.value.toString())
-                    repo.registerCustomer(registerForm.value!!);
+                    repo.register(registerForm.value!!);
                     _navigateHome.postValue(true)
                 }
             }

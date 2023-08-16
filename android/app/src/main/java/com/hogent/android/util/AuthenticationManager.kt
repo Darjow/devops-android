@@ -52,9 +52,8 @@ class AuthenticationManager() {
                     instance.klant.postValue(customer)
                     instance.authenticationState.postValue(AuthenticationState.AUTHENTICATED)
                 }
-                }
+            }
         }
-
 
         private suspend fun fetchCustomerById(id: Int): Customer? {
             return try {
@@ -62,9 +61,9 @@ class AuthenticationManager() {
                     Timber.i("trying to fetch userbyid");
                     val response = CustomerApi.service.getById(id)
 
-                    if (response?.id != null) {
+                    if (response.isSuccessful) {
                         Timber.i("response is successfully receive")
-                        response
+                        response.body()
                     } else {
                         Timber.i("no user found")
                         null
@@ -73,11 +72,11 @@ class AuthenticationManager() {
             } catch (e: Exception) {
                 Timber.wtf("[failed] trying to fetch userbyid");
                 Timber.wtf(e.message);
-
                 null
             }
         }
     }
+
 
     fun loggedIn(): Boolean {
         return authenticationState.value == AuthenticationState.AUTHENTICATED

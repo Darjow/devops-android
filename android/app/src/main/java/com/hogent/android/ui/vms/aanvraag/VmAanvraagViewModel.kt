@@ -4,8 +4,11 @@ import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.data.entities.*
+import com.hogent.android.data.entities.BackupType
+import com.hogent.android.data.entities.OperatingSystem
 import com.hogent.android.data.repositories.VmAanvraagRepository
+import com.hogent.android.data.entities.Project
+import com.hogent.android.data.entities.VirtualMachineModus
 import com.hogent.android.ui.components.forms.RequestForm
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber

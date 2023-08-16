@@ -1,8 +1,7 @@
 package com.hogent.android.data.entities
-import androidx.core.text.isDigitsOnly
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
 data class VirtualMachine(
@@ -17,7 +16,6 @@ data class VirtualMachine(
     val contractId : Int,
     val backup : Backup,
     val id: Int = 0,
-
 )
 
 enum class VirtualMachineModus {
@@ -35,84 +33,15 @@ enum class VirtualMachineModus {
     }
 }
 
-
-data class HardWare(
-    val memory: Int,
-    val storage: Int,
-    val cpu: Int
-)
-
-enum class OperatingSystem {
+enum class VirtualMachineStatus {
     NONE,
-    WINDOWS_2012,
-    WINDOWS_2016,
-    WINDOWS_2019,
-    LINUX_UBUNTU,
-    LINUX_KALI,
-    RASPBERRY_PI;
+    GEREED,
+    RUNNING,
+    TERMINATED,
+    AANGEVRAAGD;
 
     fun to_string(): String {
-        val strings = this.name.split("_")
-        var output = "";
-
-        for ((i, string) in strings.withIndex()) {
-
-            if (i != 0) {
-                output += " "
-            }
-            if (string.isDigitsOnly()) {
-                output += string
-            } else if (!string[0].isDigit()) {
-                output += string.lowercase().replaceRange(0..0, string[0].uppercase())
-            } else {
-                output += string.lowercase()
-            }
-        }
-        return output;
+        return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
     }
 }
-
-    enum class VirtualMachineStatus {
-        NONE,
-        GEREED,
-        RUNNING,
-        TERMINATED,
-        AANGEVRAAGD;
-
-        fun to_string(): String {
-            return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
-        }
-    }
-
-@JsonClass(generateAdapter = true)
-    data class Backup(
-        @Json(name = "backup_type")
-        val type: BackupType?,
-        @Json(name = "latest_backup")
-        val date: LocalDate?,
-    )
-
-    enum class BackupType() {
-        GEEN,
-        DAGELIJKS,
-        WEKELIJKS,
-        MAANDELIJKS;
-
-        fun to_string(): String {
-            return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
-        }
-    }
-
-
-    data class Connection(
-        val fqdn: String? = null,
-        val ipAdres: String? = null,
-        val username: String? = null,
-        val password: String? = null,
-    )
-
-
-
-
-
 

@@ -1,10 +1,12 @@
 package com.hogent.android.network.services
 
 
-import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.Config
-import com.hogent.android.network.dtos.LoginCredentials
-import com.hogent.android.network.dtos.Register
+import com.hogent.android.data.entities.Customer
+import com.hogent.android.network.dtos.requests.CustomerEdit
+import com.hogent.android.network.dtos.responses.EditedCustomer
+import com.hogent.android.network.dtos.responses.JWT
+import com.hogent.android.ui.components.forms.RegisterForm
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,18 +18,15 @@ private const val url = "user/customers/"
 private val retrofit = Config.createRetrofit(url)
 
 interface CustomerService{
-
-    @GET(".")
-    suspend fun getCustomers(): List<Customer>?
-
     @POST(".")
-    suspend fun registerCustomer(@Body dto: Register): Customer
+    suspend fun registerCustomer(@Body dto: RegisterForm): JWT
 
     @PUT("{id}")
-    suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: Customer): Customer?
+    suspend fun  updateCustomer(@Path("id") id: Int, @Body Customer: CustomerEdit): Response<EditedCustomer>
 
     @GET("{id}")
-    suspend fun  getById(@Path("id") id: Int): Customer?
+    suspend fun  getById(@Path("id") id: Int): Response<Customer?>
+
 
 }
 

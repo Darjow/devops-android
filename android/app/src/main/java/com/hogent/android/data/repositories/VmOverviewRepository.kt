@@ -4,7 +4,6 @@ import com.hogent.android.data.entities.Project
 import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
-import retrofit2.Response
 import timber.log.Timber
 
 class VmOverviewRepository {
