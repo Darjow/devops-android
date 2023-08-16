@@ -2,13 +2,12 @@ package com.hogent.android.data.entities
 import androidx.core.text.isDigitsOnly
 
 enum class OperatingSystem {
-    NONE,
-    WINDOWS_2012,
-    WINDOWS_2016,
-    WINDOWS_2019,
-    LINUX_UBUNTU,
-    LINUX_KALI,
-    RASPBERRY_PI;
+    WINDOWS_10,
+    WINDOWS_SERVER2019,
+    KALI_LINUX,
+    UBUNTU_22_04,
+    FEDORA_36,
+    FEDORA_35;
 
     fun to_string(): String {
         val strings = this.name.split("_")

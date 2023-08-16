@@ -1,9 +1,7 @@
 package com.hogent.android.network
 
 import AuthInterceptor
-import com.hogent.android.data.entities.Course
-import com.hogent.android.data.entities.VirtualMachine
-import com.hogent.android.data.entities.VirtualMachineModus
+import com.hogent.android.data.entities.*
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -29,6 +27,8 @@ class Config {
             .add(LocalDateAdapter())
             .add(CourseJsonAdapter())
             .add(VMModusJsonAdapter())
+            .add(OSJsonAdapter())
+            .add(BackUpPeriodJsonAdapter())
             .build()
 
         val okHttpClient = OkHttpClient.Builder()
@@ -66,7 +66,7 @@ private class LocalDateAdapter : JsonAdapter<LocalDate>() {
             return null
         }
         val dateString = reader.nextString()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS")
         return LocalDate.from(LocalDateTime.parse(dateString, formatter))
     }
 }
@@ -104,7 +104,45 @@ private class VMModusJsonAdapter {
         }
     }
     @ToJson
-    fun toJson(course: Course): Int {
-        return course.ordinal
+    fun toJson(mode: VirtualMachineModus): Int {
+        return mode.ordinal
+    }
+}
+
+private class OSJsonAdapter {
+
+    @FromJson
+    fun fromJson(value: Int): OperatingSystem {
+        return when (value) {
+            1 -> OperatingSystem.WINDOWS_SERVER2019
+            2 -> OperatingSystem.KALI_LINUX
+            3 -> OperatingSystem.UBUNTU_22_04
+            4 -> OperatingSystem.FEDORA_36
+            5 -> OperatingSystem.FEDORA_35
+            else -> OperatingSystem.WINDOWS_10
+
+        }
+    }
+    @ToJson
+    fun toJson(os: OperatingSystem): Int {
+        return os.ordinal
+    }
+}
+private class BackUpPeriodJsonAdapter {
+
+    @FromJson
+    fun fromJson(value: Int): BackupType {
+        return when (value) {
+            1 -> BackupType.CUSTOM
+            2 -> BackupType.DAILY
+            3 -> BackupType.WEEKLY
+            4 -> BackupType.MONTHLY
+            else -> BackupType.GEEN
+
+        }
+    }
+    @ToJson
+    fun toJson(bu: BackupType): Int {
+        return bu.ordinal
     }
 }

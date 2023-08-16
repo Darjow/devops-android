@@ -8,6 +8,7 @@ import java.time.LocalDate
 data class Contract(
     val startDate: LocalDate,
     var endDate: LocalDate,
-    var active: Boolean? = false,
-    val id: Int = 0,
+    val vmId: Int,
+    val customerId: Int,
+    val id: Int
 )

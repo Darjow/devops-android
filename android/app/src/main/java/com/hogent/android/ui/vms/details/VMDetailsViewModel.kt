@@ -7,21 +7,19 @@ import androidx.lifecycle.ViewModel
 import com.hogent.android.data.entities.Contract
 import com.hogent.android.data.repositories.VmDetailRepository
 import com.hogent.android.data.entities.VirtualMachine
+import com.hogent.android.network.dtos.responses.VirtualMachineDetail
 
 import kotlinx.coroutines.runBlocking
 
 class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {
 
 
-    private val _vm = MutableLiveData<VirtualMachine>();
-    private val _contract = MutableLiveData<Contract>();
+    private val _vm = MutableLiveData<VirtualMachineDetail>();
     private val _navBack = MutableLiveData(false);
 
-    val vm : LiveData<VirtualMachine>
-        get() = _vm
 
-    val contract : LiveData<Contract>
-        get() =  _contract
+    val vm : LiveData<VirtualMachineDetail>
+        get() = _vm
 
     val navBack : LiveData<Boolean>
         get() = _navBack
@@ -29,11 +27,8 @@ class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {
 
     init {
         runBlocking {
-            _vm.value = repo.getVirtualMachine()
-            if (_vm.value != null) {
-                val contr_id = _vm.value!!.contractId;
-                _contract.postValue(repo.getContract(contr_id))
-            }
+            val virtualMachine = repo.getVMById()
+            _vm.postValue(virtualMachine)
         }
     }
 
