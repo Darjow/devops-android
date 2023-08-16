@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.OperatingSystem
 import com.hogent.android.data.repositories.VmAanvraagRepository
-import com.hogent.android.data.entities.Project
 import com.hogent.android.data.entities.VirtualMachineModus
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.ui.components.forms.RequestForm
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -19,7 +20,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     private val _navToList = MutableLiveData(false)
     private val _vmNaamBestaatAl = MutableLiveData(false)
     private val _closeKeyBoard = MutableLiveData(false)
-    private val _projecten = MutableLiveData<List<Project>>()
+    private val _projecten = MutableLiveData<ProjectOverView>()
     private val _form = MutableLiveData(RequestForm())
     private val _errorToast = MutableLiveData(false)
     private val _success = MutableLiveData(false)
@@ -36,15 +37,14 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     suspend fun refreshProjects(){
             _projecten.postValue(repo.getProjecten())
-            Timber.d("Grootte lijst van projects: ", projecten.value?.size)
-            Timber.d("Of is de list null?", projecten.value.isNullOrEmpty().toString())
+            Timber.d("Grootte lijst van projects: ", projecten.value!!.total)
     }
 
     val navToList : LiveData<Boolean>
         get() = _navToList
     val closeKeyBoard : LiveData<Boolean>
         get() = _closeKeyBoard
-    val projecten : LiveData<List<Project>>
+    val projecten : LiveData<ProjectOverView>
         get() = _projecten
     val form : LiveData<RequestForm>
         get() = _form
@@ -84,18 +84,18 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     fun projectChanged(naam: String){
         val __form = _form.value!!;
 
-        if(projecten.value.isNullOrEmpty()|| naam.equals("+ Project toevoegen")){
+        if(projecten.value?.total == 0 || naam.equals("+ Project toevoegen")){
             __form.project_id = -1
         }
 
-
-        if(projecten.value!!.none { it.name == naam }){
+        else if(projecten.value!!.projects.any() { it.name == naam }) {
             __form.project_id = 0
         }
         else {
-            val project: Project = projecten.value!!.filter { it.name == naam }[0]
+            val project: ProjectOverViewItem = projecten.value!!.projects.filter { it.name == naam }[0]
             __form.project_id = project.id
         }
+
         _form.postValue(__form)
 
     }
@@ -150,6 +150,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         __form!!.startDate = date
         _form.postValue(__form)
     }
+
     fun endDateChanged(date: LocalDate){
         val __form = _form.value
         __form!!.endDate = date
@@ -167,20 +168,18 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
             runBlocking {
                 val vm = repo.getVmsByProjectId(_form.value!!.project_id!!)
 
-                if (!vm.isSuccessful) {
+                if (vm == null) {
                     _errorToast.postValue(true)
                     return@runBlocking
                 }
 
-                val listvm = vm.body()
-
-                if (listvm == null || listvm.isEmpty()) {
+                if (vm.isEmpty()) {
                     handleSuccessfulResponse()
                     _navToList.postValue(true)
                     return@runBlocking
                 }
 
-                val vms = listvm!!.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
+                val vms = vm!!.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
 
                 if (vms!!.isNotEmpty()) {
                     _vmNaamBestaatAl.postValue(true);
@@ -204,7 +203,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     fun projectMaken(){
         runBlocking {
-            var proj = repo.getProjecten()?.filter { p -> p.name.equals(naamCreatedProject.value, true)}
+            var proj = repo.getProjecten()?.projects?.filter { p -> p.name.equals(naamCreatedProject.value, true)}
             if(proj.isNullOrEmpty() && !naamCreatedProject.value.isNullOrEmpty()){
                 repo.createProject(naamCreatedProject.value.toString())
                 _closeKeyBoard.postValue(true);

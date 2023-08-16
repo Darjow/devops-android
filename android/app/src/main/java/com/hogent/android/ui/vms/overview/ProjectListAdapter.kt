@@ -8,14 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
-import com.hogent.android.data.entities.Project
 import com.hogent.android.data.entities.VirtualMachine
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.VMIndex
 import com.hogent.devOps_Android.ui.vms.overview.VirtualMachineListAdapter
 import timber.log.Timber
 
 class ProjectListAdapter(
-    private val projectList: List<Project>,
-    private val virtualmachineList: List<VirtualMachine>?,
+    private val projectList: ProjectOverView,
+    private val virtualmachineList: List<VMIndex>?,
     private val context: Context?,
 ) : RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
 
@@ -34,19 +35,19 @@ class ProjectListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val project = projectList[position]
+        val project = projectList.projects[position]
         holder.textView1.text = project.name;
 
         if(project.id > 0) {
             holder.recyclerView.layoutManager = LinearLayoutManager(context)
-            filterVirtualMachines(project.id)
+            //filterVirtualMachines(project.id)
             holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
             holder.textView1.text = project.name
         }
     }
 
     override fun getItemCount(): Int {
-        return projectList.size
+        return projectList.total
     }
 
 
@@ -56,9 +57,9 @@ class ProjectListAdapter(
 
         //de nieuw gecreërde VM zit niet in deze lijst
         virtualmachineList?.forEach { i ->
-            if (i.projectId == projectId) {
-                newvirtualMachineList.add(i)
-            }
+            //if (i.projectId == projectId) {
+            //    newvirtualMachineList.add(i)
+            //}
         }
         Timber.e("After refreshing project with id: %d   =  %d", projectId, newvirtualMachineList.size)
 

@@ -2,14 +2,17 @@ package com.hogent.android.data.repositories
 
 import com.hogent.android.data.entities.*
 import com.hogent.android.network.dtos.*
+import com.hogent.android.network.dtos.requests.ProjectCreate
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.services.ContractApi
 import com.hogent.android.network.services.ProjectApi
 import com.hogent.android.network.services.VirtualMachineApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
+import com.hogent.android.util.TimberUtils
 import retrofit2.Response
 import timber.log.Timber
-import java.util.*
 
 
 class VmAanvraagRepository() {
@@ -38,16 +41,26 @@ class VmAanvraagRepository() {
         vmApi.createVM(vm)
     }
 
-    suspend fun getProjecten(): List<Project>?{
-        return projectApi.getByCustomerId(customerId)
+    suspend fun getProjecten(): ProjectOverView? {
+        return projectApi.getAll().body();
     }
 
-    suspend fun  createProject(name : String): Project?{
-        val proj = ProjectDto(nameProject = name, cust_Id = customerId)
-        return  projectApi.createProject(proj)
+    suspend fun  createProject(name : String): ProjectOverViewItem?{
+        val response = projectApi.createProject(ProjectCreate(name, customerId))
+
+        if(response.isSuccessful){
+            return response.body();
+        }
+        return null;
     }
 
-    suspend fun  getVmsByProjectId(id : Int): Response<List<VirtualMachine>?>{
-        return vmApi.getByProjectId(id);
+    suspend fun  getVmsByProjectId(id : Int): List<VirtualMachine>?{
+        val response = vmApi.getByProjectId(id);
+        TimberUtils.logRequest(response)
+
+        if(response.isSuccessful){
+            return response.body();
+        }
+        return null;
     }
 }

@@ -1,8 +1,11 @@
 package com.hogent.android.network.services
 
-import com.hogent.android.data.entities.Project
 import com.hogent.android.network.Config
-import com.hogent.android.network.dtos.ProjectDto
+import com.hogent.android.network.dtos.requests.ProjectCreate
+import com.hogent.android.network.dtos.responses.ProjectDetails
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.ProjectOverViewItem
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -13,11 +16,15 @@ private val retrofit = Config.createRetrofit(API)
 
 interface ProjectApiService {
 
-    @GET("customer/{id}")
-    suspend fun getByCustomerId(@Path("id") id: Int): List<Project>?
+    @GET("all")
+    suspend fun getAll(): Response<ProjectOverView>
+
+    @GET("{id}")
+    suspend fun getById(@Path("id") id: Int): Response<ProjectDetails>
+
 
     @POST(".")
-    suspend fun  createProject(@Body proj : ProjectDto): Project?
+    suspend fun  createProject(@Body proj : ProjectCreate): Response<ProjectOverViewItem>
 
     }
 

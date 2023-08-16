@@ -3,6 +3,7 @@ package com.hogent.android.network
 import AuthInterceptor
 import com.hogent.android.data.entities.Course
 import com.hogent.android.data.entities.VirtualMachine
+import com.hogent.android.data.entities.VirtualMachineModus
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ class Config {
             .add(KotlinJsonAdapterFactory())
             .add(LocalDateAdapter())
             .add(CourseJsonAdapter())
+            .add(VMModusJsonAdapter())
             .build()
 
         val okHttpClient = OkHttpClient.Builder()
@@ -83,6 +85,24 @@ private class CourseJsonAdapter {
         }
     }
 
+    @ToJson
+    fun toJson(course: Course): Int {
+        return course.ordinal
+    }
+}
+private class VMModusJsonAdapter {
+
+    @FromJson
+    fun fromJson(value: Int): VirtualMachineModus {
+        return when (value) {
+            1 -> VirtualMachineModus.READY
+            2 -> VirtualMachineModus.RUNNING
+            3 -> VirtualMachineModus.PAUSED
+            4 -> VirtualMachineModus.STOPPED
+            else-> VirtualMachineModus.WAITING_APPROVEMENT
+
+        }
+    }
     @ToJson
     fun toJson(course: Course): Int {
         return course.ordinal

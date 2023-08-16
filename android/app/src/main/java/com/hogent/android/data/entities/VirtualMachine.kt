@@ -12,22 +12,25 @@ data class VirtualMachine(
     val operatingSystem: OperatingSystem = OperatingSystem.NONE,
     val hardware: HardWare,
     val projectId : Int,
-    val mode : VirtualMachineModus = VirtualMachineModus.NONE,
+    val mode : VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
     val contractId : Int,
     val backup : Backup,
     val id: Int = 0,
 )
 
 enum class VirtualMachineModus {
-    NONE,
-    PAAS,
-    IAAS;
-
+    WAITING_APPROVEMENT,       // No connection || No server
+    READY,                     // has connection && server
+    RUNNING,
+    PAUSED,
+    STOPPED;
     fun to_string(): String {
         return when (this.name) {
-            "NONE" -> "Geen"
-            "PAAS" -> "PaaS"
-            "IAAS" -> "IaaS"
+            "WAITING_APPROVEMENT" -> "Wachten op goedkeuring"
+            "READY" -> "Idle"
+            "RUNNING" -> "Online"
+            "PAUSED" -> "Gepauzeerd"
+            "STOPPED" -> "Gestopt"
             else -> throw IllegalArgumentException("Unknown vm modus received");
         }
     }
