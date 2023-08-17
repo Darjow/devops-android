@@ -1,20 +1,17 @@
 package com.hogent.android.ui.register
 
-import AuthInterceptor
 import android.app.Application
 import android.text.Editable
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.data.repositories.CustomerRepository
+import com.hogent.android.data.repositories.RegisterRepository
 import com.hogent.android.ui.components.forms.RegisterForm
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-class RegisterViewModel (val repo: CustomerRepository, val app : Application) : ViewModel() {
+class RegisterViewModel (val repo: RegisterRepository, val app : Application) : ViewModel() {
 
 
     val registerForm = MutableLiveData(RegisterForm("","","","","",""))
@@ -71,10 +68,9 @@ class RegisterViewModel (val repo: CustomerRepository, val app : Application) : 
         }
         else{
             runBlocking {
-                Timber.d("MAKING CUSTOMER")
-                Timber.d(registerForm.value.toString())
                 val response = repo.register(registerForm.value!!)
                 if(response != null && response.token != null){
+                    Timber.wtf("Setting customer. ")
                     AuthenticationManager.setCustomer(response.token);
                     _navigateHome.postValue(true)
                 }

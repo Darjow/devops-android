@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/profielFragment"
-        android:name="com.hogent.android.ui.klant.CustomerProfileFragment"
+        android:name="com.hogent.android.ui.customer.CustomerProfileFragment"
         android:label="@string/profiel"
         tools:layout="@layout/fragment_profiel">
 

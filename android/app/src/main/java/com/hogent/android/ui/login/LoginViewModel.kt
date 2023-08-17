@@ -3,12 +3,10 @@ package com.hogent.android.ui.login
 
 import android.text.Editable
 import androidx.lifecycle.*
-import com.hogent.android.data.repositories.CustomerRepository
-import com.hogent.android.network.services.AuthService
+import com.hogent.android.data.repositories.LoginRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class LoginViewModel(val repository: AuthService): ViewModel(){
+class LoginViewModel(val repository: LoginRepository): ViewModel(){
 
 
     val mail = MutableLiveData<String>()

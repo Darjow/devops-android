@@ -7,7 +7,7 @@
     <data>
         <variable
             name="customerViewModel"
-            type="com.hogent.android.ui.klant.CustomerViewModel" />
+            type="com.hogent.android.ui.customer.CustomerViewModel" />
     </data>
 
     <ScrollView

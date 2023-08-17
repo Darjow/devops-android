@@ -9,12 +9,12 @@ class CourseJsonAdapter{
     @FromJson
     fun fromJson(value: Int): Course? {
         return when (value) {
-            1 -> Course.TOEGEPASTE_INFORMATICA
-            2 -> Course.AGRO_EN_BIOTECHNOLOGIE
-            3 -> Course.BIOMEDISCHE_LABORATORIUMTECHNOLOGIE
-            4 -> Course.CHEMIE
-            5 -> Course.DIGITAL_DESIGN_AND_DEVELOPMENT
-            6 -> Course.ELEKTROMECHANICA
+            1 -> Course.AGRO_EN_BIOTECHNOLOGIE
+            2 -> Course.BIOMEDISCHE_LABORATORIUMTECHNOLOGIE
+            3 -> Course.CHEMIE
+            4 -> Course.DIGITAL_DESIGN_AND_DEVELOPMENT
+            5 -> Course.ELEKTROMECHANICA
+            6 -> Course.TOEGEPASTE_INFORMATICA
         else -> Course.NONE
         }
     }

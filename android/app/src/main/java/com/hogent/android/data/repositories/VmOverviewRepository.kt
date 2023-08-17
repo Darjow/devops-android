@@ -1,16 +1,11 @@
 package com.hogent.android.data.repositories
 
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.dtos.responses.ProjectDetails
 import com.hogent.android.network.dtos.responses.ProjectOverView
-import com.hogent.android.network.services.ProjectApi
-import com.hogent.android.util.AuthenticationManager
+import com.hogent.android.network.services.ProjectApi.projectApi
 import timber.log.Timber
 
 class VmOverviewRepository {
-
-    private val projectApi = ProjectApi.retrofitService;
-
 
     suspend fun getProjects(): ProjectOverView?{
         val response = projectApi.getAll()

@@ -1,4 +1,4 @@
-package com.hogent.android.ui.klant
+package com.hogent.android.ui.customer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

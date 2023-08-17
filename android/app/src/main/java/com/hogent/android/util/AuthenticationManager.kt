@@ -6,6 +6,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.hogent.android.data.entities.Customer
 import com.hogent.android.network.services.CustomerApi
+import com.hogent.android.network.services.CustomerApi.customerApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -58,7 +59,7 @@ class AuthenticationManager() {
         private suspend fun fetchCustomerById(id: Int): Customer? {
             return try {
                 withContext(Dispatchers.IO) {
-                    val response = CustomerApi.service.getById(id)
+                    val response = customerApi.getById(id)
                     if (response.isSuccessful) {
                         response.body()
                     } else {

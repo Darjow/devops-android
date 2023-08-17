@@ -5,7 +5,6 @@ import com.hogent.android.network.dtos.requests.ProjectCreate
 import com.hogent.android.network.dtos.responses.ProjectDetails
 import com.hogent.android.network.dtos.responses.ProjectId
 import com.hogent.android.network.dtos.responses.ProjectOverView
-import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,5 +28,5 @@ interface ProjectApiService {
 }
 
 object ProjectApi {
-    val retrofitService: ProjectApiService by lazy { retrofit.create(ProjectApiService::class.java) }
+    val projectApi: ProjectApiService by lazy { retrofit.create(ProjectApiService::class.java) }
 }

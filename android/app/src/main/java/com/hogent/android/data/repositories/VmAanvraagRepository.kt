@@ -6,7 +6,9 @@ import com.hogent.android.network.dtos.requests.ProjectCreate
 import com.hogent.android.network.dtos.requests.VMCreate
 import com.hogent.android.network.dtos.responses.*
 import com.hogent.android.network.services.ProjectApi
+import com.hogent.android.network.services.ProjectApi.projectApi
 import com.hogent.android.network.services.VirtualMachineApi
+import com.hogent.android.network.services.VirtualMachineApi.vmApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
@@ -17,10 +19,6 @@ import timber.log.Timber
 class VmAanvraagRepository() {
 
     private val customerId = AuthenticationManager.getCustomer()!!.id
-
-    private val vmApi = VirtualMachineApi.retrofitService;
-    private val projectApi = ProjectApi.retrofitService;
-
 
     suspend fun create(form: RequestForm): VMId?{
         /*Dto maken*/

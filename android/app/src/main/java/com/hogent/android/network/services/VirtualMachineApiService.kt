@@ -1,7 +1,6 @@
 package com.hogent.android.network.services
 
 import com.hogent.android.network.Config
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.dtos.requests.VMCreate
 import com.hogent.android.network.dtos.responses.VMId
 import com.hogent.android.network.dtos.responses.VirtualMachineDetail
@@ -27,5 +26,5 @@ interface VirtualMachineApiService{
 }
 
 object VirtualMachineApi {
-    val retrofitService : VirtualMachineApiService by lazy { retrofit.create(VirtualMachineApiService::class.java) }
+    val vmApi : VirtualMachineApiService by lazy { retrofit.create(VirtualMachineApiService::class.java) }
 }

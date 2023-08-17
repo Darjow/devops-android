@@ -1,4 +1,4 @@
-package com.hogent.android.ui.klant
+package com.hogent.android.ui.customer
 
 import android.text.Editable
 import android.view.View

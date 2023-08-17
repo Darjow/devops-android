@@ -1,4 +1,4 @@
-package com.hogent.android.ui.klant
+package com.hogent.android.ui.customer
 
 import android.os.Bundle
 import android.view.LayoutInflater
