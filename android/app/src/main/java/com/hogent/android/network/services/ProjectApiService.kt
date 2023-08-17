@@ -23,12 +23,11 @@ interface ProjectApiService {
     @GET("{id}")
     suspend fun getById(@Path("id") id: Int): Response<ProjectDetails>
 
-
     @POST(".")
     suspend fun  createProject(@Body proj : ProjectCreate): Response<ProjectId>
 
-    }
+}
 
-    object ProjectApi {
-        val retrofitService : ProjectApiService by lazy { retrofit.create(ProjectApiService::class.java) }
-    }
+object ProjectApi {
+    val retrofitService: ProjectApiService by lazy { retrofit.create(ProjectApiService::class.java) }
+}

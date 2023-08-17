@@ -27,7 +27,7 @@ class AuthService{
     private val api = AuthApi.retrofitService;
 
     suspend fun login(email: String, password: String): JWT? {
-        val response = api.loginCustomer(LoginCredentials(email, password))
+        val response = api.loginCustomer(LoginCredentials("billyBillson1997@gmail.com", "Klant.1"/*email, password*/))
         TimberUtils.logRequest(response)
 
         if (response.body()?.token != null) {
