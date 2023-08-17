@@ -92,7 +92,7 @@
     <string name="contractStartDetail">Startdatum: %1$s</string>
     <string name="contractEndDetail">Einddatum: %1$s</string>
     <string name="backupDetail">Backup Type: %1$s</string>
-    <string name="backupDateDetail">Backup: %1$s</string>
+    <string name="backupDateDetail">Laatste Backup: %1$s</string>
     <string name="serverDetail">Server Adres: %1$s</string>
     <string name="ipDetail">IP-Adres: %1$s</string>
     <string name="usernameDetail">Username: %1$s</string>
@@ -100,6 +100,7 @@
     <string name="vm_details_fragment">VM Details</string>
     <string name="vmModusDetail">Mode: %1$s</string>
     <string name="selecteer_project">Selecteer een project</string>
+    <string name="geen">Geen</string>
 
 
     <!--Projects-->

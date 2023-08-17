@@ -76,7 +76,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     fun setStorage(e: Editable){
         val __form = _form.value
         __form!!.storage = try{
-            Integer.parseInt(e.toString()) * 1000
+            (Integer.parseInt(e.toString()) * 1000)
         }catch (e: java.lang.Exception){
             0
         }
@@ -116,7 +116,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     fun memoryGBChanged(gb :String){
         val __form = _form.value
         __form!!.memory = try {
-            Integer.parseInt(gb.split("GB")[0]) * 1000
+            (Integer.parseInt(gb.split("GB")[0]) * 1000)
         }catch (e: java.lang.Exception){
             0
         }
@@ -173,7 +173,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
                 }
 
                 if (vm.isEmpty()) {
-                    handleSuccessfulResponse()
+                    createVM()
                     _navToList.postValue(true)
                     return@runBlocking
                 }
@@ -184,17 +184,20 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
                     _vmNaamBestaatAl.postValue(true);
                     return@runBlocking
                 } else {
-                    handleSuccessfulResponse()
+                    createVM()
                     _navToList.postValue(true)
+                    return@runBlocking
                 }
             }
         }
 
     }
 
-    private fun handleSuccessfulResponse() {
+    private fun createVM() {
         runBlocking {
-            repo.create(form.value!!)
+            Timber.wtf("HANDLING SUCCESFULL RESPONSE")
+            val resp = repo.create(form.value!!)
+            Timber.wtf(resp?.vM_id.toString());
             _form.postValue(RequestForm())
             _success.postValue(true)
         }

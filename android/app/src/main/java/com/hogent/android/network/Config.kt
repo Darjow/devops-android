@@ -13,7 +13,7 @@ class Config {
     companion object{
         private const val BASE_URL = "http://10.0.2.2:5000/api/"
 
-        val moshi = Moshi.Builder()
+        private val moshi: Moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .add(LocalDateJsonAdapter())
             .add(CourseJsonAdapter())
@@ -22,7 +22,7 @@ class Config {
             .add(BackUpPeriodJsonAdapter())
             .build()
 
-        val okHttpClient = OkHttpClient.Builder()
+        private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
             .build()
 

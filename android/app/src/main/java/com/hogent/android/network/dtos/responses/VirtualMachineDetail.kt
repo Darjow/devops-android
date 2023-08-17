@@ -12,7 +12,7 @@ data class VirtualMachineDetail(
     val operatingSystem: OperatingSystem,
     val contract: Contract,
     val backUp: Backup,
-    val fysiekeServer: FysiekeServerIndex,
-    val vmConnection: Connection,
+    val fysiekeServer: FysiekeServerIndex? = null,
+    val vmConnection: Connection? = null,
 
 )

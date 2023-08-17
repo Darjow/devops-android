@@ -147,17 +147,6 @@
             app:layout_constraintTop_toBottomOf="@+id/idDetail"
             android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/statusDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="@{@string/statusDetail(vmViewModel.vm.mode.to_string())}"
-            tools:text="Status: Actief"
-            app:layout_constraintStart_toStartOf="@+id/general_detail"
-            app:layout_constraintTop_toBottomOf="@+id/nameDetail"
-            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/osDetail"
@@ -168,9 +157,8 @@
             android:text="@{@string/osDetail(vmViewModel.vm.operatingSystem.to_string())}"
             tools:text="OS: Windows 10"
             app:layout_constraintStart_toStartOf="@+id/general_detail"
-            app:layout_constraintTop_toBottomOf="@+id/statusDetail"
+            app:layout_constraintTop_toBottomOf="@+id/nameDetail"
             android:textColor="@color/black"/>
-
 
         <TextView
             android:id="@+id/contractIdDetail"
@@ -217,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/ramDetail(vmViewModel.vm.hardware.memory / 1000)}"
+            android:text="@{@string/ramDetail(vmViewModel.vm.hardware.memory)}"
             tools:text="RAM: 16GB"
             app:layout_constraintStart_toStartOf="@+id/hardware_detail"
             app:layout_constraintTop_toBottomOf="@+id/cardTitleHardware"
@@ -242,7 +230,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/storageDetail(vmViewModel.vm.hardware.storage / 1000)}"
+            android:text="@{@string/storageDetail(vmViewModel.vm.hardware.storage)}"
             tools:text="Storage: 512GB"
             app:layout_constraintStart_toStartOf="@+id/hardware_detail"
             app:layout_constraintTop_toBottomOf="@+id/coreDetail"
@@ -268,7 +256,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="200dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/backupDateDetail(vmViewModel.vm.backUp.lastBackup)}"
+            android:text="@{vmViewModel.vm.backUp.lastBackup != null ? @string/backupDateDetail(vmViewModel.vm.backUp.lastBackup) : @string/backupDateDetail(@string/geen)}"
             tools:text="Backup: 18/02/2022"
             app:layout_constraintStart_toStartOf="@+id/hardware_detail"
             app:layout_constraintTop_toBottomOf="@+id/backupDetail"
@@ -281,7 +269,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/serverDetail(vmViewModel.vm.vmConnection.fqdn)}"
+            android:text="@{vmViewModel.vm.vmConnection.fqdn != null?  @string/serverDetail(vmViewModel.vm.vmConnection.fqdn): @string/serverDetail(@string/geen) }"
             tools:text="Server Adres: MOCK-FQDN"
             app:layout_constraintStart_toStartOf="@+id/connection_detail"
             app:layout_constraintTop_toBottomOf="@+id/cardTitleConnectie"
@@ -293,7 +281,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/ipDetail(vmViewModel.vm.vmConnection.hostname)}"
+            android:text="@{vmViewModel.vm.vmConnection.hostname != null? @string/ipDetail(vmViewModel.vm.vmConnection.hostname): @string/ipDetail(@string/geen) }"
             tools:text="IP-adres: 25.236.117.11"
             app:layout_constraintStart_toStartOf="@+id/connection_detail"
             app:layout_constraintTop_toBottomOf="@+id/serverDetail"
@@ -305,7 +293,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/usernameDetail(vmViewModel.vm.vmConnection.username)}"
+            android:text="@{vmViewModel.vm.vmConnection.username != null?  @string/usernameDetail(vmViewModel.vm.vmConnection.username): @string/usernameDetail(@string/geen)}"
             tools:text="Username: MOCK-USER"
             app:layout_constraintStart_toStartOf="@+id/connection_detail"
             app:layout_constraintTop_toBottomOf="@+id/ipDetail"
@@ -317,7 +305,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="@{@string/passwordDetail(vmViewModel.vm.vmConnection.password)}"
+            android:text="@{vmViewModel.vm.vmConnection.password != null? @string/passwordDetail(vmViewModel.vm.vmConnection.password): @string/passwordDetail(@string/geen)}"
             tools:text="Password: DW2]]YmiPrvz34-dh5]s"
             app:layout_constraintStart_toStartOf="@+id/connection_detail"
             app:layout_constraintTop_toBottomOf="@+id/usernameDetail"

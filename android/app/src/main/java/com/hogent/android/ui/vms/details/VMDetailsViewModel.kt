@@ -17,7 +17,6 @@ class VMDetailsViewModel(val repo : VmDetailRepository) : ViewModel() {
     private val _vm = MutableLiveData<VirtualMachineDetail>();
     private val _navBack = MutableLiveData(false);
 
-
     val vm : LiveData<VirtualMachineDetail>
         get() = _vm
 

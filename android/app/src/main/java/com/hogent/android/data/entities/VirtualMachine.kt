@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class VirtualMachine(
     val name : String,
     val connection : Connection? = null,
-    val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
+    val status : VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
     @Json(name = "operatingsystem")
     val operatingSystem: OperatingSystem = OperatingSystem.WINDOWS_10,
     val hardware: HardWare,
@@ -24,27 +24,16 @@ enum class VirtualMachineModus {
     RUNNING,
     PAUSED,
     STOPPED;
+
     fun to_string(): String {
         return when (this) {
-            WAITING_APPROVEMENT -> "Wachten op goedkeuring"
+            WAITING_APPROVEMENT -> "Wachtend op goedkeuring"
             READY -> "Idle"
             RUNNING -> "Online"
             PAUSED -> "Gepauzeerd"
             STOPPED -> "Gestopt"
             else -> throw IllegalArgumentException("Unknown vm modus received");
         }
-    }
-}
-
-enum class VirtualMachineStatus {
-    NONE,
-    GEREED,
-    RUNNING,
-    TERMINATED,
-    AANGEVRAAGD;
-
-    fun to_string(): String {
-        return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
     }
 }
 
