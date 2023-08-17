@@ -9,12 +9,14 @@ import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import timber.log.Timber
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 
@@ -65,9 +67,10 @@ private class LocalDateAdapter : JsonAdapter<LocalDate>() {
             reader.nextNull<Unit>()
             return null
         }
-        val dateString = reader.nextString()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS")
-        return LocalDate.from(LocalDateTime.parse(dateString, formatter))
+        val dateString = reader.nextString().split("T")[0]
+        var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+        return LocalDate.parse(dateString, formatter)
     }
 }
 

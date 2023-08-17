@@ -1,13 +1,13 @@
 package com.hogent.android.data.entities
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
+
 @JsonClass(generateAdapter = true)
 data class Backup(
     val type: BackupType?,
     val lastBackup: LocalDate?,
-    val id: Int
+    var id: Int?
 )
 
 

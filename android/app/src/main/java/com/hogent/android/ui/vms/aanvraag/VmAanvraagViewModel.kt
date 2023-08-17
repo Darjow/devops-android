@@ -85,12 +85,18 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
 
     fun projectChanged(naam: String){
+        Timber.wtf("project changed")
+        Timber.wtf("project name is: " + naam)
+        projecten.value!!.projects.forEach {
+            it
+            Timber.wtf(it.name)
+        }
         val __form = _form.value!!;
         if(projecten.value == null || projecten.value?.total == 0 || naam == "+ Project toevoegen" || naam == ""){
             __form.project_id = -1
         }
 
-        else if(projecten.value!!.projects.any() { it.name == naam }) {
+        else if(!projecten.value!!.projects.any() { it.name == naam }) {
             __form.project_id = 0
         }
         else {
@@ -125,16 +131,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
         }
         _form.postValue(__form)
     }
-    fun modeChanged(type: String){
-        val __form = _form.value
 
-        if(type == "null"){
-            __form!!.modeVm = null;
-        }else{
-            __form!!.modeVm = VirtualMachineModus.valueOf(type.uppercase().split(" ")[0])
-        }
-        _form.postValue(__form)
-    }
     fun osChanged(type: String){
         val __form = _form.value
 

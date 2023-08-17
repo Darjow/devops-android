@@ -12,7 +12,6 @@ data class RequestForm(
     var cpuCoresValue : Int? = 0,
     var memory : Int? = 0,
     var backUpType : BackupType? = null,
-    var modeVm : VirtualMachineModus? = null,
     var storage : Int? = 0,
     var startDate : LocalDate?= null,
     var endDate : LocalDate? = null,
@@ -22,7 +21,7 @@ data class RequestForm(
     var error_message = ""
 
     override fun isValid(): Boolean {
-        if(naamVm.isNullOrBlank() || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null || modeVm == null || backUpType == null){
+        if(naamVm.isNullOrBlank() || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null  || backUpType == null){
             error_message = "Alle velden zijn verplicht"
             return false;
         }

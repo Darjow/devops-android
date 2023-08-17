@@ -191,13 +191,6 @@ class VmAanvraagFragment : Fragment(){
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
-
-
-        binding.groupModeVm.setOnCheckedChangeListener { radioGroup, i ->
-            val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-            binding.viewmodel!!.modeChanged(value?.text.toString())
-        }
-
         binding.groupOsVm.setOnCheckedChangeListener { radioGroup, i ->
             val value = binding.root.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
             binding.viewmodel!!.osChanged(value?.text.toString())

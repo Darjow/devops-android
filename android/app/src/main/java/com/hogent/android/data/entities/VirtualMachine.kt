@@ -9,7 +9,7 @@ data class VirtualMachine(
     val connection : Connection? = null,
     val status : VirtualMachineStatus = VirtualMachineStatus.AANGEVRAAGD,
     @Json(name = "operatingsystem")
-    val operatingSystem: OperatingSystem = OperatingSystem.NONE,
+    val operatingSystem: OperatingSystem = OperatingSystem.WINDOWS_10,
     val hardware: HardWare,
     val projectId : Int,
     val mode : VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
