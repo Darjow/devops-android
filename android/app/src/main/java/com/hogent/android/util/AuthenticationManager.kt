@@ -58,19 +58,15 @@ class AuthenticationManager() {
         private suspend fun fetchCustomerById(id: Int): Customer? {
             return try {
                 withContext(Dispatchers.IO) {
-                    Timber.i("trying to fetch userbyid");
                     val response = CustomerApi.service.getById(id)
-
                     if (response.isSuccessful) {
-                        Timber.i("response is successfully receive")
                         response.body()
                     } else {
-                        Timber.i("no user found")
                         null
                     }
                 }
             } catch (e: Exception) {
-                Timber.wtf("[failed] trying to fetch userbyid");
+                Timber.e("[failed] trying to fetch userbyid");
                 Timber.wtf(e.message);
                 null
             }
