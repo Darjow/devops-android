@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.hogent.android.data.entities.Customer
-import com.hogent.android.network.services.CustomerApi
 import com.hogent.android.network.services.CustomerApi.customerApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

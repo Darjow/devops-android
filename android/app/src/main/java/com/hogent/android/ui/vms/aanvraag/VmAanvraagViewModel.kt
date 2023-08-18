@@ -14,7 +14,6 @@ import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.ui.components.forms.RequestForm
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.io.Console
 import java.time.LocalDate
 
@@ -32,7 +31,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
 
     init {
-        Timber.d("INIT IN VMAANVRAAG VIEWMODEL")
         viewModelScope.launch {
             refreshProjects()
         }
@@ -85,12 +83,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
 
     fun projectChanged(naam: String){
-        Timber.wtf("project changed")
-        Timber.wtf("project name is: " + naam)
-        projecten.value!!.projects.forEach {
-            it
-            Timber.wtf(it.name)
-        }
         val __form = _form.value!!;
         if(projecten.value == null || projecten.value?.total == 0 || naam == "+ Project toevoegen" || naam == ""){
             __form.project_id = -1
@@ -157,7 +149,6 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
     }
 
     fun aanvragen(){
-        Timber.d("vmaanvraag is binnengekomen: " + form.value.toString())
 
         if(!_form.value!!.isValid()){
             _errorToast.postValue(true)
@@ -195,9 +186,7 @@ class VmAanvraagViewModel(val repo : VmAanvraagRepository): ViewModel() {
 
     private fun createVM() {
         runBlocking {
-            Timber.wtf("HANDLING SUCCESFULL RESPONSE")
             val resp = repo.create(form.value!!)
-            Timber.wtf(resp?.vM_id.toString());
             _form.postValue(RequestForm())
             _success.postValue(true)
         }

@@ -1,23 +1,5 @@
 package com.hogent.android.data.entities
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
-@JsonClass(generateAdapter = true)
-data class VirtualMachine(
-    val name : String,
-    val connection : Connection? = null,
-    val status : VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
-    @Json(name = "operatingsystem")
-    val operatingSystem: OperatingSystem = OperatingSystem.WINDOWS_10,
-    val hardware: HardWare,
-    val projectId : Int,
-    val mode : VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
-    val contractId : Int,
-    val backup : Backup,
-    val id: Int = 0,
-)
-
 enum class VirtualMachineModus {
     WAITING_APPROVEMENT,       // No connection || No server
     READY,                     // has connection && server

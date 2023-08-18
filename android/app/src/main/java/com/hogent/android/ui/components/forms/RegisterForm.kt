@@ -1,9 +1,7 @@
 package com.hogent.android.ui.components.forms
 
 import androidx.lifecycle.MutableLiveData
-import com.hogent.android.ui.components.forms.IFormValidation
 import com.hogent.android.util.Validators
-import timber.log.Timber
 
 data class RegisterForm (
     var inputFirstName: String = "",

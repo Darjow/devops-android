@@ -4,9 +4,7 @@ package com.hogent.android.ui.vms.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.data.entities.Contract
 import com.hogent.android.data.repositories.VmDetailRepository
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.dtos.responses.VirtualMachineDetail
 
 import kotlinx.coroutines.runBlocking

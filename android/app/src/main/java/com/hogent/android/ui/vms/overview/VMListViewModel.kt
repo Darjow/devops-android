@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.android.data.entities.User
 import com.hogent.android.data.repositories.VmOverviewRepository
-import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.dtos.responses.VMIndex

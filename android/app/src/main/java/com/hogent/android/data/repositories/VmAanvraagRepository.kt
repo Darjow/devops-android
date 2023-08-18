@@ -1,9 +1,8 @@
 package com.hogent.android.data.repositories
 
-import android.widget.Toast
 import com.hogent.android.data.entities.*
-import com.hogent.android.network.dtos.*
 import com.hogent.android.network.dtos.requests.ProjectCreate
+import com.hogent.android.network.dtos.requests.VM
 import com.hogent.android.network.dtos.requests.VMCreate
 import com.hogent.android.network.dtos.responses.*
 import com.hogent.android.network.services.ProjectApi.projectApi
@@ -11,8 +10,6 @@ import com.hogent.android.network.services.VirtualMachineApi.vmApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
-import org.json.JSONObject
-import timber.log.Timber
 
 
 class VmAanvraagRepository() {
@@ -21,17 +18,14 @@ class VmAanvraagRepository() {
 
     suspend fun create(form: RequestForm): VMId?{
         val hardware = HardWare(form.memory!!, form.storage!!, form.cpuCoresValue!!)
-        val backup = Backup(form.backUpType, null, 0);
+        val backup = Backup(form.backUpType, null, null);
         val startDate = form.startDate!!
         val endDate = form.endDate!!
-        val dtoRequest = VMCreate(customerId, backup, startDate, endDate, hardware, form.naamVm!!, form.os!!, form.project_id!!);
+        val dtoRequest = VMCreate(customerId, VM(backup, startDate, endDate, hardware, form.naamVm!!, form.os!!, form.project_id!!));
 
-        Timber.d(dtoRequest.toString())
         val response = vmApi.createVM(dtoRequest)
-        Timber.wtf(response.toString());
-        Timber.wtf("Headers " + response.headers().toString());
-
         TimberUtils.logRequest(response)
+
         if(response.isSuccessful){
             return response.body();
         }

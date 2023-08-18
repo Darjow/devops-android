@@ -24,7 +24,6 @@ import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
 import com.hogent.android.util.clearForm
 import com.hogent.android.util.closeKeyboardOnTouch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.Month
@@ -159,7 +158,6 @@ class VmAanvraagFragment : Fragment(){
         val adapterProject = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayListOf<String>())
         adapterProject.setDropDownViewResource(R.layout.spinner_dropdown_item)
 
-        Timber.d("Lijst van projects: ", binding.viewmodel!!.projecten.value.toString())
 
         binding.viewmodel!!.projecten.observe(viewLifecycleOwner) {
             adapterProject.clear();
@@ -201,8 +199,8 @@ class VmAanvraagFragment : Fragment(){
                 val start = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.startDateChanged(start)
             } catch (e: Exception) {
-                Timber.d(e.message);
-                Timber.d(e.stackTraceToString())
+                Timber.e(e.message);
+                Timber.e(e.stackTraceToString())
             }
         }
 
@@ -212,8 +210,8 @@ class VmAanvraagFragment : Fragment(){
                 val end = LocalDate.of(year, Month.of(Month.values()[month].ordinal + 1), day);
                 binding.viewmodel!!.endDateChanged(end)
             }catch(e: Exception){
-                Timber.d(e.message)
-                Timber.d(e.stackTraceToString())
+                Timber.e(e.message)
+                Timber.e(e.stackTraceToString())
             }
 
         }

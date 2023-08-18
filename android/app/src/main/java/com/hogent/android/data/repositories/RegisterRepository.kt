@@ -11,8 +11,10 @@ class RegisterRepository {
 
     suspend fun register(dto: RegisterForm): JWT? {
         val requestBody = RegisterUser(dto.inputFirstName, dto.inputLastName,  dto.inputPassword, dto.inputConfirmPassword, dto.inputEmail, dto.inputPhoneNumber);
+
         val response =  authApi.registerCustomer(requestBody)
         TimberUtils.logRequest(response);
+
         if (!response.isSuccessful){
             return null;
         }

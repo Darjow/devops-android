@@ -9,7 +9,6 @@ import com.hogent.android.data.repositories.RegisterRepository
 import com.hogent.android.ui.components.forms.RegisterForm
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 class RegisterViewModel (val repo: RegisterRepository, val app : Application) : ViewModel() {
 
@@ -61,16 +60,13 @@ class RegisterViewModel (val repo: RegisterRepository, val app : Application) : 
     }
 
     fun submitButton(){
-        Timber.d("PRESSED SUBMIT")
         if(!registerForm.value!!.isValid()) {
-            Timber.d("FORM IS NOT VALID")
             _requireToast.postValue(true);
         }
         else{
             runBlocking {
                 val response = repo.register(registerForm.value!!)
                 if(response != null && response.token != null){
-                    Timber.wtf("Setting customer. ")
                     AuthenticationManager.setCustomer(response.token);
                     _navigateHome.postValue(true)
                 }

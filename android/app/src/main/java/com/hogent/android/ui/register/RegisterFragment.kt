@@ -61,7 +61,6 @@
 
             viewModel.requireToast.observe(viewLifecycleOwner, Observer {
                 if (it) {
-                    println("Should send toast here")
                     Toast.makeText(
                         requireContext(),
                         viewModel.registerForm.value!!.getError(),

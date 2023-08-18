@@ -20,7 +20,7 @@ interface VirtualMachineApiService{
     suspend fun getById(@Path("id") id: Int): Response<VirtualMachineDetail?>
 
     @POST(".")
-    suspend fun createVM(@Body vm: VMCreate): Response<VMId?>
+    suspend fun createVM(@Body vm: VMCreate): Response<VMId>
 
 
 }

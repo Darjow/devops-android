@@ -13,7 +13,6 @@ import com.hogent.android.ui.components.forms.CustomerContactEditForm
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
@@ -123,7 +122,6 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
                 contactps1.phoneNumber!!,
                 contactps1.firstName + " " + contactps1.lastName
             );
-            Timber.d("Contactps1: %s", contactOne.toString())
         }
         if (contactps2 != null) {
             contactTwo = ContactTwo(
@@ -144,13 +142,10 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
 
     fun onSubmitButtonPressed() {
         if (_form.value!!.isValid()) {
-            Timber.d("VALID")
             inEditMode.postValue(false);
             _successToast.postValue(true);
             persistCustomer();
         } else {
-            Timber.d("INVALID")
-            Timber.d(_form.value!!.getError())
             _errorToast.postValue(true);
         }
     }
@@ -216,7 +211,6 @@ class CustomerViewModel (private val repo: CustomerRepository) : ViewModel() {
             _failsafeRedirect.postValue(true)
         }else{
             _klant.postValue(AuthenticationManager.getCustomer())
-            Timber.d(_klant.toString())
         }
     }
 }
