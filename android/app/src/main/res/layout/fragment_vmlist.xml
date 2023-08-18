@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -9,21 +8,41 @@
             type="com.hogent.android.ui.vms.overview.VMListViewModel" />
     </data>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.vms.overview.VMListFragment"
-            android:id="@+id/project_recyclerview"
-            tools:listitem="@layout/project_container"
-            >
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/no_projects_text"
+                    android:layout_width="250dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:text="@string/geenProjecten"
+                    android:textColor="#A1887F"
+                    android:textSize="@dimen/titel_font_size"
+                    android:visibility="@{overviewViewModel.showNoProjects}" />
 
-    </ScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/project_recyclerview"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:context=".ui.vms.overview.VMListFragment"
+                    tools:listitem="@layout/project_container"
+                    android:visibility="@{overviewViewModel.showProjectList}" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

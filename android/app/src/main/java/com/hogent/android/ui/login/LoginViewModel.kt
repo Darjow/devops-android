@@ -18,10 +18,10 @@ class LoginViewModel(val repository: LoginRepository): ViewModel(){
         get() = pass
 
     fun setMail(tv: Editable){
-        mail.value = tv.toString()
+        mail.postValue(tv.toString())
     }
     fun setPass(v: Editable){
-        pass.value = v.toString();
+        pass.postValue(v.toString())
     }
 
 

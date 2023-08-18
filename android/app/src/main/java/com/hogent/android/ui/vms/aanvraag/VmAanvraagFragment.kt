@@ -200,7 +200,7 @@ class VmAanvraagFragment : Fragment(){
                 binding.viewmodel!!.startDateChanged(start)
             } catch (e: Exception) {
                 Timber.e(e.message);
-                Timber.e(e.stackTraceToString())
+                //Timber.e(e.stackTraceToString())
             }
         }
 
@@ -211,7 +211,7 @@ class VmAanvraagFragment : Fragment(){
                 binding.viewmodel!!.endDateChanged(end)
             }catch(e: Exception){
                 Timber.e(e.message)
-                Timber.e(e.stackTraceToString())
+                //Timber.e(e.stackTraceToString())
             }
 
         }

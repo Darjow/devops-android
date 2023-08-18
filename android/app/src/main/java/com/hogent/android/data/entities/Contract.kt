@@ -7,7 +7,7 @@ import java.time.LocalDate
 @JsonClass(generateAdapter = true)
 data class Contract(
     val startDate: LocalDate,
-    var endDate: LocalDate,
+    val endDate: LocalDate,
     val vmId: Int,
     val customerId: Int,
     val id: Int

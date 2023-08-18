@@ -1,5 +1,6 @@
 package com.hogent.android.ui.vms.overview
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,14 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
     private val _projecten = MutableLiveData<ProjectOverView>()
     private var _virtualmachine = MutableLiveData<List<VMIndex>>()
+    private var _showProjectList = MutableLiveData(View.GONE)
+    private var _showNoProjects = MutableLiveData(View.VISIBLE)
 
+    val showProjectList: LiveData<Int>
+        get() = _showProjectList
+
+    val showNoProjects: LiveData<Int>
+        get() = _showNoProjects
 
     val projecten: LiveData<ProjectOverView>
         get() = _projecten;
@@ -32,14 +40,18 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
     suspend fun refreshProjects() {
         val virtualMachineList = mutableListOf<VMIndex>()
+        _showProjectList.postValue(View.GONE)
+        _showNoProjects.postValue(View.GONE)
 
         _projecten.value = repo.getProjects()
-        Timber.d("Landed on vmlist viewmodel page, this user has %d projects",
-                projecten.value?.total
-                    ?: 0)
 
-        Timber.wtf(_projecten.value.toString())
+        if(projecten.value?.total != null && projecten.value?.total!! > 0){
+            _showProjectList.postValue(View.VISIBLE)
+        }else{
+            _showNoProjects.postValue(View.VISIBLE)
+        }
 
+        Timber.wtf((showNoProjects?.value == View.VISIBLE).toString());
 
         if(_projecten.value == null || _projecten.value?.total == 0){
             _projecten.postValue(ProjectOverView(listOf(ProjectOverViewItem(0,"Geen Projecten", User(0,"","","",""))), 0))
@@ -49,14 +61,6 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
         _projecten.value?.projects?.forEach { project ->
             val projectVMs = repo.getById(project.id)
 
-            Timber.d(
-                String.format(
-                    "project: %s, has %d virtual machine(s)",
-                    project.name,
-                    projectVMs?.virtualMachines?.size
-                )
-            )
-
             projectVMs?.virtualMachines?.let { vms ->
                 val updatedVMs = vms.map { vm ->
                     VMIndex(vm.id, vm.name, vm.mode, project.id)
@@ -65,7 +69,7 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
             }
 
         }
-        _virtualmachine.value = virtualMachineList
+        _virtualmachine.postValue(virtualMachineList)
     }
 }
 

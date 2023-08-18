@@ -31,32 +31,32 @@ class RegisterViewModel (val repo: RegisterRepository, val app : Application) : 
     fun setFirstname(e : Editable){
         val form = registerForm.value
         form!!.inputFirstName = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form);
     }
     fun setLastname(e : Editable){
         val form = registerForm.value
         form!!.inputLastName = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form)
     }
     fun setEmail(e : Editable){
         val form = registerForm.value
         form!!.inputEmail = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form)
     }
     fun setPhoneNumber(e : Editable){
         val form = registerForm.value
         form!!.inputPhoneNumber = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form)
     }
     fun setPassword(e : Editable){
         val form = registerForm.value
         form!!.inputPassword = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form)
     }
     fun setConfirmPassword(e : Editable){
         val form = registerForm.value
         form!!.inputConfirmPassword = e.toString()
-        registerForm.value =  form
+        registerForm.postValue(form)
     }
 
     fun submitButton(){
