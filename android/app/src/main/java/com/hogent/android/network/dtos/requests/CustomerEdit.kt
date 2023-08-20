@@ -1,7 +1,7 @@
 package com.hogent.android.network.dtos.requests
 
 import com.hogent.android.data.entities.ContactDetails
-import com.hogent.android.data.entities.Course
+import com.hogent.android.domain.Course
 
 class CustomerEdit(
     var firstName: String,

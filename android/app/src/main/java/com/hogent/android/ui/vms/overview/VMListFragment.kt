@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.android.R
+import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.repositories.VmOverviewRepository
 import com.hogent.android.databinding.FragmentVmlistBinding
 import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class VMListFragment : Fragment() {
 
@@ -34,8 +36,8 @@ class VMListFragment : Fragment() {
         val binding: FragmentVmlistBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_vmlist, container, false)
         application = requireNotNull(this.activity).application
-
-        val viewModelFactory = VMListViewModelFactory(VmOverviewRepository())
+        val dao = RoomDB.getInstance(application).projectDao
+        val viewModelFactory = VMListViewModelFactory(VmOverviewRepository(dao))
 
         viewModel = ViewModelProvider(this, viewModelFactory)[(VMListViewModel::class.java)]
 
@@ -54,6 +56,8 @@ class VMListFragment : Fragment() {
             viewLifecycleOwner,
             Observer {
                 if (viewModel.virtualmachine.value?.size ?: 0 > 0) {
+                    Timber.wtf("Creating adapter for the project")
+                    Timber.wtf(it.projects.size.toString())
                     recyclerView.adapter = ProjectListAdapter(
                         it,
                         viewModel.virtualmachine.value,

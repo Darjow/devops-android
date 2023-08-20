@@ -1,4 +1,4 @@
-package com.hogent.android.data.entities
+package com.hogent.android.domain
 
 enum class VirtualMachineModus {
     WAITING_APPROVEMENT, // No connection || No server
@@ -14,7 +14,6 @@ enum class VirtualMachineModus {
             RUNNING -> "Online"
             PAUSED -> "Gepauzeerd"
             STOPPED -> "Gestopt"
-            else -> throw IllegalArgumentException("Unknown vm modus received")
         }
     }
 }

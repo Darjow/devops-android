@@ -1,4 +1,4 @@
-package com.hogent.android.data.entities
+package com.hogent.android.domain
 import androidx.core.text.isDigitsOnly
 
 enum class OperatingSystem {

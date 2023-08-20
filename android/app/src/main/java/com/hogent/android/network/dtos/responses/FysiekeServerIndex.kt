@@ -1,6 +1,6 @@
 package com.hogent.android.network.dtos.responses
 
-import com.hogent.android.data.entities.HardWare
+import com.hogent.android.domain.HardWare
 
 class FysiekeServerIndex(
     val id: Int? = -1,

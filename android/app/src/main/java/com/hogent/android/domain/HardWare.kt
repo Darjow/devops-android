@@ -1,4 +1,4 @@
-package com.hogent.android.data.entities
+package com.hogent.android.domain
 
 data class HardWare(
     val memory: Int,

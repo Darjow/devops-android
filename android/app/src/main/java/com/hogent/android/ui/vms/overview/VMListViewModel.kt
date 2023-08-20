@@ -4,8 +4,8 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hogent.android.data.entities.User
 import com.hogent.android.data.repositories.VmOverviewRepository
+import com.hogent.android.domain.User
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.dtos.responses.VMIndex
@@ -49,8 +49,6 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
         } else {
             _showNoProjects.postValue(View.VISIBLE)
         }
-
-        Timber.wtf((showNoProjects?.value == View.VISIBLE).toString())
 
         if (_projecten.value == null || _projecten.value?.total == 0) {
             _projecten.postValue(

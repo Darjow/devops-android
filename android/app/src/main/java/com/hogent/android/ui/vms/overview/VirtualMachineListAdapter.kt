@@ -34,13 +34,13 @@ class VirtualMachineListAdapter(
             holder.textView3.textSize = 15F
         } else {
             val virtualmachine = virtualmachineList!![position - 1]
-            holder.textView1.text = virtualmachine?.mode.toString()
-            holder.textView2.text = virtualmachine?.name
+            holder.textView1.text = virtualmachine.mode.toString()
+            holder.textView2.text = virtualmachine.name
             holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
             holder.itemView.setOnClickListener {
                 Navigation.findNavController(it).navigate(
-                    VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id)
+                    VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine.id)
                 )
             }
         }

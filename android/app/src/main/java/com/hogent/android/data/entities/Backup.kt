@@ -1,13 +1,18 @@
 package com.hogent.android.data.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
+@Entity(tableName = "BackUps")
 @JsonClass(generateAdapter = true)
 data class Backup(
-    val type: BackupType?,
-    val lastBackup: LocalDate?,
-    var id: Int?
+    var type: BackupType? = BackupType.GEEN,
+    var lastBackup: LocalDate? = LocalDate.MIN,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L
+
 )
 
 enum class BackupType() {

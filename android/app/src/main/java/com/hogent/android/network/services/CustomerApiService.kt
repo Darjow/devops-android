@@ -1,6 +1,6 @@
 package com.hogent.android.network.services
 
-import com.hogent.android.data.entities.Customer
+import com.hogent.android.domain.Customer
 import com.hogent.android.network.Config
 import com.hogent.android.network.dtos.requests.CustomerEdit
 import com.hogent.android.network.dtos.responses.EditedCustomer

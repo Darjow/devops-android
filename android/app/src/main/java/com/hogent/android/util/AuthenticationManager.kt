@@ -4,7 +4,8 @@ import AuthInterceptor
 import androidx.lifecycle.MutableLiveData
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.hogent.android.data.entities.Customer
+import com.hogent.android.data.daos.CustomerDao
+import com.hogent.android.domain.Customer
 import com.hogent.android.network.services.CustomerApi.customerApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,50 +37,20 @@ class AuthenticationManager() {
             return instance.loggedIn()
         }
 
-        suspend fun setCustomer(token: String?) {
+        fun setCustomer(customer: Customer?) {
             if (!::instance.isInitialized) {
                 throw IllegalArgumentException("AuthenticationManager instance not initialized")
             }
-            if (token == null) {
+            if (customer == null) {
                 instance.klant.postValue(null)
                 instance.authenticationState.postValue(AuthenticationState.UNAUTHENTICATED)
                 return
             }
-            var userId: Int
-
-            try {
-                AuthInterceptor.setAuthToken(token)
-                val decodedJWT: DecodedJWT = JWT.decode(token)
-                val nameId = decodedJWT.getClaim("nameid")!!
-                userId = (nameId.toString().replace("\"", "")).toInt()
-            } catch (e: Exception) {
-                Timber.e("Unknown token received: %s " + e.message)
-                return
-            }
-
-            val customer: Customer? = fetchCustomerById(userId)
-            if (customer != null) {
-                instance.klant.postValue(customer)
-                instance.authenticationState.postValue(AuthenticationState.AUTHENTICATED)
-            }
-        }
-
-        private suspend fun fetchCustomerById(id: Int): Customer? {
-            return try {
-                withContext(Dispatchers.IO) {
-                    val response = customerApi.getById(id)
-                    if (response.isSuccessful) {
-                        response.body()
-                    } else {
-                        null
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.e("[failed] trying to fetch userbyid")
-                null
-            }
+            instance.klant.postValue(customer)
+            instance.authenticationState.postValue(AuthenticationState.AUTHENTICATED)
         }
     }
+
 
     fun loggedIn(): Boolean {
         return authenticationState.value == AuthenticationState.AUTHENTICATED

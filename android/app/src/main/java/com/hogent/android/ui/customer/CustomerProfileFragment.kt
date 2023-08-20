@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
+import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentProfielBinding
 import com.hogent.android.util.closeKeyboardOnTouch
@@ -28,8 +29,11 @@ class CustomerProfileFragment : Fragment() {
             container,
             false
         )
-
-        val viewModelFactory = CustomerViewModelFactory(CustomerRepository())
+        val application = requireNotNull(this.activity).application
+        val db = RoomDB.getInstance(application)
+        val customerDao = db.customerDao
+        val contactDo = db.contactDetailsDao
+        val viewModelFactory = CustomerViewModelFactory(CustomerRepository(customerDao, contactDo))
 
         val customerView =
             ViewModelProvider(this, viewModelFactory)[(CustomerViewModel::class.java)]

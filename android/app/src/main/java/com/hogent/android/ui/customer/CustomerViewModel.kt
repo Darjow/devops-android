@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hogent.android.data.entities.ContactDetails
-import com.hogent.android.data.entities.Customer
 import com.hogent.android.data.repositories.CustomerRepository
+import com.hogent.android.domain.Customer
 import com.hogent.android.network.dtos.requests.CustomerEdit
 import com.hogent.android.ui.components.forms.ContactOne
 import com.hogent.android.ui.components.forms.ContactTwo
@@ -118,15 +118,15 @@ class CustomerViewModel(private val repo: CustomerRepository) : ViewModel() {
 
         if (contactps1 != null) {
             contactOne = ContactOne(
-                contactps1.email!!,
-                contactps1.phoneNumber!!,
+                contactps1.email,
+                contactps1.phoneNumber,
                 contactps1.firstName + " " + contactps1.lastName
             )
         }
         if (contactps2 != null) {
             contactTwo = ContactTwo(
-                contactps2.email!!,
-                contactps2.phoneNumber!!,
+                contactps2.email,
+                contactps2.phoneNumber,
                 contactps2.firstName + " " + contactps2.lastName
             )
         }

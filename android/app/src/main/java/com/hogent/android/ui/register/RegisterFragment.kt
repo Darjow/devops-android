@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
+import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.repositories.RegisterRepository
 import com.hogent.android.databinding.FragmentRegisterBinding
 import com.hogent.android.ui.login.LoginFragment
@@ -33,7 +34,8 @@ class RegisterFragment : Fragment() {
             false
         )
         val application = requireNotNull(this.activity).application
-        val factory = RegisterFactoryModel(RegisterRepository(), application)
+        val dao = RoomDB.getInstance(application).customerDao
+        val factory = RegisterFactoryModel(RegisterRepository(dao))
         viewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
 
         binding.lifecycleOwner = this

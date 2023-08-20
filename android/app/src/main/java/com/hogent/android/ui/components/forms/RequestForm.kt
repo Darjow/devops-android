@@ -1,7 +1,7 @@
 package com.hogent.android.ui.components.forms
 
 import com.hogent.android.data.entities.BackupType
-import com.hogent.android.data.entities.OperatingSystem
+import com.hogent.android.domain.OperatingSystem
 import java.time.LocalDate
 
 data class RequestForm(

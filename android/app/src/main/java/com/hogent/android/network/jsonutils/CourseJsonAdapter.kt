@@ -1,6 +1,6 @@
 package com.hogent.android.network.jsonutils
 
-import com.hogent.android.data.entities.Course
+import com.hogent.android.domain.Course
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

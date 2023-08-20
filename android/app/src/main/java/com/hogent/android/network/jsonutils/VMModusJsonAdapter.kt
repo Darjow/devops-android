@@ -1,6 +1,6 @@
 package com.hogent.android.network.jsonutils
 
-import com.hogent.android.data.entities.VirtualMachineModus
+import com.hogent.android.domain.VirtualMachineModus
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hogent.android.data.entities.BackupType
-import com.hogent.android.data.entities.OperatingSystem
 import com.hogent.android.data.repositories.VmAanvraagRepository
+import com.hogent.android.domain.OperatingSystem
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.ui.components.forms.RequestForm
 import java.time.LocalDate
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
 
@@ -34,6 +35,14 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
 
     suspend fun refreshProjects() {
         val response = repo.getProjecten()
+        Timber.e("Refreshing projects total count :" + response!!.total.toString())
+
+        response.projects.forEach{
+            Timber.e(it.name);
+            Timber.e(it.user.email)
+            Timber.e(it.id.toString())
+            Timber.e(it.user.firstName)
+        }
         _projecten.postValue(response)
     }
 
@@ -163,9 +172,9 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
                     return@runBlocking
                 }
 
-                val vms = vm!!.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
+                val vms = vm.filter { vm -> vm.name.equals(_form.value!!.naamVm, true) }
 
-                if (vms!!.isNotEmpty()) {
+                if (vms.isNotEmpty()) {
                     _vmNaamBestaatAl.postValue(true)
                     return@runBlocking
                 } else {

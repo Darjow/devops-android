@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.hogent.android.R
+import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.repositories.LoginRepository
 import com.hogent.android.databinding.FragmentLoginBinding
 import com.hogent.android.util.closeKeyboardOnTouch
@@ -24,7 +25,11 @@ class LoginFragment : Fragment() {
     ): View? {
         val binding: FragmentLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        val viewModelFactory = LoginViewModelFactory(LoginRepository())
+        val application = requireNotNull(this.activity).application
+        val db = RoomDB.getInstance(application)
+
+        val viewModelFactory =
+            LoginViewModelFactory(LoginRepository(db.customerDao, db.contactDetailsDao))
         val loginView = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
         binding.loginViewModel = loginView

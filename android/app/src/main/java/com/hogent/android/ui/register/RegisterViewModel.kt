@@ -1,6 +1,5 @@
 package com.hogent.android.ui.register
 
-import android.app.Application
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,7 @@ import com.hogent.android.ui.components.forms.RegisterForm
 import com.hogent.android.util.AuthenticationManager
 import kotlinx.coroutines.runBlocking
 
-class RegisterViewModel(val repo: RegisterRepository, val app: Application) : ViewModel() {
+class RegisterViewModel(val repo: RegisterRepository) : ViewModel() {
 
     val registerForm = MutableLiveData(RegisterForm("", "", "", "", "", ""))
 
@@ -63,7 +62,7 @@ class RegisterViewModel(val repo: RegisterRepository, val app: Application) : Vi
             runBlocking {
                 val response = repo.register(registerForm.value!!)
                 if (response != null && response.token != null) {
-                    AuthenticationManager.setCustomer(response.token)
+                    AuthenticationManager.setCustomer(null)
                     _navigateHome.postValue(true)
                 }
                 // else hndle error with a toast or w/e but atm no register is implemented
