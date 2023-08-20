@@ -15,9 +15,9 @@ class OSJsonAdapter {
             4 -> OperatingSystem.FEDORA_36
             5 -> OperatingSystem.FEDORA_35
             else -> OperatingSystem.WINDOWS_10
-
         }
     }
+
     @ToJson
     fun toJson(os: OperatingSystem): Int {
         return os.ordinal

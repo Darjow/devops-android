@@ -13,10 +13,10 @@ class VMModusJsonAdapter {
             2 -> VirtualMachineModus.RUNNING
             3 -> VirtualMachineModus.PAUSED
             4 -> VirtualMachineModus.STOPPED
-            else-> VirtualMachineModus.WAITING_APPROVEMENT
-
+            else -> VirtualMachineModus.WAITING_APPROVEMENT
         }
     }
+
     @ToJson
     fun toJson(mode: VirtualMachineModus): Int {
         return mode.ordinal

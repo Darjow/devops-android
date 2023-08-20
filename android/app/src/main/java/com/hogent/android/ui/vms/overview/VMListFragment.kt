@@ -17,7 +17,6 @@ import com.hogent.android.databinding.FragmentVmlistBinding
 import com.hogent.android.util.closeKeyboardOnTouch
 import kotlinx.coroutines.runBlocking
 
-
 class VMListFragment : Fragment() {
 
     private lateinit var viewModel: VMListViewModel
@@ -25,21 +24,20 @@ class VMListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val binding: FragmentVmlistBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_vmlist, container, false);
+            DataBindingUtil.inflate(inflater, R.layout.fragment_vmlist, container, false)
         application = requireNotNull(this.activity).application
 
-        val viewModelFactory = VMListViewModelFactory(VmOverviewRepository());
+        val viewModelFactory = VMListViewModelFactory(VmOverviewRepository())
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[(VMListViewModel::class.java)];
+        viewModel = ViewModelProvider(this, viewModelFactory)[(VMListViewModel::class.java)]
 
         binding.overviewViewModel = viewModel
         binding.lifecycleOwner = this
@@ -50,26 +48,28 @@ class VMListFragment : Fragment() {
         }
 
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.project_recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(this.context);
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
-        viewModel.projecten.observe(viewLifecycleOwner, Observer {
-            if(viewModel.virtualmachine.value?.size?: 0 > 0) {
-                recyclerView.adapter = ProjectListAdapter(
-                    it,
-                    viewModel.virtualmachine.value,
-                    this.context
-                );
+        viewModel.projecten.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (viewModel.virtualmachine.value?.size ?: 0 > 0) {
+                    recyclerView.adapter = ProjectListAdapter(
+                        it,
+                        viewModel.virtualmachine.value,
+                        this.context
+                    )
+                }
             }
-        })
-
+        )
 
         return binding.root
     }
 
     override fun onResume() {
-        super.onResume();
+        super.onResume()
         runBlocking {
-            viewModel.refreshProjects();
+            viewModel.refreshProjects()
         }
     }
 }

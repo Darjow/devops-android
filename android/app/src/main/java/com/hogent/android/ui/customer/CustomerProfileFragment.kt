@@ -15,40 +15,64 @@ import com.hogent.android.data.repositories.CustomerRepository
 import com.hogent.android.databinding.FragmentProfielBinding
 import com.hogent.android.util.closeKeyboardOnTouch
 
+class CustomerProfileFragment : Fragment() {
 
-class CustomerProfileFragment: Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: FragmentProfielBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_profiel,
+            container,
+            false
+        )
 
-    override fun onCreateView( inflater: LayoutInflater,   container: ViewGroup?,   savedInstanceState: Bundle?): View? {
-        val binding: FragmentProfielBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profiel, container, false);
+        val viewModelFactory = CustomerViewModelFactory(CustomerRepository())
 
-        val viewModelFactory = CustomerViewModelFactory(CustomerRepository());
-
-        val customerView = ViewModelProvider(this, viewModelFactory)[(CustomerViewModel::class.java)];
+        val customerView =
+            ViewModelProvider(this, viewModelFactory)[(CustomerViewModel::class.java)]
 
         binding.customerViewModel = customerView
         binding.lifecycleOwner = this
         binding.root.closeKeyboardOnTouch()
 
-        customerView.success.observe(viewLifecycleOwner, Observer{
-            if(it){
-                Toast.makeText(requireContext(),"Contactpersoon werd aangepast", Toast.LENGTH_LONG).show()
-                customerView.doneSuccessToast()
+        customerView.success.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Contactpersoon werd aangepast",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    customerView.doneSuccessToast()
+                }
             }
-        })
-        customerView.error.observe(viewLifecycleOwner, Observer{
-            if(it){
-                Toast.makeText(requireContext(),customerView.getError(), Toast.LENGTH_LONG).show();
-                customerView.doneErrorToast()
+        )
+        customerView.error.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    Toast.makeText(requireContext(), customerView.getError(), Toast.LENGTH_LONG)
+                        .show()
+                    customerView.doneErrorToast()
+                }
             }
-        })
+        )
 
-        customerView.failsafeRedirect.observe(viewLifecycleOwner, Observer{
-            if(it){
-                NavHostFragment.findNavController(this).navigate(CustomerProfileFragmentDirections.actionFromProfileToLogin())
-                customerView.doneNavigation()
+        customerView.failsafeRedirect.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    NavHostFragment.findNavController(this).navigate(
+                        CustomerProfileFragmentDirections.actionFromProfileToLogin()
+                    )
+                    customerView.doneNavigation()
+                }
             }
-        })
-
+        )
 
         return binding.root
     }

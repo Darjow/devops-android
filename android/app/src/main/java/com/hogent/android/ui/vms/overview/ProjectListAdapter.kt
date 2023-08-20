@@ -14,9 +14,8 @@ import com.hogent.android.network.dtos.responses.VMIndex
 class ProjectListAdapter(
     private val projectList: ProjectOverView,
     private val virtualmachineList: List<VMIndex>?,
-    private val context: Context?,
+    private val context: Context?
 ) : RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
-
 
     private var newvirtualMachineList = mutableListOf<VMIndex>()
 
@@ -27,15 +26,19 @@ class ProjectListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.project_container, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.project_container,
+            parent,
+            false
+        )
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val project = projectList.projects[position]
-        holder.textView1.text = project.name;
+        holder.textView1.text = project.name
 
-        if(project.id > 0) {
+        if (project.id > 0) {
             holder.recyclerView.layoutManager = LinearLayoutManager(context)
             filterVirtualMachines(project.id)
             holder.recyclerView.adapter = VirtualMachineListAdapter(newvirtualMachineList)
@@ -47,14 +50,13 @@ class ProjectListAdapter(
         return projectList.total
     }
 
-
     private fun filterVirtualMachines(projectId: Int) {
         newvirtualMachineList.clear()
 
-        //de nieuw gecreërde VM zit niet in deze lijst
+        // de nieuw gecreërde VM zit niet in deze lijst
         virtualmachineList?.forEach { i ->
             if (i.projectId == projectId) {
-                newvirtualMachineList.add(i);
+                newvirtualMachineList.add(i)
             }
         }
     }

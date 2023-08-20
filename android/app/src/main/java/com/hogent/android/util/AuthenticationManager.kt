@@ -40,21 +40,21 @@ class AuthenticationManager() {
             if (!::instance.isInitialized) {
                 throw IllegalArgumentException("AuthenticationManager instance not initialized")
             }
-            if(token == null) {
-                instance.klant.postValue(null);
+            if (token == null) {
+                instance.klant.postValue(null)
                 instance.authenticationState.postValue(AuthenticationState.UNAUTHENTICATED)
-                return;
+                return
             }
-            var userId: Int;
+            var userId: Int
 
             try {
                 AuthInterceptor.setAuthToken(token)
                 val decodedJWT: DecodedJWT = JWT.decode(token)
-                val nameId = decodedJWT.getClaim("nameid")!!;
-                userId = (nameId.toString().replace("\"", "")).toInt();
-            }catch(e: Exception){
+                val nameId = decodedJWT.getClaim("nameid")!!
+                userId = (nameId.toString().replace("\"", "")).toInt()
+            } catch (e: Exception) {
                 Timber.e("Unknown token received: %s " + e.message)
-                return;
+                return
             }
 
             val customer: Customer? = fetchCustomerById(userId)
@@ -75,12 +75,11 @@ class AuthenticationManager() {
                     }
                 }
             } catch (e: Exception) {
-                Timber.e("[failed] trying to fetch userbyid");
+                Timber.e("[failed] trying to fetch userbyid")
                 null
             }
         }
     }
-
 
     fun loggedIn(): Boolean {
         return authenticationState.value == AuthenticationState.AUTHENTICATED
@@ -88,7 +87,7 @@ class AuthenticationManager() {
 
     fun logOut() {
         klant.postValue(null)
-        AuthInterceptor.setAuthToken("");
+        AuthInterceptor.setAuthToken("")
         authenticationState.postValue(AuthenticationState.UNAUTHENTICATED)
     }
 }

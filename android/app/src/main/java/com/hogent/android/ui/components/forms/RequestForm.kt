@@ -1,59 +1,63 @@
 package com.hogent.android.ui.components.forms
 
-
 import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.OperatingSystem
-import com.hogent.android.data.entities.VirtualMachineModus
 import java.time.LocalDate
 
 data class RequestForm(
-    var naamVm : String? = "",
-    var os : OperatingSystem? = null,
-    var cpuCoresValue : Int? = 0,
-    var memory : Int? = 0,
-    var backUpType : BackupType? = null,
-    var storage : Int? = 0,
-    var startDate : LocalDate?= null,
-    var endDate : LocalDate? = null,
+    var naamVm: String? = "",
+    var os: OperatingSystem? = null,
+    var cpuCoresValue: Int? = 0,
+    var memory: Int? = 0,
+    var backUpType: BackupType? = null,
+    var storage: Int? = 0,
+    var startDate: LocalDate? = null,
+    var endDate: LocalDate? = null,
     var project_id: Int? = 0
-): IFormValidation {
+) : IFormValidation {
 
     var error_message = ""
 
     override fun isValid(): Boolean {
-        if(naamVm.isNullOrBlank() || cpuCoresValue == null || memory == null || storage == null  || startDate == null || endDate == null || os == null  || backUpType == null){
+        if (naamVm.isNullOrBlank() ||
+            cpuCoresValue == null ||
+            memory == null ||
+            storage == null ||
+            startDate == null ||
+            endDate == null ||
+            os == null ||
+            backUpType == null
+        ) {
             error_message = "Alle velden zijn verplicht"
-            return false;
+            return false
         }
 
-        if (endDate!! == startDate || endDate!!.isBefore(startDate)){
+        if (endDate!! == startDate || endDate!!.isBefore(startDate)) {
             error_message = "Einddatum moet na startdatum"
-            return false;
+            return false
         }
 
-        if(cpuCoresValue!! < 1){
+        if (cpuCoresValue!! < 1) {
             error_message = "Cores moet positief zijn"
-            return false;
+            return false
         }
-        if(memory!! < 1){
+        if (memory!! < 1) {
             error_message = "Geheugen moet positief zijn"
-            return false;
+            return false
         }
-        if(storage!! < 1){
+        if (storage!! < 1) {
             error_message = "Opslag moet positief zijn"
-            return false;
+            return false
         }
-        if(project_id!! < 1L || project_id!! == 0 ){
+        if (project_id!! < 1L || project_id!! == 0) {
             error_message = "Selecteer een project"
-            return false;
+            return false
         }
 
-        return true;
+        return true
     }
 
     override fun getError(): String? {
-        return error_message;
+        return error_message
     }
-
-
 }

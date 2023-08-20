@@ -3,36 +3,36 @@ package com.hogent.android.util
 import timber.log.Timber
 
 class Validators {
-    companion object{
-        fun validatePassword(password: String?):Boolean{
-            if(password == null){
+    companion object {
+        fun validatePassword(password: String?): Boolean {
+            if (password == null) {
                 Timber.d("Password == null")
-                return false;
+                return false
             }
-            if(!password.any {it.isDigit() }){
+            if (!password.any { it.isDigit() }) {
                 Timber.d("Password ! contains digit")
-                return false;
+                return false
             }
-            if(!password.any {!it.isLetterOrDigit()}){
+            if (!password.any { !it.isLetterOrDigit() }) {
                 Timber.d("Password ! contains symbol")
-                return false;
+                return false
             }
-            if(password.length < 6){
+            if (password.length < 6) {
                 Timber.d("Password size < 6")
-                return false;
+                return false
             }
             return true
         }
 
-        fun validateFullName(fullName: String) : Boolean{
-            if(!fullName.matches(Regex("[^0-9]"))){
-                return fullName.split(" ").size >= 2;
+        fun validateFullName(fullName: String): Boolean {
+            if (!fullName.matches(Regex("[^0-9]"))) {
+                return fullName.split(" ").size >= 2
             }
-            return false;
+            return false
         }
         fun validatePhoneNumber(phoneNumber: String?): Boolean {
             if (phoneNumber == null) {
-                return false;
+                return false
             }
 
             val pattern = Regex("^(04\\d{8}|0[^0]\\d{8})$")
@@ -40,8 +40,8 @@ class Validators {
         }
 
         fun validateEmail(email: String?): Boolean {
-            if(email == null){
-                return false;
+            if (email == null) {
+                return false
             }
 
             val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"

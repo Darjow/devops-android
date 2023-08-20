@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
+    id 'org.jlleitschuh.gradle.ktlint' version '11.5.1'
 }
 
 
@@ -43,6 +44,16 @@ android {
 
     dataBinding{
         enabled = true
+    }
+}
+
+ktlint{
+    android = true
+    ignoreFailures = false
+    reporters {
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "sarif"
     }
 }
 

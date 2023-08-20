@@ -14,9 +14,9 @@ class BackUpPeriodJsonAdapter {
             3 -> BackupType.WEEKLY
             4 -> BackupType.MONTHLY
             else -> BackupType.GEEN
-
         }
     }
+
     @ToJson
     fun toJson(bu: BackupType): Int {
         return bu.ordinal

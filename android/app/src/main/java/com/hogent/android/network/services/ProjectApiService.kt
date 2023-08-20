@@ -23,8 +23,7 @@ interface ProjectApiService {
     suspend fun getById(@Path("id") id: Int): Response<ProjectDetails>
 
     @POST(".")
-    suspend fun  createProject(@Body proj : ProjectCreate): Response<ProjectId>
-
+    suspend fun createProject(@Body proj: ProjectCreate): Response<ProjectId>
 }
 
 object ProjectApi {

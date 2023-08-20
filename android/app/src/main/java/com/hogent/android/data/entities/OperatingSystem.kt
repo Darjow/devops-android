@@ -11,10 +11,9 @@ enum class OperatingSystem {
 
     fun to_string(): String {
         val strings = this.name.split("_")
-        var output = "";
+        var output = ""
 
         for ((i, string) in strings.withIndex()) {
-
             if (i != 0) {
                 output += " "
             }
@@ -26,6 +25,6 @@ enum class OperatingSystem {
                 output += string.lowercase()
             }
         }
-        return output;
+        return output
     }
 }

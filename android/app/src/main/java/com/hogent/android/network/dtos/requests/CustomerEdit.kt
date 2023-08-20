@@ -3,7 +3,7 @@ package com.hogent.android.network.dtos.requests
 import com.hogent.android.data.entities.ContactDetails
 import com.hogent.android.data.entities.Course
 
-class CustomerEdit (
+class CustomerEdit(
     var firstName: String,
     var name: String,
     var phoneNumber: String,
@@ -12,4 +12,4 @@ class CustomerEdit (
     var bedrijf: String?,
     var contactPersoon: ContactDetails?,
     var reserveContactpersoon: ContactDetails?
-    )
+)

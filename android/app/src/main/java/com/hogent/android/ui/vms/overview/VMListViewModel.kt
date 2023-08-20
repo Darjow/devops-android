@@ -12,7 +12,6 @@ import com.hogent.android.network.dtos.responses.VMIndex
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
-
 class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
     private val _projecten = MutableLiveData<ProjectOverView>()
@@ -27,14 +26,14 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
         get() = _showNoProjects
 
     val projecten: LiveData<ProjectOverView>
-        get() = _projecten;
+        get() = _projecten
 
     val virtualmachine: LiveData<List<VMIndex>>
-        get() = _virtualmachine;
+        get() = _virtualmachine
 
     init {
         runBlocking {
-            refreshProjects();
+            refreshProjects()
         }
     }
 
@@ -45,16 +44,21 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
         _projecten.value = repo.getProjects()
 
-        if(projecten.value?.total != null && projecten.value?.total!! > 0){
+        if (projecten.value?.total != null && projecten.value?.total!! > 0) {
             _showProjectList.postValue(View.VISIBLE)
-        }else{
+        } else {
             _showNoProjects.postValue(View.VISIBLE)
         }
 
-        Timber.wtf((showNoProjects?.value == View.VISIBLE).toString());
+        Timber.wtf((showNoProjects?.value == View.VISIBLE).toString())
 
-        if(_projecten.value == null || _projecten.value?.total == 0){
-            _projecten.postValue(ProjectOverView(listOf(ProjectOverViewItem(0,"Geen Projecten", User(0,"","","",""))), 0))
+        if (_projecten.value == null || _projecten.value?.total == 0) {
+            _projecten.postValue(
+                ProjectOverView(
+                    listOf(ProjectOverViewItem(0, "Geen Projecten", User(0, "", "", "", ""))),
+                    0
+                )
+            )
             return
         }
 
@@ -67,10 +71,7 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
                 }
                 virtualMachineList.addAll(updatedVMs)
             }
-
         }
         _virtualmachine.postValue(virtualMachineList)
     }
 }
-
-

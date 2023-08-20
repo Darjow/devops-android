@@ -1,10 +1,10 @@
-package com.hogent.android.network.jsonutils;
+package com.hogent.android.network.jsonutils
 
-import com.hogent.android.data.entities.Course;
-import com.squareup.moshi.FromJson;
-import com.squareup.moshi.ToJson;
+import com.hogent.android.data.entities.Course
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 
-class CourseJsonAdapter{
+class CourseJsonAdapter {
 
     @FromJson
     fun fromJson(value: Int): Course? {
@@ -15,7 +15,7 @@ class CourseJsonAdapter{
             4 -> Course.DIGITAL_DESIGN_AND_DEVELOPMENT
             5 -> Course.ELEKTROMECHANICA
             6 -> Course.TOEGEPASTE_INFORMATICA
-        else -> Course.NONE
+            else -> Course.NONE
         }
     }
 

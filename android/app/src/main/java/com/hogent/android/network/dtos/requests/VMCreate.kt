@@ -8,15 +8,17 @@ import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
 data class VMCreate(
-    val customerId:Int,
+    val customerId: Int,
     val virtualMachine: VM
 
-    )
+)
 
-data class VM(val backup: Backup,
-              val start: LocalDate,
-              val end: LocalDate,
-              val hardware: HardWare,
-              val name: String,
-              val operatingSystem: OperatingSystem,
-              val projectId: Int)
+data class VM(
+    val backup: Backup,
+    val start: LocalDate,
+    val end: LocalDate,
+    val hardware: HardWare,
+    val name: String,
+    val operatingSystem: OperatingSystem,
+    val projectId: Int
+)

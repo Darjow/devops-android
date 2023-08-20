@@ -1,6 +1,5 @@
 package com.hogent.android.ui.vms.overview
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,8 @@ import com.hogent.android.R
 import com.hogent.android.network.dtos.responses.VMIndex
 import com.hogent.android.util.AuthenticationManager
 
-
-class VirtualMachineListAdapter (
-    private var virtualmachineList: List<VMIndex>?,
+class VirtualMachineListAdapter(
+    private var virtualmachineList: List<VMIndex>?
 ) : RecyclerView.Adapter<VirtualMachineListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,11 +22,10 @@ class VirtualMachineListAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.virtual_machine_container, parent, false)
+            .inflate(R.layout.virtual_machine_container, parent, false)
 
         return ViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position == 0) {
@@ -42,9 +39,10 @@ class VirtualMachineListAdapter (
             holder.textView3.text = AuthenticationManager.getCustomer()!!.email
 
             holder.itemView.setOnClickListener {
-                Navigation.findNavController(it).navigate(VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id))
+                Navigation.findNavController(it).navigate(
+                    VMListFragmentDirections.actionFromVmlistToDetail(virtualmachine!!.id)
+                )
             }
-
         }
     }
 
@@ -52,4 +50,3 @@ class VirtualMachineListAdapter (
         return virtualmachineList?.size!! + 1
     }
 }
-

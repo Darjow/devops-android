@@ -1,4 +1,4 @@
-import com.hogent.android.network.services.AuthApi
+
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -10,7 +10,6 @@ class AuthInterceptor : Interceptor {
             authToken = token
         }
     }
-
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()

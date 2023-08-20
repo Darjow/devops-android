@@ -10,7 +10,6 @@ data class Backup(
     var id: Int?
 )
 
-
 enum class BackupType() {
     GEEN,
     CUSTOM,

@@ -1,36 +1,37 @@
 package com.hogent.android.ui.components.forms
 
-import androidx.lifecycle.MutableLiveData
 import com.hogent.android.util.Validators
 
-data class CustomerContactEditForm(var contact1 : ContactOne = ContactOne(), var contact2: ContactTwo = ContactTwo()): IFormValidation {
+data class CustomerContactEditForm(
+    var contact1: ContactOne = ContactOne(),
+    var contact2: ContactTwo = ContactTwo()
+) : IFormValidation {
 
     var error_message = ""
 
-    override fun isValid(): Boolean{
-        if(!contact1.isValid()) {
+    override fun isValid(): Boolean {
+        if (!contact1.isValid()) {
             error_message = contact1.getError()
-            return false;
+            return false
         }
-        if(contact2.isValid()) {
-            return true;
+        if (contact2.isValid()) {
+            return true
         }
-        if(contact2.email == "" && contact2.phone == "" && contact2.fullName == ""){
-            return true;
+        if (contact2.email == "" && contact2.phone == "" && contact2.fullName == "") {
+            return true
         }
         error_message = contact2.getError()
-        return false;
-
+        return false
     }
-    override fun getError(): String?{
+    override fun getError(): String? {
         return error_message
     }
 }
 
-
-data class ContactOne(val email: String = "", val phone: String = "", val fullName: String= "") {
+data class ContactOne(val email: String = "", val phone: String = "", val fullName: String = "") {
     fun isValid(): Boolean {
-        return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) && Validators.validateFullName(fullName);
+        return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) &&
+            Validators.validateFullName(fullName)
     }
 
     fun getError(): String {
@@ -41,15 +42,16 @@ data class ContactOne(val email: String = "", val phone: String = "", val fullNa
             return "Gsmnummer contactpersoon 1 is ongeldig."
         }
         if (!Validators.validateFullName(fullName)) {
-            return "Naam van contactpersoon 1 is ongeldig.";
+            return "Naam van contactpersoon 1 is ongeldig."
         }
-        return "";
+        return ""
     }
 }
 
-data class ContactTwo(val email: String= "", val phone: String = "", val fullName: String = "") {
+data class ContactTwo(val email: String = "", val phone: String = "", val fullName: String = "") {
     fun isValid(): Boolean {
-        return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) && Validators.validateFullName(fullName);
+        return Validators.validateEmail(email) && Validators.validatePhoneNumber(phone) &&
+            Validators.validateFullName(fullName)
     }
 
     fun getError(): String {
@@ -62,8 +64,6 @@ data class ContactTwo(val email: String= "", val phone: String = "", val fullNam
         if (!Validators.validateFullName(fullName)) {
             return "Naam contactpersoon 2 is ongeldig."
         }
-        return "";
+        return ""
     }
 }
-
-

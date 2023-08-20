@@ -7,24 +7,23 @@ import com.hogent.android.util.TimberUtils
 
 class VmOverviewRepository {
 
-    suspend fun getProjects(): ProjectOverView?{
+    suspend fun getProjects(): ProjectOverView? {
         val response = projectApi.getAll()
         TimberUtils.logRequest(response)
 
-        if(response.isSuccessful){
-            return response.body()!!;
+        if (response.isSuccessful) {
+            return response.body()!!
         }
-        return null;
-
+        return null
     }
 
-    suspend fun getById(id: Int): ProjectDetails?{
+    suspend fun getById(id: Int): ProjectDetails? {
         val output = projectApi.getById(id)
-        TimberUtils.logRequest(output);
+        TimberUtils.logRequest(output)
 
-        if(output.isSuccessful && output.body() != null){
-            return output.body()!!;
+        if (output.isSuccessful && output.body() != null) {
+            return output.body()!!
         }
-        return null;
+        return null
     }
 }

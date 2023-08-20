@@ -1,6 +1,5 @@
 package com.hogent.android.data.repositories
 
-
 import com.hogent.android.network.dtos.requests.CustomerEdit
 import com.hogent.android.network.dtos.responses.EditedCustomer
 import com.hogent.android.network.services.CustomerApi.customerApi
@@ -13,9 +12,8 @@ class CustomerRepository {
         TimberUtils.logRequest(response)
 
         if (!response.isSuccessful) {
-            return null;
+            return null
         }
-        return response.body();
+        return response.body()
     }
-
 }
