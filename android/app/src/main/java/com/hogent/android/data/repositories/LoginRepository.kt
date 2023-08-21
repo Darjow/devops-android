@@ -22,8 +22,8 @@ class LoginRepository(
 ) {
     suspend fun login(email: String, password: String) {
         val response =
-            authApi.loginCustomer(LoginCredentials("billyBillson1997@gmail.com", "Password.1"))
-        // val response = authApi.loginCustomer(LoginCredentials(email, password))
+            // authApi.loginCustomer(LoginCredentials("billyBillson1997@gmail.com", "Password.1"))
+            authApi.loginCustomer(LoginCredentials(email, password))
 
         TimberUtils.logRequest(response)
 

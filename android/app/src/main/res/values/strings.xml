@@ -108,4 +108,5 @@
     <string name="projectAanMaken">Maak project</string>
     <string name="projectAanMakenHint">Project A</string>
     <string name="geenProjecten">U hebt geen projecten</string>
+    <string name="geenVms">Je hebt geen VMs</string>
 </resources>

@@ -10,19 +10,13 @@ import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.dtos.responses.VMIndex
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
-    private val _projecten = MutableLiveData<ProjectOverView>()
-    private var _virtualmachine = MutableLiveData<List<VMIndex>>()
-    private var _showProjectList = MutableLiveData(View.GONE)
-    private var _showNoProjects = MutableLiveData(View.VISIBLE)
+    private val _projecten = MutableLiveData<ProjectOverView>(null)
+    private var _virtualmachine = MutableLiveData<List<VMIndex>>(null)
 
-    val showProjectList: LiveData<Int>
-        get() = _showProjectList
-
-    val showNoProjects: LiveData<Int>
-        get() = _showNoProjects
 
     val projecten: LiveData<ProjectOverView>
         get() = _projecten
@@ -38,29 +32,17 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
     suspend fun refreshProjects() {
         val virtualMachineList = mutableListOf<VMIndex>()
-        _showProjectList.postValue(View.GONE)
-        _showNoProjects.postValue(View.GONE)
 
-        _projecten.value = repo.getProjects()
 
-        if (projecten.value?.total != null && projecten.value?.total!! > 0) {
-            _showProjectList.postValue(View.VISIBLE)
-        } else {
-            _showNoProjects.postValue(View.VISIBLE)
-        }
+        val response = repo.getProjects()
 
-        if (_projecten.value == null || _projecten.value?.total == 0) {
-            _projecten.postValue(
-                ProjectOverView(
-                    listOf(ProjectOverViewItem(0, "Geen Projecten", User(0, "", "", "", ""))),
-                    0
-                )
-            )
+        if (response == null || response.total == 0) {
+            _projecten.postValue(null)
             return
         }
 
-        _projecten.value?.projects?.forEach { project ->
-            val projectVMs = repo.getById(project.id)
+        response.projects?.forEach { project ->
+            val projectVMs =  repo.getById(project.id)
 
             projectVMs?.virtualMachines?.let { vms ->
                 val updatedVMs = vms.map { vm ->
@@ -69,6 +51,9 @@ class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
                 virtualMachineList.addAll(updatedVMs)
             }
         }
+        Timber.wtf("RETURNING " + virtualMachineList.size + " VMS")
         _virtualmachine.postValue(virtualMachineList)
+        //return after vms as projects is being observed and needs virtualmachines
+        _projecten.postValue(response)
     }
 }

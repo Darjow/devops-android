@@ -14,19 +14,19 @@ class VmOverviewRepository(private val projectDao: ProjectDao) {
 
     suspend fun getProjects(): ProjectOverView? {
         val response = projectApi.getAll()
-        /*val cached = projectDao.getAllByCustomerId(
+        val cached = projectDao.getAllByCustomerId(
             AuthenticationManager.getCustomer()!!.id.toLong()
-        )*/
+        )
 
         TimberUtils.logRequest(response)
 
         if (!response.isSuccessful) {
-            /*if (cached.isEmpty()) {
+            if (cached.isEmpty()) {
                 return null
-            }*/
+            }
             return null
         }
-        /*if (cached.isNotEmpty()) {
+        if (cached.isNotEmpty()) {
             val items = cached.map {
                 ProjectOverViewItem(
                     it.id,
@@ -39,7 +39,7 @@ class VmOverviewRepository(private val projectDao: ProjectDao) {
 
         response.body()?.projects?.forEach {
             projectDao.createProject(Project(it.name, it.user.id.toLong(), it.id.toLong()))
-        }*/
+        }
 
         return response.body()
     }

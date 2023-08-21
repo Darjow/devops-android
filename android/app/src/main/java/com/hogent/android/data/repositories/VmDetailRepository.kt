@@ -2,7 +2,6 @@ package com.hogent.android.data.repositories
 
 import com.hogent.android.data.daos.BackupDao
 import com.hogent.android.data.daos.ConnectionDao
-import com.hogent.android.data.daos.ContractDao
 import com.hogent.android.data.daos.VirtualMachineDao
 import com.hogent.android.data.entities.Backup
 import com.hogent.android.domain.HardWare
@@ -12,7 +11,6 @@ import com.hogent.android.util.TimberUtils
 
 class VmDetailRepository(
     private val vmDao: VirtualMachineDao,
-    private val contractDao: ContractDao,
     private val backUpDao: BackupDao,
     private val connectionDao: ConnectionDao,
     private val vm_id: Int

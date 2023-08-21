@@ -112,7 +112,7 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
     fun memoryGBChanged(gb: String) {
         val __form = _form.value
         __form!!.memory = try {
-            (Integer.parseInt(gb.split("GB")[0]) * 1000)
+            (Integer.parseInt(gb.split("GB")[0])*1000)
         } catch (e: java.lang.Exception) {
             0
         }
@@ -188,7 +188,7 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
 
     private fun createVM() {
         runBlocking {
-            val resp = repo.create(form.value!!)
+            repo.create(form.value!!)
             _form.postValue(RequestForm())
             _success.postValue(true)
         }
@@ -231,8 +231,5 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
 
     fun naamCheckVmReset() {
         _vmNaamBestaatAl.postValue(false)
-    }
-    fun doneNavToList() {
-        _navToList.postValue(false)
     }
 }

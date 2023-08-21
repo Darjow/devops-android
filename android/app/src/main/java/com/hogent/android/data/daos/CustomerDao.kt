@@ -31,4 +31,3 @@ interface CustomerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun create(customer: User): Long
 }
-

@@ -29,11 +29,10 @@ class VMDetailsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val db = RoomDB.getInstance(application)
         val vmDao = db.virtualMachineDao
-        val contractDao = db.contractDao
         val backupDao = db.backupDao
         val connectionDao = db.connectionDao
         val viewModelFactory = VMDetailsViewModelFactory(
-            VmDetailRepository(vmDao, contractDao, backupDao, connectionDao, vm_id)
+            VmDetailRepository(vmDao, backupDao, connectionDao, vm_id)
         )
         val viewModel = ViewModelProvider(this, viewModelFactory)[VMDetailsViewModel::class.java]
 
