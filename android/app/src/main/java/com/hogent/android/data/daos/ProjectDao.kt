@@ -20,9 +20,10 @@ interface ProjectDao {
             "U.name as 'lastName', U.email, U.phoneNumber " +
             "FROM Project P " +
             "LEFT JOIN Users U on P.klantId = U.id "+
-            "LEFT JOIN VMContracts V ON U.id = V.customerId "
+            "LEFT JOIN VMContracts V ON U.id = V.customerId " +
+            "WHERE U.id = :key"
     )
-    suspend fun getAll(): List<ProjectOverviewItemDao>
+    suspend fun getAllByCustomerId(key: Long): List<ProjectOverviewItemDao>
 
     @Query(
         value = "SELECT P.id, P.name, U.id as 'customerId', U.firstName, U.name as 'lastName', " +
@@ -35,7 +36,7 @@ interface ProjectDao {
     suspend fun getById(key: Long): List<ProjectDetailsDao>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createProject(project: Project)
+    suspend fun createProject(project: Project): Long
 
 
     @Transaction

@@ -32,7 +32,7 @@ interface VirtualMachineDao {
     suspend fun getById(key: Long): VirtualMachineDetailDao
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createVM(vm: VirtualMachine)
+    suspend fun createVM(vm: VirtualMachine): Long
 
     @Update
     suspend fun update(vm: VirtualMachine)
@@ -44,11 +44,11 @@ interface VirtualMachineDao {
         if(cached.conId != null){
             connection = Connection(
                 cached.conId,
-                cached.fqdn,
-                cached.hostname,
-                cached.username,
-                cached.passwordHash,
-                cached.password)
+                cached.fqdn!!,
+                cached.hostname!!,
+                cached.username!!,
+                cached.passwordHash!!,
+                cached.password!!)
         }
         return VirtualMachineDetail(
             cached.id.toInt(),
@@ -58,8 +58,8 @@ interface VirtualMachineDao {
             cached.operatingSystem,
             Backup(cached.type!!, cached.lastBackup),
             Contract(
-                cached.contractStart,
-                cached.contractEnd,
+                cached.contractStart!!,
+                cached.contractEnd!!,
                 cached.contractVmId!!,
                 cached.contractCustomerId!!,
                 cached.contractId!!

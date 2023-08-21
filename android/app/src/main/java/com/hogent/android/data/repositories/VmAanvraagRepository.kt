@@ -46,8 +46,8 @@ class VmAanvraagRepository(
         backupDao.create(Backup(backup.type, backup.lastBackup, vm!!.backUp.id))
 
         val daoDto = VirtualMachine(
-            vm.name!!,
-            vm.operatingSystem!!,
+            vm.name,
+            vm.operatingSystem,
             vm.mode,
             vm.hardware,
             vm.backUp.id,
@@ -76,7 +76,7 @@ class VmAanvraagRepository(
 
     suspend fun getProjecten(): ProjectOverView? {
         val response = projectApi.getAll()
-        val cached = projectDao.getAll()
+        val cached = projectDao.getAllByCustomerId(customerId.toLong())
 
         TimberUtils.logRequest(response)
 
@@ -136,9 +136,7 @@ class VmAanvraagRepository(
         }
 
         if (cached.isNotEmpty()) {
-            cached.filter {
-                it.vmId != null && it.vmName != null && it.id != null && it.mode != null
-            }.forEach { e ->
+            cached.forEach { e ->
                 responseValue.add(
                     VMIndex(
                         e.vmId!!.toInt(),

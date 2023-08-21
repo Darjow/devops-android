@@ -26,11 +26,11 @@ import com.hogent.android.domain.Course
     ]
 )
 data class User(
-    var name: String = "",
-    var firstName: String = "",
-    var phoneNumber: String = "",
-    var email: String = "",
-    var password: String = "",
+    var name: String,
+    var firstName: String,
+    var phoneNumber: String,
+    var email: String,
+    var password: String,
     var bedrijfsnaam: String? = null,
     var opleiding: Course? = null, //
     var contactId: Long? = null,

@@ -9,9 +9,9 @@ import com.squareup.moshi.JsonClass
 data class Connection(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
-    var fqdn: String? = "",
-    var hostname: String? = "",
-    var username: String? = "",
-    var passwordHash: String? = "",
-    var password: String? = ""
+    var fqdn: String,
+    var hostname: String,
+    var username: String,
+    var passwordHash: String,
+    var password: String
 )

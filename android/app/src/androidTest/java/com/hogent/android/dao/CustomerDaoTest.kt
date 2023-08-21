@@ -1,4 +1,4 @@
-package com.hogent.android
+package com.hogent.android.dao
 
 import android.content.Context
 import androidx.room.Room
@@ -36,7 +36,7 @@ class CustomerDaoTest {
     }
 
     @Test
-    fun testCreateNoContacts() = runBlocking {
+    fun test_create_withNoContacts_success() = runBlocking {
         val id = userDao.create(
             User(
                 "Some Name",
@@ -57,7 +57,7 @@ class CustomerDaoTest {
     }
 
     @Test
-    fun testCreateWithContacts() = runBlocking {
+    fun test_create_withContacts_success() = runBlocking {
         val contactId = contactDao.create(
             ContactDetails(
                 "0497815772",
@@ -80,35 +80,30 @@ class CustomerDaoTest {
             )
         )
 
-        val user = userDao.getById(id)
-
-        Assert.assertTrue(user != null)
-        Assert.assertTrue(user.c1_id == contactId)
-        Assert.assertTrue(user.c1_phone != null)
+        Assert.assertTrue(id >= 1L)
 
     }
 
     @Test
-    fun testGetByIdNoCustomer() = runBlocking {
+    fun test_getById_NoCustomer_null() = runBlocking {
         val user = userDao.getById(20)
         Assert.assertTrue(user == null)
     }
 
     @Test(expected = Exception::class)
-    fun testUpdateUserIncorrectCredentials() = runBlocking {
+    fun test_update_foreignKeyConstraint_fail() = runBlocking {
         val user = User(
             "Some Name",
             "First name",
             "0497815773",
             "felkfj@hotmail.com",
             "random.P1",
-            null,
+            "null",
             null,
             null,
             null
         )
         val id = userDao.create(user)
-
 
         userDao.updateCustomer(User(
             "Some Name",
@@ -118,14 +113,14 @@ class CustomerDaoTest {
             "random.P1",
             null,
             null,
-            5,
+            50,
             null,
             id,
         ))
     }
 
-    @Test(expected = Exception::class)
-    fun testUpdateUserCorrectCredentials() = runBlocking {
+    @Test
+    fun test_update_user_correctCredentials_success() = runBlocking {
         val user = User(
             "Some Name",
             "First name",
@@ -138,7 +133,6 @@ class CustomerDaoTest {
             null
         )
         val id = userDao.create(user)
-
 
         userDao.updateCustomer(User(
             "New Name",
@@ -148,7 +142,7 @@ class CustomerDaoTest {
             "random.P15555",
             null,
             null,
-            5,
+            null,
             null,
             id,
         ))

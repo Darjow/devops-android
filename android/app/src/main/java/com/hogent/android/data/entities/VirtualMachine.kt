@@ -29,18 +29,15 @@ import com.hogent.android.domain.VirtualMachineModus
     ]
 )
 data class VirtualMachine(
-    var name: String = "",
-    var operatingSystem: OperatingSystem = OperatingSystem.WINDOWS_10,
+    var name: String,
+    var operatingSystem: OperatingSystem,
     var mode: VirtualMachineModus = VirtualMachineModus.WAITING_APPROVEMENT,
-
     @Embedded
-    var hardWare: HardWare = HardWare(0, 0, 0),
-
+    var hardWare: HardWare,
     var backUpId: Long = 0L,
     var connectionId: Long? = null,
     var contractId: Long? = 0L,
     var projectId: Long = 0L,
-
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
 

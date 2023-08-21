@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 
 )
 data class Project(
-    var name: String = "",
+    var name: String,
     var klantId: Long = 0L,
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L

@@ -20,8 +20,8 @@ import java.time.LocalDate
 )
 @JsonClass(generateAdapter = true)
 data class Contract(
-    var startDate: LocalDate? = null,
-    var endDate: LocalDate? = null,
+    var startDate: LocalDate,
+    var endDate: LocalDate,
     var vmId: Long = 0L,
     var customerId: Long = 0L,
     @PrimaryKey(autoGenerate = true)
