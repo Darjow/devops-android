@@ -2,6 +2,7 @@ package com.hogent.android.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.hogent.android.domain.BackupType
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
@@ -14,15 +15,3 @@ data class Backup(
     var id: Long = 0L
 
 )
-
-enum class BackupType() {
-    GEEN,
-    CUSTOM,
-    DAILY,
-    WEEKLY,
-    MONTHLY;
-
-    fun to_string(): String {
-        return this.name.lowercase().replaceFirstChar { e -> e.uppercase() }
-    }
-}

@@ -9,7 +9,7 @@ import com.hogent.android.network.dtos.responses.EditedCustomer
 import com.hogent.android.network.services.CustomerApi.customerApi
 import com.hogent.android.util.TimberUtils
 
-class CustomerRepository(private val dao: CustomerDao, private val contactDao: ContactDetailsDao){
+class CustomerRepository(private val dao: CustomerDao, private val contactDao: ContactDetailsDao) {
 
     suspend fun updateCustomer(id: Int, cust: CustomerEdit): EditedCustomer? {
         val response = customerApi.updateCustomer(id, cust)
@@ -19,12 +19,12 @@ class CustomerRepository(private val dao: CustomerDao, private val contactDao: C
         if (!response.isSuccessful) {
             return null
         }
-        if(customer != null){
+        if (customer != null) {
             var c1Id = customer.c1_id
             var c2Id = customer.c2_id
 
-            if(customer.c1_id == null && cust.contactPersoon != null) {
-                c1Id =contactDao.create(
+            if (customer.c1_id == null && cust.contactPersoon != null) {
+                c1Id = contactDao.create(
                     ContactDetails(
                         cust.contactPersoon!!.phoneNumber,
                         cust.contactPersoon!!.email,
@@ -33,8 +33,8 @@ class CustomerRepository(private val dao: CustomerDao, private val contactDao: C
                     )
                 )
             }
-            if(customer.c2_id == null && cust.reserveContactpersoon != null) {
-                c2Id =contactDao.create(
+            if (customer.c2_id == null && cust.reserveContactpersoon != null) {
+                c2Id = contactDao.create(
                     ContactDetails(
                         cust.reserveContactpersoon!!.phoneNumber,
                         cust.reserveContactpersoon!!.email,

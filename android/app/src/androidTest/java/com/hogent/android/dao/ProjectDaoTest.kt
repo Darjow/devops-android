@@ -3,25 +3,28 @@ package com.hogent.android.dao
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.hogent.android.data.daos.*
+import com.hogent.android.data.daos.ProjectDao
 import com.hogent.android.data.database.RoomDB
-import com.hogent.android.data.entities.*
+import com.hogent.android.data.entities.ContactDetails
+import com.hogent.android.data.entities.Project
+import com.hogent.android.data.entities.User
+import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
 
 class ProjectDaoTest {
     private lateinit var projectDao: ProjectDao
     private lateinit var db: RoomDB
 
     @Before
-    fun createDb() =  runBlocking {
+    fun createDb() = runBlocking {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         projectDao = db.projectDao
 
@@ -44,6 +47,7 @@ class ProjectDaoTest {
         )
         Assert.assertTrue(id > 1L)
     }
+
     @Test(expected = Exception::class)
     fun test_create_foreignKeyConstraint_fail() = runBlocking {
         val id = projectDao.createProject(
@@ -56,7 +60,7 @@ class ProjectDaoTest {
 
     @Test
     fun test_getAll_success() = runBlocking {
-       val projects = projectDao.getAllByCustomerId(1L)
+        val projects = projectDao.getAllByCustomerId(1L)
 
         Assert.assertTrue(projects.isNotEmpty())
         Assert.assertTrue(projects.size == 1)
@@ -69,8 +73,6 @@ class ProjectDaoTest {
 
         Assert.assertTrue(projectRecords.isEmpty())
     }
-
-
 
     private suspend fun seedTestSuite() {
         val con = db.contactDetailsDao.create(
@@ -101,7 +103,7 @@ class ProjectDaoTest {
             Project("Polizei", 1, 3)
         }
 
-        projects.forEach{
+        projects.forEach {
             projectDao.createProject(it.invoke())
         }
     }

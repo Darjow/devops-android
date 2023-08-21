@@ -6,12 +6,12 @@ import androidx.test.core.app.ApplicationProvider
 import com.hogent.android.data.daos.ContactDetailsDao
 import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.entities.ContactDetails
+import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
 
 class ContactDetailsDaoTest {
 
@@ -22,7 +22,8 @@ class ContactDetailsDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         contactDao = db.contactDetailsDao
     }
@@ -40,14 +41,14 @@ class ContactDetailsDaoTest {
                 "0497815773",
                 "felkfj@hotmail.com",
                 "First name",
-                "Some Name",
+                "Some Name"
             )
         )
 
         Assert.assertFalse(id > 0L)
     }
 
-    //when caching we specify ID on items. And not use autonumbering
+    // when caching we specify ID on items. And not use autonumbering
     @Test
     fun testCreateWithId() = runBlocking {
         val id = contactDao.create(
@@ -61,7 +62,5 @@ class ContactDetailsDaoTest {
         )
 
         Assert.assertTrue(id == 50L)
-
     }
 }
-

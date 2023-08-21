@@ -6,13 +6,12 @@ import androidx.test.core.app.ApplicationProvider
 import com.hogent.android.data.daos.ConnectionDao
 import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.entities.Connection
+import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
-
 
 class ConnectionDaoTest {
 
@@ -23,7 +22,8 @@ class ConnectionDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         connDao = db.connectionDao
     }
@@ -43,7 +43,7 @@ class ConnectionDaoTest {
                 "168.172.150.4",
                 "admin",
                 "\$2a\$11\$B2ytf/G.ApplUD97cDbguOlBOJ1ZOOj8E1p.61wvrNhbLvq96Fn2.",
-                "Password.1",
+                "Password.1"
             )
         )
 

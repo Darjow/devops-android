@@ -37,18 +37,18 @@ interface VirtualMachineDao {
     @Update
     suspend fun update(vm: VirtualMachine)
 
-
     @Transaction
     fun getByIdFromCache(cached: VirtualMachineDetailDao): VirtualMachineDetail {
-        var connection : Connection? = null
-        if(cached.conId != null){
+        var connection: Connection? = null
+        if (cached.conId != null) {
             connection = Connection(
                 cached.conId,
                 cached.fqdn!!,
                 cached.hostname!!,
                 cached.username!!,
                 cached.passwordHash!!,
-                cached.password!!)
+                cached.password!!
+            )
         }
         return VirtualMachineDetail(
             cached.id.toInt(),
@@ -67,5 +67,4 @@ interface VirtualMachineDao {
             connection
         )
     }
-
 }

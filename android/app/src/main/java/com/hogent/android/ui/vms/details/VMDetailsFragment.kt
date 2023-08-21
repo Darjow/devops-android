@@ -33,7 +33,8 @@ class VMDetailsFragment : Fragment() {
         val backupDao = db.backupDao
         val connectionDao = db.connectionDao
         val viewModelFactory = VMDetailsViewModelFactory(
-            VmDetailRepository(vmDao, contractDao, backupDao, connectionDao,vm_id))
+            VmDetailRepository(vmDao, contractDao, backupDao, connectionDao, vm_id)
+        )
         val viewModel = ViewModelProvider(this, viewModelFactory)[VMDetailsViewModel::class.java]
 
         binding.vmViewModel = viewModel

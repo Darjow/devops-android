@@ -2,14 +2,7 @@ package com.hogent.android.util
 
 import AuthInterceptor
 import androidx.lifecycle.MutableLiveData
-import com.auth0.jwt.JWT
-import com.auth0.jwt.interfaces.DecodedJWT
-import com.hogent.android.data.daos.CustomerDao
 import com.hogent.android.domain.Customer
-import com.hogent.android.network.services.CustomerApi.customerApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class AuthenticationManager() {
 
@@ -50,7 +43,6 @@ class AuthenticationManager() {
             instance.authenticationState.postValue(AuthenticationState.AUTHENTICATED)
         }
     }
-
 
     fun loggedIn(): Boolean {
         return authenticationState.value == AuthenticationState.AUTHENTICATED

@@ -1,9 +1,9 @@
 package com.hogent.android.network.dtos.responses
 
 import com.hogent.android.data.entities.Backup
-import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.entities.Connection
 import com.hogent.android.data.entities.Contract
+import com.hogent.android.domain.BackupType
 import com.hogent.android.domain.HardWare
 import com.hogent.android.domain.OperatingSystem
 import com.hogent.android.domain.VirtualMachineModus

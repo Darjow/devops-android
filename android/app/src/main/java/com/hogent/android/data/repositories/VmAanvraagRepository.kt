@@ -1,27 +1,34 @@
 package com.hogent.android.data.repositories
 
-import com.hogent.android.data.daos.*
-import com.hogent.android.data.entities.*
+import com.hogent.android.data.daos.BackupDao
+import com.hogent.android.data.daos.ContractDao
+import com.hogent.android.data.daos.ProjectDao
+import com.hogent.android.data.daos.VirtualMachineDao
+import com.hogent.android.data.entities.Backup
+import com.hogent.android.data.entities.Contract
+import com.hogent.android.data.entities.Project
+import com.hogent.android.data.entities.VirtualMachine
 import com.hogent.android.domain.HardWare
 import com.hogent.android.domain.User
-import com.hogent.android.domain.VirtualMachineModus
 import com.hogent.android.network.dtos.requests.ProjectCreate
 import com.hogent.android.network.dtos.requests.VM
 import com.hogent.android.network.dtos.requests.VMCreate
-import com.hogent.android.network.dtos.responses.*
+import com.hogent.android.network.dtos.responses.ProjectId
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.ProjectOverViewItem
+import com.hogent.android.network.dtos.responses.VMId
+import com.hogent.android.network.dtos.responses.VMIndex
 import com.hogent.android.network.services.ProjectApi.projectApi
 import com.hogent.android.network.services.VirtualMachineApi.vmApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
-import timber.log.Timber
 
 class VmAanvraagRepository(
     private val vmDao: VirtualMachineDao,
     private val projectDao: ProjectDao,
     private val backupDao: BackupDao,
-    private val contractDao: ContractDao,
-    private val userDao: CustomerDao
+    private val contractDao: ContractDao
 ) {
 
     private val customerId = AuthenticationManager.getCustomer()!!.id
@@ -53,7 +60,7 @@ class VmAanvraagRepository(
             vm.backUp.id,
             null,
             null,
-            //vm.contract?.id,
+            // vm.contract?.id,
             dtoRequest.virtualMachine.projectId.toLong(),
             response.body()!!.id.toLong()
         )
@@ -65,7 +72,7 @@ class VmAanvraagRepository(
                 endDate,
                 response.body()!!.id.toLong(),
                 customerId.toLong(),
-                response.body()!!.id.toLong() //always the same amount of contracts as vms
+                response.body()!!.id.toLong() // always the same amount of contracts as vms
             )
         )
         daoDto.contractId = vm.id.toLong()
@@ -83,7 +90,7 @@ class VmAanvraagRepository(
         if (!response.isSuccessful && cached.isEmpty()) {
             return null
         }
-        if(!response.isSuccessful) {
+        if (!response.isSuccessful) {
             return null
         }
         if (cached.isNotEmpty()) {
@@ -100,7 +107,7 @@ class VmAanvraagRepository(
         response.body()?.projects?.forEach {
             projectDao.createProject(Project(it.name, it.user.id.toLong(), it.id.toLong()))
         }
-        return response.body();
+        return response.body()
     }
 
     suspend fun createProject(name: String): ProjectId? {
@@ -149,8 +156,9 @@ class VmAanvraagRepository(
             return responseValue
         }
 
-
-        projectDao.createProject(Project(response.body()!!.name, customerId.toLong(), response.body()!!.id.toLong()))
+        projectDao.createProject(
+            Project(response.body()!!.name, customerId.toLong(), response.body()!!.id.toLong())
+        )
 
         for (virtualMachine in response.body()!!.virtualMachines) {
             val vm = vmApi.getById(virtualMachine.id).body()
@@ -176,6 +184,3 @@ class VmAanvraagRepository(
         return response.body()?.virtualMachines
     }
 }
-
-
-

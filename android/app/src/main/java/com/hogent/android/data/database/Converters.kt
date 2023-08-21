@@ -2,7 +2,7 @@ package com.hogent.android.data.database
 
 import androidx.room.TypeConverter
 import com.hogent.android.data.entities.Backup
-import com.hogent.android.data.entities.BackupType
+import com.hogent.android.domain.BackupType
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.json.JSONObject

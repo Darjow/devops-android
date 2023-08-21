@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.repositories.VmAanvraagRepository
+import com.hogent.android.domain.BackupType
 import com.hogent.android.domain.OperatingSystem
 import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.ui.components.forms.RequestForm
@@ -37,8 +37,8 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
         val response = repo.getProjecten()
         Timber.e("Refreshing projects total count :" + response!!.total.toString())
 
-        response.projects.forEach{
-            Timber.e(it.name);
+        response.projects.forEach {
+            Timber.e(it.name)
             Timber.e(it.user.email)
             Timber.e(it.id.toString())
             Timber.e(it.user.firstName)

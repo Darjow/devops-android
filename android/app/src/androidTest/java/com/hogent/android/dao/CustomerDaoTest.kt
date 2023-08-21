@@ -8,11 +8,12 @@ import com.hogent.android.data.daos.CustomerDao
 import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.entities.ContactDetails
 import com.hogent.android.data.entities.User
-import kotlinx.coroutines.runBlocking
-import org.junit.*
-
 import java.io.IOException
-
+import kotlinx.coroutines.runBlocking
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class CustomerDaoTest {
     private lateinit var userDao: CustomerDao
@@ -23,7 +24,8 @@ class CustomerDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         userDao = db.customerDao
         contactDao = db.contactDetailsDao
@@ -47,13 +49,12 @@ class CustomerDaoTest {
                 null,
                 null,
                 null,
-                null,
+                null
             )
         )
         val user = userDao.getById(id)
 
         Assert.assertTrue(user != null)
-
     }
 
     @Test
@@ -76,12 +77,11 @@ class CustomerDaoTest {
                 null,
                 null,
                 contactId,
-                null,
+                null
             )
         )
 
         Assert.assertTrue(id >= 1L)
-
     }
 
     @Test
@@ -105,18 +105,20 @@ class CustomerDaoTest {
         )
         val id = userDao.create(user)
 
-        userDao.updateCustomer(User(
-            "Some Name",
-            "First name",
-            "",
-            "",
-            "random.P1",
-            null,
-            null,
-            50,
-            null,
-            id,
-        ))
+        userDao.updateCustomer(
+            User(
+                "Some Name",
+                "First name",
+                "",
+                "",
+                "random.P1",
+                null,
+                null,
+                50,
+                null,
+                id
+            )
+        )
     }
 
     @Test
@@ -134,17 +136,19 @@ class CustomerDaoTest {
         )
         val id = userDao.create(user)
 
-        userDao.updateCustomer(User(
-            "New Name",
-            "New First name",
-            "0497444773",
-            "felkfj@hotmail.com",
-            "random.P15555",
-            null,
-            null,
-            null,
-            null,
-            id,
-        ))
+        userDao.updateCustomer(
+            User(
+                "New Name",
+                "New First name",
+                "0497444773",
+                "felkfj@hotmail.com",
+                "random.P15555",
+                null,
+                null,
+                null,
+                null,
+                id
+            )
+        )
     }
 }

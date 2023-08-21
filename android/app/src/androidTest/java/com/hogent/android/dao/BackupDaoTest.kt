@@ -7,13 +7,13 @@ import com.hogent.android.data.daos.BackupDao
 import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.entities.Backup
 import com.hogent.android.data.entities.BackupType
+import java.io.IOException
+import java.time.LocalDate
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
-import java.time.LocalDate
 
 class BackupDaoTest {
 
@@ -24,7 +24,8 @@ class BackupDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         backupDao = db.backupDao
     }

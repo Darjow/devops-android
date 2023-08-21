@@ -19,7 +19,7 @@ interface ProjectDao {
         value = "SELECT P.id, P.name, U.id as 'customerId', U.firstName, " +
             "U.name as 'lastName', U.email, U.phoneNumber " +
             "FROM Project P " +
-            "LEFT JOIN Users U on P.klantId = U.id "+
+            "LEFT JOIN Users U on P.klantId = U.id " +
             "LEFT JOIN VMContracts V ON U.id = V.customerId " +
             "WHERE U.id = :key"
     )
@@ -37,7 +37,6 @@ interface ProjectDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createProject(project: Project): Long
-
 
     @Transaction
     fun mapToProjectDetails(result: List<ProjectDetailsDao>): ProjectDetails? {

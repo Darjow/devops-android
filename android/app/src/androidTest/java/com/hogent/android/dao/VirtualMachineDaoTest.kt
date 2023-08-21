@@ -3,21 +3,25 @@ package com.hogent.android.dao
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.hogent.android.data.daos.BackupDao
-import com.hogent.android.data.daos.ConnectionDao
 import com.hogent.android.data.daos.VirtualMachineDao
 import com.hogent.android.data.database.RoomDB
-import com.hogent.android.data.entities.*
+import com.hogent.android.data.entities.Backup
+import com.hogent.android.data.entities.ContactDetails
+import com.hogent.android.data.entities.Contract
+import com.hogent.android.data.entities.Project
+import com.hogent.android.data.entities.User
+import com.hogent.android.data.entities.VirtualMachine
+import com.hogent.android.domain.BackupType
 import com.hogent.android.domain.HardWare
 import com.hogent.android.domain.OperatingSystem
 import com.hogent.android.domain.VirtualMachineModus
+import java.io.IOException
+import java.time.LocalDate
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
-import java.time.LocalDate
 
 class VirtualMachineDaoTest {
 
@@ -28,7 +32,8 @@ class VirtualMachineDaoTest {
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, RoomDB::class.java
+            context,
+            RoomDB::class.java
         ).build()
         vmDao = db.virtualMachineDao
     }
@@ -43,7 +48,6 @@ class VirtualMachineDaoTest {
     fun test_create_correctParameters_success() = runBlocking {
         val vm = createVM()
 
-
         Assert.assertTrue(vm.id >= 1L)
         Assert.assertTrue(vm.projectId >= 1L)
         Assert.assertTrue(vm.contractId!! >= 1L)
@@ -53,7 +57,7 @@ class VirtualMachineDaoTest {
     @Test
     fun test_update_correctParameters_success() = runBlocking {
         val vm = createVM()
-        val hardWare = HardWare(50000,500000,20)
+        val hardWare = HardWare(50000, 500000, 20)
 
         vm.hardWare = hardWare
         vm.mode = VirtualMachineModus.RUNNING
@@ -64,7 +68,6 @@ class VirtualMachineDaoTest {
         Assert.assertTrue(response.storage == hardWare.storage)
         Assert.assertTrue(response.amount_vCPU == hardWare.amount_vCPU)
         Assert.assertTrue(response.mode == VirtualMachineModus.RUNNING)
-
     }
 
     @Test
@@ -83,10 +86,10 @@ class VirtualMachineDaoTest {
                 "0497815773",
                 "some@hotmail.com",
                 "Billo",
-                "Ollib",
+                "Ollib"
             )
         )
-        val custId =  db.customerDao.create(
+        val custId = db.customerDao.create(
             User(
                 "Billy",
                 "Willy",
@@ -100,7 +103,8 @@ class VirtualMachineDaoTest {
         )
 
         val backupId = db.backupDao.create(
-            Backup(BackupType.WEEKLY, LocalDate.now().minusDays(5)))
+            Backup(BackupType.WEEKLY, LocalDate.now().minusDays(5))
+        )
 
         val projectId = db.projectDao.createProject(Project("proje", custId))
 
@@ -108,23 +112,23 @@ class VirtualMachineDaoTest {
             "testVM",
             OperatingSystem.FEDORA_35,
             VirtualMachineModus.WAITING_APPROVEMENT,
-            HardWare(5000,15000,2),
+            HardWare(5000, 15000, 2),
             backupId,
-             null,
             null,
-            projectId,
+            null,
+            projectId
         )
 
         val vmId = db.virtualMachineDao.createVM(vm)
 
         val contractId = db.contractDao.create(
-            Contract(LocalDate.now(), LocalDate.now().plusDays(90), vmId, custId))
+            Contract(LocalDate.now(), LocalDate.now().plusDays(90), vmId, custId)
+        )
 
         vm.contractId = contractId
         vmDao.update(vm)
         vm.id = vmId
 
         return vm
-
     }
 }

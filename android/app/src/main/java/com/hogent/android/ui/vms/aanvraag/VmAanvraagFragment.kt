@@ -23,9 +23,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.internal.ViewUtils
 import com.hogent.android.R
 import com.hogent.android.data.database.RoomDB
-import com.hogent.android.data.entities.BackupType
 import com.hogent.android.data.repositories.VmAanvraagRepository
 import com.hogent.android.databinding.AddvmFragmentBinding
+import com.hogent.android.domain.BackupType
 import com.hogent.android.domain.OperatingSystem
 import com.hogent.android.util.clearForm
 import com.hogent.android.util.closeKeyboardOnTouch
@@ -52,10 +52,10 @@ class VmAanvraagFragment : Fragment() {
         val projDao = dbInstance.projectDao
         val backUpDao = dbInstance.backupDao
         val contractDao = dbInstance.contractDao
-        val userDao = dbInstance.customerDao
 
         val viewModelFactory = VmAanvraagFactoryModel(
-            VmAanvraagRepository(vmDao, projDao, backUpDao, contractDao,userDao ))
+            VmAanvraagRepository(vmDao, projDao, backUpDao, contractDao)
+        )
 
         val vmAanvraagView =
             ViewModelProvider(this, viewModelFactory)[VmAanvraagViewModel::class.java]

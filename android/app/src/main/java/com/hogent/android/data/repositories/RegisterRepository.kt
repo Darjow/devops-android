@@ -32,7 +32,7 @@ class RegisterRepository(private val dao: CustomerDao) {
                 firstName = dto.inputFirstName,
                 password = dto.inputPassword,
                 email = dto.inputEmail,
-                phoneNumber = dto.inputPhoneNumber,
+                phoneNumber = dto.inputPhoneNumber
             )
         )
 

@@ -1,6 +1,10 @@
 package com.hogent.android.data.daos
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.hogent.android.data.entities.User
 import com.hogent.android.network.dtos.responses.CustomerDaoResponse
 

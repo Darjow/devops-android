@@ -5,20 +5,18 @@ import com.hogent.android.data.daos.ConnectionDao
 import com.hogent.android.data.daos.ContractDao
 import com.hogent.android.data.daos.VirtualMachineDao
 import com.hogent.android.data.entities.Backup
-import com.hogent.android.data.entities.Connection
-import com.hogent.android.data.entities.Contract
 import com.hogent.android.domain.HardWare
 import com.hogent.android.network.dtos.responses.VirtualMachineDetail
 import com.hogent.android.network.services.VirtualMachineApi.vmApi
 import com.hogent.android.util.TimberUtils
-import timber.log.Timber
 
 class VmDetailRepository(
     private val vmDao: VirtualMachineDao,
     private val contractDao: ContractDao,
     private val backUpDao: BackupDao,
     private val connectionDao: ConnectionDao,
-    private val vm_id: Int) {
+    private val vm_id: Int
+) {
 
     suspend fun getVMById(): VirtualMachineDetail? {
         val response = vmApi.getById(vm_id)
@@ -26,15 +24,15 @@ class VmDetailRepository(
         TimberUtils.logRequest(response)
 
         if (!response.isSuccessful) {
-            if(cached == null){
+            if (cached == null) {
                 return null
             }
             return null
         }
 
-        return if(cached != null){
+        return if (cached != null) {
             vmDao.getByIdFromCache(cached)
-        }else {
+        } else {
             setByIdInCache(response.body()!!)
         }
     }
@@ -42,7 +40,11 @@ class VmDetailRepository(
         if (responseBody?.vmConnection != null) {
             connectionDao.create(responseBody.vmConnection)
         }
-        val backup = Backup(responseBody!!.backUp.type, responseBody.backUp.lastBackup, responseBody.backUp.id)
+        val backup = Backup(
+            responseBody!!.backUp.type,
+            responseBody.backUp.lastBackup,
+            responseBody.backUp.id
+        )
 
         backUpDao.create(backup)
 
@@ -50,13 +52,15 @@ class VmDetailRepository(
             responseBody!!.id,
             responseBody.name,
             responseBody.mode,
-            HardWare(responseBody.hardware.memory, responseBody.hardware.storage, responseBody.hardware.amount_vCPU),
+            HardWare(
+                responseBody.hardware.memory,
+                responseBody.hardware.storage,
+                responseBody.hardware.amount_vCPU
+            ),
             responseBody.operatingSystem,
             backup,
             responseBody.contract,
             responseBody.vmConnection
         )
     }
-
-
 }

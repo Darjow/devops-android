@@ -3,17 +3,20 @@ package com.hogent.android.data.repositories
 import com.hogent.android.data.daos.ProjectDao
 import com.hogent.android.data.entities.Project
 import com.hogent.android.domain.User
-import com.hogent.android.network.dtos.responses.*
+import com.hogent.android.network.dtos.responses.ProjectDetails
+import com.hogent.android.network.dtos.responses.ProjectOverView
+import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.services.ProjectApi.projectApi
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
-import timber.log.Timber
 
 class VmOverviewRepository(private val projectDao: ProjectDao) {
 
     suspend fun getProjects(): ProjectOverView? {
         val response = projectApi.getAll()
-        val cached = projectDao.getAllByCustomerId(AuthenticationManager.getCustomer()!!.id.toLong())
+        val cached = projectDao.getAllByCustomerId(
+            AuthenticationManager.getCustomer()!!.id.toLong()
+        )
 
         TimberUtils.logRequest(response)
 

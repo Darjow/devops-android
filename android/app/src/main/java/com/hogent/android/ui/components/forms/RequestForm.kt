@@ -1,6 +1,6 @@
 package com.hogent.android.ui.components.forms
 
-import com.hogent.android.data.entities.BackupType
+import com.hogent.android.domain.BackupType
 import com.hogent.android.domain.OperatingSystem
 import java.time.LocalDate
 

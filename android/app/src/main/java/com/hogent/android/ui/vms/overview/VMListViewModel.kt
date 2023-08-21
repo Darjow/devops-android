@@ -10,7 +10,6 @@ import com.hogent.android.network.dtos.responses.ProjectOverView
 import com.hogent.android.network.dtos.responses.ProjectOverViewItem
 import com.hogent.android.network.dtos.responses.VMIndex
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class VMListViewModel(val repo: VmOverviewRepository) : ViewModel() {
 
