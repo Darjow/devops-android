@@ -49,6 +49,21 @@ class ContactDetailsDaoTest {
         Assert.assertFalse(id == null)
 
     }
+    @Test
+    fun testCreateWrongCredentials() = runBlocking {
+        val id = contactDao.create(
+            ContactDetails(
+                "0497815773",
+                "felkfj@hotmail.com",
+                "",
+                "",
+                50
+            )
+        )
+
+        Assert.assertTrue(id.toInt() == 50)
+
+    }
     //when caching we specify ID on items. And not use autonumbering
     @Test
     fun testCreateWithId() = runBlocking {

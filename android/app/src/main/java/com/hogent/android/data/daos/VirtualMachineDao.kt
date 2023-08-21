@@ -56,7 +56,7 @@ interface VirtualMachineDao {
             cached.mode,
             HardWare(cached.memory, cached.storage, cached.amount_vCPU),
             cached.operatingSystem,
-            Backup(cached.type, cached.lastBackup),
+            Backup(cached.type!!, cached.lastBackup),
             Contract(
                 cached.contractStart,
                 cached.contractEnd,

@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Entity(tableName = "BackUps")
 @JsonClass(generateAdapter = true)
 data class Backup(
-    var type: BackupType? = BackupType.GEEN,
+    var type: BackupType,
     var lastBackup: LocalDate? = LocalDate.MIN,
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L
