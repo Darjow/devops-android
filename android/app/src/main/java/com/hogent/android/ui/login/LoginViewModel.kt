@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.hogent.android.data.repositories.LoginRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(val repository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
 
     val mail = MutableLiveData<String>()
     val pass = MutableLiveData<String>()

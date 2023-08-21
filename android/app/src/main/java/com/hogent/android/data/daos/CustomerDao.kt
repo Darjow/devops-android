@@ -25,5 +25,5 @@ interface CustomerDao {
     suspend fun getById(key: Long): CustomerDaoResponse
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun create(customer: User)
+    suspend fun create(customer: User): Long
 }
