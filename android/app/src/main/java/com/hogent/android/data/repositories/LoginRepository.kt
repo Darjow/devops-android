@@ -39,7 +39,13 @@ class LoginRepository(
         if (customer == null) {
             return
         }
+        cacheUser(customer, password)
+    }
 
+    private suspend fun cacheUser(
+        customer: Customer,
+        password: String
+    ) {
         var idcontact1: Long? = null
         var idcontact2: Long? = null
 

@@ -22,7 +22,7 @@ interface VirtualMachineDao {
             "C.id as 'contractId', C.startDate as 'contractStart', C.endDate as 'contractEnd' ," +
             "C.vMId as 'contractVmId', C.customerId as 'contractCustomerId', " +
             "B.type, B.lastBackup, B.id as 'backupId', " +
-            "con.id as 'conId',con.fqdn,con.hostname,con.username,con.passwordHash,con.password " +
+            "con.id as 'conId',con.fqdn,con.hostname,con.username,con.password " +
             "FROM VirtualMachines V " +
             "LEFT JOIN VMContracts C ON V.contractId = c.id " +
             "LEFT JOIN BackUps B ON V.backUpId = B.id " +
@@ -46,7 +46,6 @@ interface VirtualMachineDao {
                 cached.fqdn!!,
                 cached.hostname!!,
                 cached.username!!,
-                cached.passwordHash!!,
                 cached.password!!
             )
         }

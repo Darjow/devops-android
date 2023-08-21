@@ -44,6 +44,5 @@ data class VirtualMachineDetailDao(
     val fqdn: String?,
     val hostname: String?,
     val username: String?,
-    val passwordHash: String?,
     val password: String?
 )

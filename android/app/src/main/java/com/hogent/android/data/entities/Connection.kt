@@ -12,6 +12,5 @@ data class Connection(
     var fqdn: String,
     var hostname: String,
     var username: String,
-    var passwordHash: String,
     var password: String
 )

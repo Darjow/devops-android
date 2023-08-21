@@ -23,6 +23,8 @@ import com.hogent.android.network.services.VirtualMachineApi.vmApi
 import com.hogent.android.ui.components.forms.RequestForm
 import com.hogent.android.util.AuthenticationManager
 import com.hogent.android.util.TimberUtils
+import retrofit2.Response
+import java.time.LocalDate
 
 class VmAanvraagRepository(
     private val vmDao: VirtualMachineDao,
@@ -49,34 +51,7 @@ class VmAanvraagRepository(
         if (!response.isSuccessful) {
             return null
         }
-        val vm = vmApi.getById(response.body()!!.id).body()
-        backupDao.create(Backup(backup.type, backup.lastBackup, vm!!.backUp.id))
-
-        val daoDto = VirtualMachine(
-            vm.name,
-            vm.operatingSystem,
-            vm.mode,
-            vm.hardware,
-            vm.backUp.id,
-            null,
-            null,
-            // vm.contract?.id,
-            dtoRequest.virtualMachine.projectId.toLong(),
-            response.body()!!.id.toLong()
-        )
-        vmDao.createVM(daoDto)
-
-        contractDao.create(
-            Contract(
-                startDate,
-                endDate,
-                response.body()!!.id.toLong(),
-                customerId.toLong(),
-                response.body()!!.id.toLong() // always the same amount of contracts as vms
-            )
-        )
-        daoDto.contractId = vm.id.toLong()
-        vmDao.update(daoDto)
+        insertCreatedVMIntoCache(response.body()!!.id, dtoRequest)
 
         return response.body()
     }
@@ -141,9 +116,11 @@ class VmAanvraagRepository(
             }
             return responseValue
         }
-
-        if (cached.isNotEmpty()) {
-            cached.forEach { e ->
+        //return from cache
+        if(cached.size == response.body()!!.virtualMachines.size){
+            cached.filter {
+                it.id != null && it.vmName != null && it.mode != null && it.vmId != null
+            }.forEach { e ->
                 responseValue.add(
                     VMIndex(
                         e.vmId!!.toInt(),
@@ -156,16 +133,18 @@ class VmAanvraagRepository(
             return responseValue
         }
 
-        projectDao.createProject(
-            Project(response.body()!!.name, customerId.toLong(), response.body()!!.id.toLong())
-        )
-
+        //seed cache
+        if(projectDao.getById(id.toLong()).isEmpty()){
+            projectDao.createProject(Project(response.body()!!.name,response.body()!!.user.id.toLong(), response.body()!!.id.toLong()) )
+        }
         for (virtualMachine in response.body()!!.virtualMachines) {
             val vm = vmApi.getById(virtualMachine.id).body()
+            val dbVm = vmDao.getById(virtualMachine.id.toLong())
 
-            if (vm?.contract != null) {
-                contractDao.create(vm.contract)
+            if(dbVm != null){
+                continue
             }
+
             if (vm?.backUp != null) {
                 backupDao.create(vm.backUp)
             }
@@ -175,12 +154,53 @@ class VmAanvraagRepository(
                 vm.mode,
                 vm.hardware,
                 vm.backUp.id,
-                vm.vmConnection?.id,
-                vm.contract!!.id,
+                null,
+                //vm.contract!!.id,
                 id.toLong()
             )
-            vmDao.createVM(daoDto)
+            val vmId = vmDao.createVM(daoDto)
+            vmDao.getById(vmId)
+
+            if (vm?.contract != null) {
+                daoDto.contractId = contractDao.create(vm.contract)
+                vmDao.update(daoDto)
+            }
         }
         return response.body()?.virtualMachines
+    }
+
+    private suspend fun insertCreatedVMIntoCache(
+        id: Int,
+        dtoRequest: VMCreate,
+    ) {
+        val vm = vmApi.getById(id).body()
+        backupDao.create(
+            Backup(dtoRequest.virtualMachine.backup.type, null, vm!!.backUp.id))
+
+        val daoDto = VirtualMachine(
+            vm.name,
+            vm.operatingSystem,
+            vm.mode,
+            vm.hardware,
+            vm.backUp.id,
+            null,
+            null,
+            // vm.contract?.id,
+            dtoRequest.virtualMachine.projectId.toLong(),
+            id.toLong()
+        )
+        val vmId = vmDao.createVM(daoDto)
+
+        contractDao.create(
+            Contract(
+                dtoRequest.virtualMachine.start,
+                dtoRequest.virtualMachine.end,
+                vmId,
+                customerId.toLong(),
+                vmId // always the same amount of contracts as vms
+            )
+        )
+        daoDto.contractId = vm.id.toLong()
+        vmDao.update(daoDto)
     }
 }

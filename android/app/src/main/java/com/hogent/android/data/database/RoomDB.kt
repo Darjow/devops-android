@@ -32,7 +32,7 @@ import com.hogent.android.data.entities.VirtualMachine
         Contract::class,
         Project::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(value = [BackupConverter::class, LocalDateConverter::class])
