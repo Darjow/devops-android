@@ -1,6 +1,6 @@
 ﻿# Android applicatie
 #### API
-Deze applicatie maakt gebruik van een API (de node.js backend)
+Deze applicatie maakt gebruik van een API (de c# backend)
 
 ## De app gebruiken
 
@@ -10,6 +10,10 @@ Deze applicatie maakt gebruik van een API (de node.js backend)
 ####  Gebruiken:
 - build en run de app op een emulator met API 30+
 
+#### Linter:
+```./gradlew ktlintCheck
+./gradlew kltlintFormat```
+
 #### Problems?
 - File -> Invalidate caches
 - Clean project
@@ -17,8 +21,8 @@ Deze applicatie maakt gebruik van een API (de node.js backend)
 
 #### Logging in:
 * User:  
-  • Email: ```john.doe@hotmail.com``` <br>
-  • Password: ```Password#69```
+  • Email: ```billyBillson1997@gmail.com``` <br>
+  • Password: ```Password.1```
 
 
 ## Functionaliteiten
@@ -26,6 +30,7 @@ Deze applicatie maakt gebruik van een API (de node.js backend)
 - registreren
 - klant profiel + dynamisch wijzigen hiervan
 - lijst van projecten met daarin de VM's
+- vm details
 - virtual machine aanvragen
 
 
