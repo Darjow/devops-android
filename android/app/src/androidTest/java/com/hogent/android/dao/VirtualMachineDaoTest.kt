@@ -75,7 +75,6 @@ class VirtualMachineDaoTest {
 
         Assert.assertEquals(vm.id, response.id)
         Assert.assertEquals(vm.backUpId, response.backupId)
-
     }
 
     private suspend fun createVM(): VirtualMachine {
