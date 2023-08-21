@@ -11,8 +11,9 @@ Deze applicatie maakt gebruik van een API (de c# backend)
 - build en run de app op een emulator met API 30+
 
 #### Linter:
-```./gradlew ktlintCheck
-./gradlew kltlintFormat```
+./gradlew ktlintCheck
+./gradlew kltlintFormat
+
 
 #### Problems?
 - File -> Invalidate caches
