@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.hogent.android.data.daos.BackupDao
 import com.hogent.android.data.database.RoomDB
 import com.hogent.android.data.entities.Backup
-import com.hogent.android.data.entities.BackupType
+import com.hogent.android.domain.BackupType
 import java.io.IOException
 import java.time.LocalDate
 import kotlinx.coroutines.runBlocking

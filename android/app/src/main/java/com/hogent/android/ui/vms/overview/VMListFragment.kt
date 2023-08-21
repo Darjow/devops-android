@@ -55,10 +55,10 @@ class VMListFragment : Fragment() {
         viewModel.projecten.observe(
             viewLifecycleOwner,
             Observer {
-                if(viewModel.projecten.value == null || viewModel.projecten.value?.total == 0){
+                if (viewModel.projecten.value == null || viewModel.projecten.value?.total == 0) {
                     Timber.e("CRATING EMPTY VIEHOLDER")
                     recyclerView.adapter = EmptyProjectListAdapter()
-                }else{
+                } else {
                     Timber.wtf("Creating adapter for the project")
                     Timber.wtf(it.projects.size.toString())
                     recyclerView.adapter = ProjectListAdapter(

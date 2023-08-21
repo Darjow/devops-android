@@ -112,7 +112,7 @@ class VmAanvraagViewModel(val repo: VmAanvraagRepository) : ViewModel() {
     fun memoryGBChanged(gb: String) {
         val __form = _form.value
         __form!!.memory = try {
-            (Integer.parseInt(gb.split("GB")[0])*1000)
+            (Integer.parseInt(gb.split("GB")[0]) * 1000)
         } catch (e: java.lang.Exception) {
             0
         }
