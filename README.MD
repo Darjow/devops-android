@@ -1,8 +1,8 @@
 ## In deze repository bevind zich: 
-* [De Android applicatie](https://github.com/Darjow/Android/tree/master/android)
+* [De Android applicatie](https://github.com/Darjow/devops-android/tree/master/android)
 
 
 
 ## Branches:
-* [Api, inclusief node.js backend](https://github.com/Darjow/Android/tree/api)
-* [mock, op basis van seeding](https://github.com/Darjow/Android/tree/mock)
+* [Api](https://github.com/Darjow/devops-android/tree/api)
+* [mock](https://github.com/Darjow/devops-android/tree/mock)
